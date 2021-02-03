@@ -15,5 +15,4 @@ The backend uses Flask as the main API framework. The database is a PostgreSQL d
 This project is made by :
 - Alexis LEBEL @Alestrio
 - Meryem Kaya @MeryemKy
-- Malo Legrand
-- Romain Bronquard
+- Malo Legrand @HoesMaaad

@@ -13,6 +13,12 @@ The backend uses Flask as the main API framework. The database is a PostgreSQL d
 
 There are several kinds of file :
 
+### Flask :
+
+|File name|Use case
+|---|---
+|[run.py](backend/run.py)|Main entry point of the app
+
 ### Services :
 Those are files intended to work with the SQLService class. Those are the interfaces between the database and the
 programm in itself.

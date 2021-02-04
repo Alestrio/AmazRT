@@ -14,8 +14,7 @@ AbstractService
 
 This is the superclass of the services.
 The services are the interfaces between the programme, and the SQLService class.
-It is names AbstractService to quickly show that it's the superclass, though nothing or almost nothing is declared
-abstract.
+It is named AbstractService to quickly show that it's the superclass, though the class in itself isn't declared abstract
 """
 
 

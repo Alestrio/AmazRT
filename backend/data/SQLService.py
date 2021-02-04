@@ -56,3 +56,19 @@ class SQLService:
     """
     def __del__(self):
         self.sql.close()
+
+    """This method returns the rows found by the query"""
+    def issueQueryWithResult(self, query: str):
+        cursor = self.sql.execute(query)
+        return cursor.fetchall()
+
+    """
+    This method only issue a query to the db, without returning anything. 
+    It will be used for update/delete opoerations
+    """
+    def issueQueryUpdate(self, query: str):
+        cursor = self.sql.execute(query)
+        try:
+            cursor.commit()
+        except:
+            print("sql exception (commit cursor)")

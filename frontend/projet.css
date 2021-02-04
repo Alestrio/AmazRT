@@ -1,0 +1,68 @@
+*{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-align: justify;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+header{
+    color: rgb(0, 0, 0);
+    text-transform: uppercase;
+    width: 100%;
+}
+
+nav#navig{
+    display: block;
+    background-color: rgba(243, 0, 0, 0.795);
+    width: 100%;
+    height: auto;
+    max-height: 2.5em;
+    overflow: hidden;
+    margin-top: 2em;
+    
+}
+
+ul#items{
+    list-style-type: none;
+}
+
+ul#items li{
+    height: 2.5em;
+    line-height: 2.5em;
+    display: inline-block;
+    padding: 0 1em;
+}
+
+ul#items li a{
+    text-decoration: none;
+    width: 100%;
+    color: white;
+    height: 2.5em;
+    line-height: 2.5em;
+    
+}
+
+nav#navig img{
+    display: none;
+}
+
+#bandeau,#bandeau img{
+    width: 100%;
+}
+
+#legende h3{
+    text-transform: uppercase;
+    text-align: right;
+    font-size: smaller;
+}
+
+#legende p{
+    text-align: right;
+    font-size: smaller;
+}
+
+article{
+   font-size: larger;
+   margin-right: 11em; 
+}

@@ -38,12 +38,16 @@ class SQLService:
             self.port = os.getenv("DB_PORT")
             self.dbname = os.getenv("DB_NAME")
 
-        self.sql = psycopg2.connect(database=self.dbname,
-                                    user=self.username,
-                                    host=self.address,
-                                    password=self.password,
-                                    port=self.port)
-        self.cursor = self.sql.cursor()
+        try:
+            self.sql = psycopg2.connect(database=self.dbname,
+                                        user=self.username,
+                                        host=self.address,
+                                        password=self.password,
+                                        port=self.port)
+        except:
+            print("Database connection problem")
+        else:
+            self.cursor = self.sql.cursor()
 
     """
     Destructor :

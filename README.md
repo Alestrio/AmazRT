@@ -49,6 +49,10 @@ Those files are api routes
 |---|---
 |[config.py](backend/util/config.py)|This is the config file for the API
 
+## Dependencies :
+- Flask : `# pip3 install flask`
+- Psycopg2 : `# pip3 install psycopg2-binary`
+
 ## Credits :
  
 This project is made by :

@@ -40,14 +40,14 @@ Those files are api routes
 
 |File name|Use case
 |---|---
-|[ParcelRoutes.py](backend/data/routes/ParcelRoutes.py)|This file contains the routes related to Parcel information
-|[TrackingRoutes.py](backend/data/routes/TrackingRoutes.py)|This file contains the routes related to Tracking information
-|[UserRoute.py](backend/data/routes/UserRoute.py)|This file contains the routes related to user management
+|[ParcelRoute.py](backend/routes/ParcelRoute.py)|This file contains the routes related to Parcel information
+|[TrackingRoute.py](backend/routes/TrackingRoute.py)|This file contains the routes related to Tracking information
+|[UserRoute.py](backend/routes/UserRoute.py)|This file contains the routes related to user management
 
 ### Misc:
 |File name|Use case
 |---|---
-|[config.py](backend/data/util/config.py)|This is the config file for the API
+|[config.py](backend/util/config.py)|This is the config file for the API
 
 ## Credits :
  

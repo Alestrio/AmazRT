@@ -1,6 +1,5 @@
 *{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: justify;
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
@@ -95,16 +94,8 @@ footer p{
     margin-bottom: 2em;
 }
 
-section .france1{
-    width: 1em;
-    width: 10%;
-}
-
-#legende p2{
-    font-style: normal;
-}
-
-.zoom img{
-    width: 20px;
-    height: 20px;
+.france1{
+    height: 2rem;
+    width: 2rem!important;
+    object-fit: cover;
 }

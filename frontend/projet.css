@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
+    text-align: center;
 }
 
 header{
@@ -53,16 +54,57 @@ nav#navig img{
 
 #legende h3{
     text-transform: uppercase;
-    text-align: right;
     font-size: smaller;
 }
 
 #legende p{
     text-align: right;
     font-size: smaller;
+    margin-top: 1em;
 }
 
 article{
    font-size: larger;
-   margin-right: 11em; 
+   text-align: left; 
+   margin-right: 11em;
+}
+
+h3{
+   margin-top: 3em;
+   text-align: left;
+}
+
+h2{
+    margin-top: 1em;
+}
+
+main{
+    margin-top: 1em;
+}
+
+footer strong{
+    text-align: left;
+    margin-top: 5em;
+    margin-right: 28em;
+    margin-bottom: 5em;
+}
+
+footer p{
+    margin-right: 86em;
+    margin-top: 1em;
+    margin-bottom: 2em;
+}
+
+section .france1{
+    width: 1em;
+    width: 10%;
+}
+
+#legende p2{
+    font-style: normal;
+}
+
+.zoom img{
+    width: 20px;
+    height: 20px;
 }

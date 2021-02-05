@@ -25,18 +25,11 @@ class SQLService:
     Attributes : username, password, address, port, dbname, sql, cursor
     """
     def __init__(self):
-        if config.isDebug:
-            self.username = "postgres"
-            self.password = "test"
-            self.address = "localhost"
-            self.port = "5432"
-            self.dbname = "amazrt"
-        else:
-            self.username = os.getenv("DB_USER")
-            self.password = os.getenv("DB_PW")
-            self.address = os.getenv("DB_URL")
-            self.port = os.getenv("DB_PORT")
-            self.dbname = os.getenv("DB_NAME")
+        self.username = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PW")
+        self.address = os.getenv("DB_URL")
+        self.port = os.getenv("DB_PORT")
+        self.dbname = os.getenv("DB_NAME")
 
         try:
             self.sql = psycopg2.connect(database=self.dbname,

@@ -25,11 +25,12 @@ class SQLService:
     Attributes : username, password, address, port, dbname, sql, cursor
     """
     def __init__(self):
-        self.username = os.getenv("DB_USER")
+        self.username = os.getenv("DB_USERNAME")
         self.password = os.getenv("DB_PW")
         self.address = os.getenv("DB_URL")
         self.port = os.getenv("DB_PORT")
         self.dbname = os.getenv("DB_NAME")
+        print(self.username)
 
         try:
             self.sql = psycopg2.connect(database=self.dbname,

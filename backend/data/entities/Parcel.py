@@ -7,6 +7,13 @@
 #  - Malo LEGRAND @HoesMaaad
 from backend.data.entities.AbstractEntity import AbstractEntity
 
+"""
+Parcel :
+
+This is the data model of a parcel.
+It contains all the informations related to the parcel in itself (not the tracking)
+"""
+
 
 class Parcel(AbstractEntity):
 
@@ -15,7 +22,7 @@ class Parcel(AbstractEntity):
 
     :Arguments:
     - serial : database id
-    - reference : parcel number, same a stracking number
+    - reference : parcel number, same as tracking number
     - condition : if the parcel is damaged or not
     - weight, length, width, height
     - sender : name and address of the sender

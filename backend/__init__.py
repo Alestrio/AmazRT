@@ -6,5 +6,6 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 from flask import Flask
-from backend import routes
 app = Flask(__name__)
+
+from backend.routes import ParcelRoute

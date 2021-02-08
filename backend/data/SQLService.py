@@ -25,18 +25,12 @@ class SQLService:
     Attributes : username, password, address, port, dbname, sql, cursor
     """
     def __init__(self):
-        if config.isDebug:
-            self.username = "postgres"
-            self.password = "test"
-            self.address = "localhost"
-            self.port = "5432"
-            self.dbname = "amazrt"
-        else:
-            self.username = os.getenv("DB_USER")
-            self.password = os.getenv("DB_PW")
-            self.address = os.getenv("DB_URL")
-            self.port = os.getenv("DB_PORT")
-            self.dbname = os.getenv("DB_NAME")
+        self.username = os.getenv("DB_USERNAME")
+        self.password = os.getenv("DB_PW")
+        self.address = os.getenv("DB_URL")
+        self.port = os.getenv("DB_PORT")
+        self.dbname = os.getenv("DB_NAME")
+        print(self.username)
 
         try:
             self.sql = psycopg2.connect(database=self.dbname,
@@ -56,3 +50,19 @@ class SQLService:
     """
     def __del__(self):
         self.sql.close()
+
+    """This method returns the rows found by the query"""
+    def issueQueryWithResult(self, query: str):
+        cursor = self.sql.execute(query)
+        return cursor.fetchall()
+
+    """
+    This method only issue a query to the db, without returning anything. 
+    It will be used for update/delete opoerations
+    """
+    def issueQueryUpdate(self, query: str):
+        cursor = self.sql.execute(query)
+        try:
+            cursor.commit()
+        except:
+            print("sql exception (commit cursor)")

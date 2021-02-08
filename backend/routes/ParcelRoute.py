@@ -15,4 +15,4 @@ service = ParcelService()
 
 @app.route("/parcel/all")
 def getAllParcels():
-    return jsonify(service.findAll())
+    return "jsonify(service.findAll())"

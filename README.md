@@ -58,6 +58,7 @@ Those files are api routes
 ## Dependencies :
 - Flask : `# pip3 install flask`
 - Psycopg2 : `# pip3 install psycopg2-binary`
+- SQLAlchemy : `# pip3 install sqlalchemy`
 
 ## Credits :
  

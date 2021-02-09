@@ -12,7 +12,19 @@ from backend.data.services.ParcelService import ParcelService
 
 service = ParcelService()
 
-
+@app.route("/")
 @app.route("/parcel/all")
 def getAllParcels():
     return "jsonify(service.findAll())"
+
+@app.route("/parcel/get")
+def getBySerial():
+    return "!"
+
+@app.route("/parcel/update")
+def updateBySerial():
+    return "!"
+
+@app.route("/parcel/!")
+def findAll():
+    return "!"

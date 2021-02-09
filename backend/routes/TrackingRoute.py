@@ -7,9 +7,16 @@
 #  - Malo LEGRAND @HoesMaaad
 
 from backend import app
-from backend.data.services.TrackingService import TrackingService
 
-@app.route("/")
-@app.route("/parcel/all")
-def getAllParcels():
-    return "jsonify(service.findAll())"
+@app.route("/tracking/all")
+def getAllTracking():
+    return "??"
+
+@app.route("/tracking/get")
+def getTrackingByID():
+    return ""
+
+@app.route("/tracking/update")
+def updateTrackingByID():
+    return ""
+

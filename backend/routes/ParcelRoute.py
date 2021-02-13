@@ -12,7 +12,20 @@ from backend.data.services.ParcelService import ParcelService
 
 service = ParcelService()
 
+@app.route("/")
 
 @app.route("/parcel/all")
 def getAllParcels():
     return "jsonify(service.findAll())"
+
+@app.route("/parcel/get")
+def getRouteByID():
+    return "!"
+
+@app.route("/parcel/update")
+def updateRouteByID():
+    return "!"
+
+@app.route("/parcel/delete")
+def deleteRouteByID():
+    return "!"

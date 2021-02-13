@@ -7,7 +7,7 @@
 #  - Malo LEGRAND @HoesMaaad
 from abc import abstractmethod
 
-from backend.data import SQLService as sqls
+from backend.data import base as sqls
 
 """
 AbstractService

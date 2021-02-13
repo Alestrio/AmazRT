@@ -29,7 +29,7 @@ programm in itself.
 |[ParcelService.py](backend/data/services/ParcelService.py)|This is the Parcel managament service
 |[TrackingService.py](backend/data/services/TrackingService.py)|This is the Tracking information management service
 |[UserService.py](backend/data/services/UserService.py)|This is the User information management service
-|[SQLService.py](backend/data/SQLService.py)|This one is a litle bit special. This is the interface between the services and the database
+|[SQLService.py](backend/data/base.py)|This one is a litle bit special. This is the interface between the services and the database
 
 ### Entities :
 Those files are the data models used by the programm :
@@ -58,6 +58,7 @@ Those files are api routes
 ## Dependencies :
 - Flask : `# pip3 install flask`
 - Psycopg2 : `# pip3 install psycopg2-binary`
+- SQLAlchemy : `# pip3 install sqlalchemy`
 
 ## Credits :
  

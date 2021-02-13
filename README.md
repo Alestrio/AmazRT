@@ -25,11 +25,7 @@ programm in itself.
 
 |File name|Use case
 |---|-------
-|[AbstractService.py](backend/data/services/AbstractService.py)|This is the superclass of all the services
-|[ParcelService.py](backend/data/services/ParcelService.py)|This is the Parcel managament service
-|[TrackingService.py](backend/data/services/TrackingService.py)|This is the Tracking information management service
-|[UserService.py](backend/data/services/UserService.py)|This is the User information management service
-|[SQLService.py](backend/data/base.py)|This one is a litle bit special. This is the interface between the services and the database
+|[base.py](backend/data/base.py)|This is the interface between the services and the database
 
 ### Entities :
 Those files are the data models used by the programm :

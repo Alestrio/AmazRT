@@ -48,8 +48,8 @@ class SQLService:
     
     Closes the connection
     """
-    def __del__(self):
-        self.sql.close()
+    #def __del__(self):
+        #self.sql.close()
 
     """This method returns the rows found by the query"""
     def issueQueryWithResult(self, query: str):

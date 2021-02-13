@@ -18,6 +18,7 @@ This is the data model used for Parcel tracking
 
 
 class Tracking(AbstractEntity):
+    __tablename__ = 'tracking'
     id = Column(Integer, primary_key=True)
     parcel = relationship("Parcel")
     successive_positions = Column('successive_positions', ARRAY(String(32)))

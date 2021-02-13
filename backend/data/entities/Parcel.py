@@ -18,6 +18,7 @@ It contains all the informations related to the parcel in itself (not the tracki
 
 
 class Parcel(AbstractEntity):
+    __tablename__ = 'parcels'
     id = Column(Integer, primary_key=True)
     reference = Column('reference', String(32))
     condition = Column('condition', String(32))

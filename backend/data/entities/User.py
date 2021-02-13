@@ -19,6 +19,7 @@ This is the data model of a user.
 
 
 class User(AbstractEntity):
+    __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
     username = Column('username', String(32))
     firstname = Column('firstname', String(32))

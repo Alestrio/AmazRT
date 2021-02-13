@@ -6,3 +6,9 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 
+from backend.data.entities import *
+from backend.data.base import Session, engine, Base
+
+Base.metadata.create_all(engine)
+
+session = Session()

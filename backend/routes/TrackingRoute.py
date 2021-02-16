@@ -5,13 +5,16 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
+from flask import jsonify
 
-from backend import app
+from backend import app, session
+from backend.data.entities.Tracking import Tracking
 
 
 @app.route("/tracking/all")
 def getAllTracking():
-    return "??"
+    trackings = session.query(Tracking).all()
+    return jsonify(trackings)
 
 
 @app.route("/tracking/get")

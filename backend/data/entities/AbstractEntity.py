@@ -14,8 +14,10 @@ The entities are the data models storing user, tracking or parcel information.
 It is named AbstractEntity to quickly show that it's the superclass, though the class in itself isn't declared abstract
 """
 
+from backend.data.base import Base
 
-class AbstractEntity:
+
+class AbstractEntity(Base):
 
     def __init__(self, serial: int):
         self.serial = serial

@@ -25,11 +25,7 @@ programm in itself.
 
 |File name|Use case
 |---|-------
-|[AbstractService.py](backend/data/services/AbstractService.py)|This is the superclass of all the services
-|[ParcelService.py](backend/data/services/ParcelService.py)|This is the Parcel managament service
-|[TrackingService.py](backend/data/services/TrackingService.py)|This is the Tracking information management service
-|[UserService.py](backend/data/services/UserService.py)|This is the User information management service
-|[SQLService.py](backend/data/SQLService.py)|This one is a litle bit special. This is the interface between the services and the database
+|[base.py](backend/data/base.py)|This is the interface between the services and the database
 
 ### Entities :
 Those files are the data models used by the programm :
@@ -46,14 +42,19 @@ Those files are api routes
 
 |File name|Use case
 |---|---
-|[ParcelRoutes.py](backend/data/routes/ParcelRoutes.py)|This file contains the routes related to Parcel information
-|[TrackingRoutes.py](backend/data/routes/TrackingRoutes.py)|This file contains the routes related to Tracking information
-|[UserRoute.py](backend/data/routes/UserRoute.py)|This file contains the routes related to user management
+|[ParcelRoute.py](backend/routes/ParcelRoute.py)|This file contains the routes related to Parcel information
+|[TrackingRoute.py](backend/routes/TrackingRoute.py)|This file contains the routes related to Tracking information
+|[UserRoute.py](backend/routes/UserRoute.py)|This file contains the routes related to user management
 
 ### Misc:
 |File name|Use case
 |---|---
-|[config.py](backend/data/util/config.py)|This is the config file for the API
+|[config.py](backend/util/config.py)|This is the config file for the API
+
+## Dependencies :
+- Flask : `# pip3 install flask`
+- Psycopg2 : `# pip3 install psycopg2-binary`
+- SQLAlchemy : `# pip3 install sqlalchemy`
 
 ## Credits :
  

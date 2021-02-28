@@ -18,6 +18,6 @@ from backend.data.base import Base
 
 
 class AbstractEntity(Base):
-
-    def __init__(self, serial: int):
-        self.serial = serial
+    """
+    This is the superclass of the entities
+    """

@@ -14,7 +14,7 @@
         const xhr = new XMLHttpRequest();
 
         xhr.addEventListener("load", function(event) {
-            alert(xhr.responseText);
+            console.log(xhr.responseText);
         });
 
         // At the end, we'll use a post method on getTracking() route
@@ -22,7 +22,7 @@
 
         function track(tracking_number) {
             xhr.send();
-
+            
         }
     </script>
 
@@ -63,7 +63,7 @@
                 <label>
                     Numéro de suivi / tracking number <br>
                     <input maxlength="20" name="tracking_number"><br>
-                    <button onclick="">Valider/Validate</button><br>
+                    <button onclick="track(tracking_number)">Valider/Validate</button><br>
                 </label>
             </form>
 

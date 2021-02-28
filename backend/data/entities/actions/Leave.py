@@ -25,7 +25,7 @@ class Leave(AbstractAction):
     The tablename is "deposer"
     """
     __tablename__ = 'deposer'
-    parcel = relationship('pld', foreign_keys='pld.id_pld', primary_key=True)
+    pld = relationship('pld', foreign_keys='pld.id_pld', primary_key=True)
     provider = relationship('fournisseur', foreign_keys='fournisseur.id_fournisseur', primary_key=True)
     deposit_date = Column('date_depot', DATE)
 

@@ -13,8 +13,8 @@ from backend.data.entities.AbstractEntity import AbstractEntity
 class Parcel(AbstractEntity):
     """
     @Entity
-    This is the entity class responsible for supplier data management.
-    The tablename is "fournisseur"
+    This is the entity class responsible for Parcel data management.
+    The tablename is "colis"
     """
     __tablename__ = 'colis'
     id_parcel = Column('id_colis', Integer, primary_key=True)

@@ -5,10 +5,11 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-from backend import app, Base, engine, Session
-
-
 def pld_dummydata():
+    pass
+
+
+def pld_removedummydata():
     pass
 
 
@@ -16,11 +17,19 @@ def pld_test():
     pass
 
 
-def execute_test():
-    app.run(debug=True)
-    Base.metadata.create_all(engine)
+def plr_dummydata():
+    pass
 
-    session = Session()
+
+def plr_removedummydata():
+    pass
+
+
+def plr_test():
+    pass
+
+
+def execute_test():
     pld_test()
 
 

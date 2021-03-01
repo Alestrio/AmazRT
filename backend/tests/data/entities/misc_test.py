@@ -5,23 +5,33 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-from backend import app, Base, engine, Session
-
-
-def customer_dummydata():
+def city_dummydata():
     pass
 
 
-def customer_test():
+def city_removedummydata():
+    pass
+
+
+def city_test():
+    pass
+
+
+def parcel_dummydata():
+    pass
+
+
+def parcel_removedummydata():
+    pass
+
+
+def parcel_test():
     pass
 
 
 def execute_test():
-    app.run(debug=True)
-    Base.metadata.create_all(engine)
-
-    session = Session()
-    customer_test()
+    city_test()
+    parcel_test()
 
 
 if __name__ == '__main__':

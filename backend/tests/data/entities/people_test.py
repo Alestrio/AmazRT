@@ -5,33 +5,46 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-def pld_dummydata():
+def customer_dummydata():
     pass
 
 
-def pld_removedummydata():
+def custommer_removedummydata():
     pass
 
 
-def pld_test():
+def customer_test():
     pass
 
 
-def plr_dummydata():
+def supplier_dummydata():
     pass
 
 
-def plr_removedummydata():
+def supplier_removedummydata():
     pass
 
 
-def plr_test():
+def supplier_test():
+    pass
+
+
+def operator_dummydata():
+    pass
+
+
+def operator_removedummydata():
+    pass
+
+
+def operator_test():
     pass
 
 
 def execute_test():
-    pld_test()
-    plr_test()
+    customer_test()
+    supplier_test()
+    operator_test()
 
 
 if __name__ == '__main__':

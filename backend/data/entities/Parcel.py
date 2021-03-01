@@ -23,6 +23,5 @@ class Parcel(Base):
 
     def __init__(self,
                  ref, ptype):
-        super().__init__()
         self.ref = ref
         self.type = ptype

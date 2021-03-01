@@ -5,7 +5,7 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-from sqlalchemy import Column, Integer, VARCHAR
+from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from sqlalchemy.orm import relationship
 
 from backend import Base
@@ -19,7 +19,7 @@ class Customer(Base):
     """
     __tablename__ = 'client'
     id_client = Column('id_client', Integer, primary_key=True)
-    id_city = relationship('ville', foreign_keys='ville.id_ville')
+    id_city = Column('id_ville', Integer, ForeignKey('ville.id_ville'))
     ref = Column('ref_client', VARCHAR(15))
     lastname = Column('nom_client', VARCHAR(30))
     firstname = Column('prenom_client', VARCHAR(30))
@@ -28,10 +28,8 @@ class Customer(Base):
     password = Column("mdp_client", VARCHAR(15))
 
     def __init__(self,
-                 id_client, id_city, ref, lastname, firstname, address, login, password):
+                 id_city, ref, lastname, firstname, address, login, password):
         """Constructor"""
-        super().__init__()
-        self.id_client = id_client
         self.id_city = id_city
         self.ref = ref
         self.lastname = lastname

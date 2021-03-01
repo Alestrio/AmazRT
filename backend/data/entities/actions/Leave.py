@@ -15,16 +15,17 @@ from apt_pkg import DATE
 from sqlalchemy import Column
 from sqlalchemy.orm import relationship
 
-from backend.data.entities.actions.AbstractAction import AbstractAction
+from backend import Base
 
 
-class Leave(AbstractAction):
+class Leave(Base):
     """
     @Entity
     This is the entity class responsible for the initial deposit of the parcel.
     The tablename is "deposer"
     """
     __tablename__ = 'deposer'
+    parcel = relationship('colis', foreign_keys='colis.id_colis', primary_key=True)
     pld = relationship('pld', foreign_keys='pld.id_pld', primary_key=True)
     provider = relationship('fournisseur', foreign_keys='fournisseur.id_fournisseur', primary_key=True)
     deposit_date = Column('date_depot', DATE)

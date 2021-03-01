@@ -8,10 +8,10 @@
 from sqlalchemy import Column, Integer, VARCHAR
 from sqlalchemy.orm import relationship
 
-from backend.data.entities.AbstractEntity import AbstractEntity
+from backend import Base
 
 
-class Customer(AbstractEntity):
+class Customer(Base):
     """
     @Entity
     This is the entity class responsible for customer data management.

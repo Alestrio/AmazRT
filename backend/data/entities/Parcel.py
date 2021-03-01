@@ -7,10 +7,10 @@
 #  - Malo LEGRAND @HoesMaaad
 from sqlalchemy import Column, Integer, VARCHAR
 
-from backend.data.entities.AbstractEntity import AbstractEntity
+from backend import Base
 
 
-class Parcel(AbstractEntity):
+class Parcel(Base):
     """
     @Entity
     This is the entity class responsible for Parcel data management.

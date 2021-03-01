@@ -8,10 +8,10 @@
 from sqlalchemy import Column, Integer, VARCHAR, CHAR, Numeric
 from sqlalchemy.orm import relationship
 
-from backend.data.entities.AbstractEntity import AbstractEntity
+from backend import Base
 
 
-class City(AbstractEntity):
+class City(Base):
     """
     @Entity
     This is the entity class responsible for cities data management.

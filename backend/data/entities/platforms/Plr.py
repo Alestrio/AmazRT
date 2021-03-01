@@ -7,10 +7,10 @@
 #  - Malo LEGRAND @HoesMaaad
 from sqlalchemy import Column, Integer, VARCHAR
 
-from backend.data.entities.AbstractEntity import AbstractEntity
+from backend import Base
 
 
-class Plr(AbstractEntity):
+class Plr(Base):
     """
     @Entity
     This is the entity class responsible for region-level platform data management.
@@ -22,8 +22,7 @@ class Plr(AbstractEntity):
     name = Column('nom_plr', VARCHAR(50))
 
     def __init__(self,
-                 id_pld, id_plr, ref, name):
+                 ref, name):
         super().__init__()
-        self.id_plr = id_plr
         self.ref = ref
         self.name = name

@@ -6,20 +6,17 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 from backend import app, Base, engine, Session
+from backend.data.entities.platforms.Pld import Pld
 from backend.data.entities.platforms.Plr import Plr
 
 
-def pld_dummydata(asession):
-    pass
-
-
-def pld_removedummydata(asession):
-    pass
-
-
 def pld_test(asession):
-    pld_dummydata(asession)
-    pld_removedummydata(asession)
+    plds = asession.query(Pld).all()
+    assert (plds is not None)
+    for pld in plds:
+        if pld.id_pld == 6:
+            assert (pld.ref == 'pld45')
+            break
 
 
 def plr_test(asession):

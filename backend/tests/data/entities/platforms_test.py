@@ -5,34 +5,41 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-def pld_dummydata():
+from backend import app, Base, engine, Session
+from backend.data.entities.platforms.Plr import Plr
+
+
+def pld_dummydata(asession):
     pass
 
 
-def pld_removedummydata():
+def pld_removedummydata(asession):
     pass
 
 
-def pld_test():
-    pass
+def pld_test(asession):
+    pld_dummydata(asession)
+    pld_removedummydata(asession)
 
 
-def plr_dummydata():
-    pass
+def plr_test(asession):
+    plrs = asession.query(Plr).all()
+    # print(plrs)
+    assert (plrs is not None)
+    for plr in plrs:
+        if plr.id_plr == 6:
+            assert (plr.ref == 'plr11')
+            break
 
 
-def plr_removedummydata():
-    pass
-
-
-def plr_test():
-    pass
-
-
-def execute_test():
-    pld_test()
-    plr_test()
+def execute_test(asession):
+    plr_test(asession)
+    pld_test(asession)
+    print('platforms tests ok')
 
 
 if __name__ == '__main__':
-    execute_test()
+    Base.metadata.create_all(engine)
+
+    session = Session()
+    execute_test(session)

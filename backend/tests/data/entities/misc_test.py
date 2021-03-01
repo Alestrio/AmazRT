@@ -7,6 +7,7 @@
 #  - Malo LEGRAND @HoesMaaad
 from backend import Base, engine, Session
 from backend.data.entities.City import City
+from backend.data.entities.Parcel import Parcel
 
 
 def city_test(asession):
@@ -18,16 +19,30 @@ def city_test(asession):
             break
 
 
-def parcel_dummydata():
-    pass
+def parcel_dummydata(asession):
+    asession.add(Parcel('ThisIs1Ref666', 'ParceltypeGoBrrr'))
+    asession.add(Parcel('ThisIsAn0th3rRef', 'ParcelTypeAgain'))
+    asession.add(Parcel('LastRef4g41n', 'LastParcelType'))
+    asession.commit()
 
 
-def parcel_removedummydata():
-    pass
+def parcel_removedummydata(asession):
+    parcels = asession.query(Parcel).all()
+    for parcel in parcels:
+        if parcel.type == 'ParceltypeGoBrrr' or parcel.type == 'ParcelTypeAgain' or parcel.type == 'LastParcelType':
+            asession.delete(parcel)
+    asession.commit()
 
 
 def parcel_test(asession):
-    pass
+    parcel_dummydata(asession)
+    parcels = asession.query(Parcel).all()
+    assert(parcels is not None)
+    for parcel in parcels:
+        if parcel.type == 'ParcelTypeAgain':
+            assert (parcel.ref == 'ThisIsAn0th3rRef')
+            break
+    parcel_removedummydata(asession)
 
 
 def execute_test(asession):

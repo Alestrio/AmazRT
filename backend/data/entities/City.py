@@ -5,8 +5,7 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-from sqlalchemy import Column, Integer, VARCHAR, CHAR, Numeric
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, VARCHAR, CHAR, Numeric, ForeignKey
 
 from backend import Base
 
@@ -19,12 +18,12 @@ class City(Base):
     """
     __tablename__ = 'ville'
     id_city = Column('id_ville', Integer, primary_key=True)
-    id_pld = relationship('pld', foreign_keys='pld.id_pld')
+    id_pld = ForeignKey('pld.id_pld')
     name = Column('nom_ville', VARCHAR(50))
     postalcode = Column('cp', CHAR(5))
     insee_code = Column('insee_code', VARCHAR(5))
     gps_lat = Column('gps_lat', Numeric)
-    gps_long = Column('gps_long', Numeric)
+    gps_long = Column('gps_lng', Numeric)
 
     def __init__(self,
                  id_city, id_pld, name, postalcode, insee_code, gps_lat, gps_long):

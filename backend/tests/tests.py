@@ -6,7 +6,7 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 from backend import app, Base, engine, Session
-from backend.tests.data.entities import actions_test, platforms_test
+from backend.tests.data.entities import actions_test, platforms_test, misc_test
 
 
 def execute_all_tests():
@@ -15,6 +15,7 @@ def execute_all_tests():
     session = Session()
 
     platforms_test.execute_test(session)
+    misc_test.execute_test(session)
 
 
 if __name__ == '__main__':

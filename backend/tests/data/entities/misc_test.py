@@ -5,16 +5,17 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-def city_dummydata():
-    pass
+from backend import Base, engine, Session
+from backend.data.entities.City import City
 
 
-def city_removedummydata():
-    pass
-
-
-def city_test():
-    pass
+def city_test(asession):
+    cities = asession.query(City).all()
+    assert (cities is not None)
+    for city in cities:
+        if city.id_city == 6:
+            assert (city.name == 'Ambronay')
+            break
 
 
 def parcel_dummydata():
@@ -25,14 +26,18 @@ def parcel_removedummydata():
     pass
 
 
-def parcel_test():
+def parcel_test(asession):
     pass
 
 
-def execute_test():
-    city_test()
-    parcel_test()
+def execute_test(asession):
+    city_test(asession)
+    parcel_test(asession)
+    print('misc tests ok')
 
 
 if __name__ == '__main__':
-    execute_test()
+    Base.metadata.create_all(engine)
+
+    session = Session()
+    execute_test(session)

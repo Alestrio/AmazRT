@@ -22,8 +22,7 @@ class Parcel(Base):
     type = Column('type_colis', VARCHAR(20))
 
     def __init__(self,
-                 id_parcel, ref, ptype):
+                 ref, ptype):
         super().__init__()
-        self.id_parcel = id_parcel
         self.ref = ref
         self.type = ptype

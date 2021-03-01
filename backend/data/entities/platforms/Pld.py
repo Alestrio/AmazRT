@@ -5,7 +5,7 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-from sqlalchemy import Column, Integer, VARCHAR
+from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from sqlalchemy.orm import relationship
 
 from backend import Base
@@ -19,7 +19,7 @@ class Pld(Base):
     """
     __tablename__ = 'pld'
     id_pld = Column('id_pld', Integer, primary_key=True)
-    id_plr = relationship('plr', foreign_keys='plr.id_plr')
+    id_plr = ForeignKey('plr.id_plr')
     ref = Column('ref_pld', VARCHAR(6))
     name = Column('nom_pld', VARCHAR(50))
 

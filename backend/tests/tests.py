@@ -6,16 +6,15 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 from backend import app, Base, engine, Session
-from backend.tests.data.entities import actions_test
+from backend.tests.data.entities import actions_test, platforms_test
 
 
 def execute_all_tests():
-    app.run(debug=True)
     Base.metadata.create_all(engine)
 
     session = Session()
 
-    actions_test.execute_test(session)
+    platforms_test.execute_test(session)
 
 
 if __name__ == '__main__':

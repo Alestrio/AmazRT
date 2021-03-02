@@ -7,6 +7,7 @@
 #  - Malo LEGRAND @HoesMaaad
 from backend import Base, engine, Session
 from backend.data.entities.people.Customer import Customer
+from backend.data.entities.people.Supplier import Supplier
 
 
 def customer_dummydata(asession):
@@ -32,22 +33,39 @@ def customer_test(asession):
     customers = asession.query(Customer).all()
     assert (customers is not None)
     for custom in customers:
-        if custom.ref == 'anotherCustomerRef':
+        if custom.ref == 'anoCustomerRef':
             assert (custom.firstname == 'Bob')
             break
     customer_removedummydata(asession)
 
 
 def supplier_dummydata(asession):
-    pass
+    asession.add(
+        Supplier(6, 'supplierRef', 'Toto Industries', '12 rue de Toto', 'toto', 'totopass'))
+    asession.add(
+        Supplier(7, 'anotherRef', 'Titi Incorporate', '42 avenue titi', 'titi', 'titipass'))
+    asession.add(
+        Supplier(8, 'lastRef', 'Tata Ltd', '69 boulevard tata', 'tata', 'tatapass'))
+    asession.commit()
 
 
 def supplier_removedummydata(asession):
-    pass
+    suppliers = asession.query(Supplier).all()
+    for supp in suppliers:
+        if supp.ref == 'supplierRef' or supp.ref == 'anotherRef' or supp.ref == 'lastRef':
+            asession.delete(supp)
+    asession.commit()
 
 
 def supplier_test(asession):
-    pass
+    supplier_dummydata(asession)
+    suppliers = asession.query(Supplier).all()
+    assert (suppliers is not None)
+    for supp in suppliers:
+        if supp.ref == 'supplierRef':
+            assert (supp.login == 'toto')
+            break
+    supplier_removedummydata(asession)
 
 
 def operator_dummydata(asession):

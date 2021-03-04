@@ -17,6 +17,7 @@ def execute_all_tests():
     platforms_test.execute_test(session)
     people_test.execute_test(session)
     misc_test.execute_test(session)
+    actions_test.execute_test(session)
 
 
 if __name__ == '__main__':

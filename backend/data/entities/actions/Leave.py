@@ -11,9 +11,7 @@
 #
 from datetime import date
 
-from apt_pkg import DATE
-from sqlalchemy import Column
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey, Date
 
 from backend import Base
 
@@ -25,15 +23,15 @@ class Leave(Base):
     The tablename is "deposer"
     """
     __tablename__ = 'deposer'
-    parcel = relationship('colis', foreign_keys='colis.id_colis', primary_key=True)
-    pld = relationship('pld', foreign_keys='pld.id_pld', primary_key=True)
-    provider = relationship('fournisseur', foreign_keys='fournisseur.id_fournisseur', primary_key=True)
-    deposit_date = Column('date_depot', DATE)
+    parcel = Column('id_colis', ForeignKey('colis.id_colis'), primary_key=True)
+    pld = Column('id_pld', ForeignKey('pld.id_pld'), primary_key=True)
+    supplier = Column('id_fournisseur', ForeignKey('fournisseur.id_fournisseur'), primary_key=True)
+    deposit_date = Column('date_depot', Date)
 
-    def __init__(self, parcel: str, provider: str, deposit_date: date):
+    def __init__(self, parcel, pld, supplier, deposit_date: date):
         """Constructor"""
-        super().__init__()
         self.parcel = parcel
-        self.provider = provider
+        self.pld = pld
+        self.supplier = supplier
         self.deposit_date = deposit_date
 

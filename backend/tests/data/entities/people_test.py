@@ -7,6 +7,7 @@
 #  - Malo LEGRAND @HoesMaaad
 from backend import Base, engine, Session
 from backend.data.entities.people.Customer import Customer
+from backend.data.entities.people.Operator import Operator
 from backend.data.entities.people.Supplier import Supplier
 
 
@@ -69,15 +70,32 @@ def supplier_test(asession):
 
 
 def operator_dummydata(asession):
-    pass
+    asession.add(
+        Operator(6, 'Elica', 'Alice', 'toto', 'totopass'))
+    asession.add(
+        Operator(7, 'Bob', 'Bob', 'titi', 'titipass'))
+    asession.add(
+        Operator(8, 'Cirdec', 'Cedric', 'tata', 'tatapass'))
+    asession.commit()
 
 
 def operator_removedummydata(asession):
-    pass
+    operators = asession.query(Operator).all()
+    for op in operators:
+        if op.firstname == 'Alice' or op.firstname == 'Bob' or op.firstname == 'Cedric':
+            asession.delete(op)
+    asession.commit()
 
 
 def operator_test(asession):
-    pass
+    operator_dummydata(asession)
+    operators = asession.query(Operator).all()
+    assert (operators is not None)
+    for op in operators:
+        if op.firstname == 'Alice':
+            assert (op.login == 'toto')
+            break
+    supplier_removedummydata(asession)
 
 
 def execute_test(asession):

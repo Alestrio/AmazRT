@@ -16,8 +16,8 @@ from backend import Base
 class Send(Base):
     """
     @Entity
-    This is the entity class responsible for the last step of the parcel pull.
-    The tablename is "retirer"
+    This is the entity class responsible for the middle step of the parcel trip.
+    The tablename is "envoyer"
     """
     __tablename__ = 'envoyer'
     parcel = Column('id_colis', ForeignKey('colis.id_colis'), primary_key=True)

@@ -42,7 +42,7 @@ def updateCustomerByID():
     return "!"
 
 @app.route("/operator/delete")
-def deleteByID():
+def deleteOperatorByID():
     return "!"
 
 @app.route("/supplier/all")
@@ -58,6 +58,6 @@ def updateCustomerByID():
     return "!"
 
 @app.route("/supplier/delete")
-def deleteByID():
+def deleteSupplierByID():
     return "!"
 

@@ -29,10 +29,10 @@ dbname = os.getenv("DB_NAME")
 dbname = 'postgres'
 address = f'postgresql://{username}:{password}@{address}:{port}/{dbname}'
 
-try:
-    engine = create_engine(address, isolation_level='AUTOCOMMIT')
-    Session = sessionmaker(bind=engine)
-    session = Session()
-    Base = declarative_base()
-except:
-    print("Database connection problem")
+#try:
+engine = create_engine(address, isolation_level='AUTOCOMMIT')
+Session = sessionmaker(bind=engine)
+session = Session()
+Base = declarative_base()
+#except:
+print("Database connection problem")

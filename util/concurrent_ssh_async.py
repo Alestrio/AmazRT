@@ -6,7 +6,6 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 import asyncssh
-import asyncssh.client as client
 import asyncio
 import sys
 

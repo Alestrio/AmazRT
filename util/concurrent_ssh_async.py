@@ -21,7 +21,7 @@ def define_clients():
 
 
 async def run_client(host, command):
-    async with asyncssh.connect(host, username='root', password='iutchalons') as conn:
+    async with asyncssh.connect(host, username='root', password='iutchalons', known_hosts=None) as conn:
         return await conn.run(command)
 
 

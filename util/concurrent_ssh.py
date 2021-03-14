@@ -5,7 +5,6 @@
 #  - Meryem KAYA @MeryemKy
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
-import logging
 
 import paramiko
 import paramiko.client as client
@@ -39,14 +38,12 @@ commands = {
 
 
 def execute_command(command: str):
-    final_result = ''
     i = 1
     for conn in connections:
         result = conn.exec_command(command)
         stdin, stdout, stderr = result
-        final_result += f'{i}>{stderr.readlines()}{stdout.readlines()}\n'
+        print(f'{i}>{stderr.readlines()}{stdout.readlines()}')
         i += 1
-    return final_result
 
 
 def mainloop():
@@ -56,8 +53,7 @@ def mainloop():
         if command in commands:
             commands[command]()
         else:
-            results = execute_command(command)
-            print(results)
+            execute_command(command)
 
 
 def main():

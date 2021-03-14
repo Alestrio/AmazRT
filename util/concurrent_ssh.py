@@ -26,8 +26,8 @@ def define_clients():
         for addr in addresses:
             cli = client.SSHClient()
             cli.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            #cli.load_system_host_keys()
-            #print(addr)
+            # cli.load_system_host_keys()
+            # print(addr)
             cli.connect(hostname=addr, username='root', password='iutchalons')
             connections.append(cli)
 
@@ -43,7 +43,9 @@ def execute_command(command: str):
     i = 1
     for conn in connections:
         result = conn.exec_command(command)
-        final_result += f'{i}>{result[1].read()}\n'
+        stdin, stdout, stderr = result
+        final_result += f'{i}>{stderr.readlines()}{stdout.readlines()}\n'
+        i += 1
     return final_result
 
 

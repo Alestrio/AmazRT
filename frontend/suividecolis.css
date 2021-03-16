@@ -4,7 +4,7 @@
     padding: 0;
     box-sizing: border-box; 
     text-align: center;
-    font-size: medium;
+    font-size: large;
 }
 
 header{
@@ -108,4 +108,14 @@ footer p{
     width: 1rem!important;
     margin-left: 0em;
     margin-top: 1em;
+}
+
+form{
+    border: 2px solid black;
+    width: 30rem;
+    margin: 1em auto;
+    padding: 1em  1em;
+}
+form button{
+    margin: 0.5em;
 }

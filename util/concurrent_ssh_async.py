@@ -37,7 +37,10 @@ async def execute_command(command: str):
     tasks = (run_client(host, command) for host in hosts)
     results = await asyncio.gather(*tasks, return_exceptions=True)
     for i, result in enumerate(results, 1):
-        print(f'{i}>{result.stderr}{result.stdout}')
+        try:
+            print(f'{i}>{result.stderr}{result.stdout}')
+        except Exception:
+            pass
 
 
 def mainloop():

@@ -6,12 +6,3 @@
 #  - Alexis LEBEL @Alestrio
 #  - Malo LEGRAND @HoesMaaad
 
-from backend import app, Base, engine, Session
-
-if __name__ == "__main__":
-    app.run(debug=True)
-    Base.metadata.create_all(engine)
-
-    print('hello')
-
-    session = Session()

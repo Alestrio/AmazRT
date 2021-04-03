@@ -26,6 +26,7 @@ password = os.getenv("DB_PW")
 address = os.getenv("DB_URL")
 port = os.getenv("DB_PORT")
 dbname = os.getenv("DB_NAME")
+dbname = 'postgres'
 address = f'postgresql://{username}:{password}@{address}:{port}/{dbname}'
 
 try:

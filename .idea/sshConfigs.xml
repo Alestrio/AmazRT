@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig authType="PASSWORD" host="10.59.63.62" id="a00f9078-9a0a-43de-b592-93fd242183d4" localPort="25563" port="22" nameFormat="DESCRIPTIVE" username="postgres" />
-    </configs>
-  </component>
-</project>

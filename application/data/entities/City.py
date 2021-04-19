@@ -9,6 +9,12 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
+#  AmazRT  -  Parcel Management System
+#  First semester Technical Degree project
+#
+#  AmazRT  -  Parcel Management System
+#  First semester Technical Degree project
+#
 from sqlalchemy import Column, Integer, VARCHAR, CHAR, Numeric, ForeignKey
 
 from application import Base

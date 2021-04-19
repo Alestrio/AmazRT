@@ -1,3 +1,23 @@
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
 /*==============================================================*/
 /* Nom de SGBD :  PostgreSQL 8                                  */
 /* Date de cr�ation :  19/02/2021 20:42:34                      */

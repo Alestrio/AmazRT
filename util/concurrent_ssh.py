@@ -1,14 +1,21 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
-#  Copyright  (c) 2021 - 2022
-#  - Meryem KAYA @MeryemKy
-#  - Alexis LEBEL @Alestrio
-#  - Malo LEGRAND @HoesMaaad
+#    Copyright  (c) 2021 - 2022
+#   - Meryem KAYA @MeryemKy
+#   - Alexis LEBEL @Alestrio
+#   - Malo LEGRAND @HoesMaaad
 
+#  AmazRT  -  Parcel Management System
+#  First semester Technical Degree project
+#
+import sys
+
+#  AmazRT  -  Parcel Management System
+#  First semester Technical Degree project
+#
 import paramiko
 import paramiko.client as client
-import sys
 
 connections = []
 

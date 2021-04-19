@@ -1,4 +1,14 @@
-COPY pld(id_pld, id_plr, ref_pld, nom_pld) FROM stdin;
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
+COPY pld (id_pld, id_plr, ref_pld, nom_pld) FROM stdin;
 1	16	pld37	Ain
 2	10	pld91	Aisne
 3	16	pld38	Allier

@@ -9,9 +9,6 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from application import Base, engine, Session  # import des composants base de données
 from application.data.entities.people.Customer import Customer  # Import de la classe client
 from application.data.entities.people.Operator import Operator  # import de la classe opérateur

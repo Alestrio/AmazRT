@@ -9,7 +9,6 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
-# from application import app, Base, engine, Session
 from application import app
 
 if __name__ == "__main__":

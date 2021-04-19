@@ -1,4 +1,14 @@
-COPY plr(id_plr, ref_plr, nom_plr) FROM stdin;
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
+COPY plr (id_plr, ref_plr, nom_plr) FROM stdin;
 1	plr91	Guadeloupe
 2	plr92	Martinique
 3	plr93	Guyane

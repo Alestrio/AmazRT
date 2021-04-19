@@ -108,3 +108,7 @@ util/addresses.txt
 util/adresses.txt
 
 .idea/
+
+venv/*
+/venv/
+/venv/bin

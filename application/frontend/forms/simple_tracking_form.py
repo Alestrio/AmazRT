@@ -9,11 +9,11 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
-from flask import render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField
+from wtforms.validators import InputRequired
 
-from application import app
 
-
-@app.route('/products_services')
-def products_services():
-    return render_template('t_products_services.html')
+class SimpleTrackingForm(FlaskForm):
+    tracking_number_field = StringField('Ex : EF000238FR', [InputRequired()])
+    submit = SubmitField('Envoyer !')

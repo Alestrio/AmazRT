@@ -9,11 +9,3 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
-from flask import render_template
-
-from application import app
-
-
-@app.route('/products_services')
-def products_services():
-    return render_template('t_products_services.html')

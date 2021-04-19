@@ -1,0 +1,46 @@
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?d2slya');
+  src:  url('fonts/icomoon.eot?d2slya#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?d2slya') format('truetype'),
+    url('fonts/icomoon.woff?d2slya') format('woff'),
+    url('fonts/icomoon.svg?d2slya#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-home:before {
+  content: "\e900";
+}
+.icon-user:before {
+  content: "\e971";
+}
+.icon-key:before {
+  content: "\e98d";
+}

@@ -1,0 +1,21 @@
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
+
+*{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    width: 100%;
+    min-height: 100vh;
+}

@@ -1,0 +1,98 @@
+<!--
+  ~ AmazRT  -  Parcel Management System
+  ~ First semester Technical Degree project
+  ~
+  ~   Copyright  (c) 2021 - 2022
+  ~  - Meryem KAYA @MeryemKy
+  ~  - Alexis LEBEL @Alestrio
+  ~  - Malo LEGRAND @HoesMaaad
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AmazRT: Plateforme logistique</title>
+    <link href="../../static/css/AcceuilLogin.css" rel="stylesheet">
+    <link href="../../static/css/tailwind.css" rel="stylesheet">
+    <link href="../../static/css/fonts/icomoon/style.css" rel="stylesheet"/>
+    <meta name="Description" content="AmazRT">
+</head>
+<body>
+<header>
+    <div class="w-full h-32 flex flex-row items-center justify-center space-x-32 px-10">
+        <img alt="logo" class="w-1/4 object-cover" src="../../static/img/logo_large.png">
+        <form action="" method="post" class="w-3/4 bg-yellow-600 rounded-full p-3">
+            <div class="flex flex-row justify-end items-end space-x-10">
+                <div class="">
+                    <label class="">
+                        <span class="icon-user text-white text-2xl"></span>
+                        <input type="text" class="rounded-full outline-none py-1 px-2" placeholder="Enter username"
+                               name="uname" required>
+                    </label>
+                </div>
+
+                <div class="">
+                    <label class="">
+                        <span class="icon-key text-white text-2xl"></span>
+                        <input type="password" class="rounded-full outline-none py-1 px-2" placeholder="Enter password"
+                               name="upassword" required>
+                    </label>
+                </div>
+
+                <button class="rounded-full border-2 border-white bg-yellow-500 py-1 px-2 text-white w-28 text-center"
+                        type="submit">Login
+                </button>
+                <br>
+            </div>
+            <div class="flex flex-row justify-end items-end space-x-3 mt-2">
+                <a href="#" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Forgot
+                    password?</a>
+                <a href="#" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Create
+                    account</a>
+            </div>
+        </form>
+    </div>
+    <nav class="bg-yellow-600">
+        <div class="max-w-7xl mx-auto px-8">
+            <div class="relative flex items-center justify-between h-16">
+                <div class="flex-1 flex items-center justify-center">
+                    <div class="flex space-x-4">
+                        <a href="/"
+                           class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">Accueil</a>
+                        <a href="/products_services"
+                           class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">Produits et
+                            Services</a>
+                        <a href="/tracking_expedition"
+                           class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">Suivi
+                            Expédition</a>
+                        <label class="">
+                            <input type="search" class="rounded-full px-2 py-1 outline-none" placeholder="Rechercher"/>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+</header>
+{% block content %}{% endblock %}
+<footer>
+    <div class="flex flex-row justify-center items-center px-20 mt-32 h-64 space-x-32">
+        <div class="flex flex-col justify-center items-center space-y-2">
+            <a href="#">Responsabilités sociales</a>
+            <a href="#">Protection des données personnelles</a>
+            <a href="#">Ressources humaines</a>
+            <a href="#">A propos de nous</a>
+            <a href="#">Contactez-nous</a>
+            <a href="#">Formulaire de suggestion-réclamation</a>
+        </div>
+        <div class="flex flex-col justify-center items-center">
+            <p class="">amazrt.service@gmail.com</p>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

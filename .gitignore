@@ -112,3 +112,15 @@ util/adresses.txt
 venv/*
 /venv/
 /venv/bin
+
+application/data/__pycache__/
+
+application/__pycache__/
+
+application/data/entities/__pycache__/
+
+application/routes/__pycache__/
+
+application/routes/frontend/__pycache__/
+
+application/util/__pycache__/

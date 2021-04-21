@@ -1,14 +1,10 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
-#
 #    Copyright  (c) 2021 - 2022
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 isDebug = True
 USER_ROUTE = "/api/users/"
 test_motd = """ _______                   ______ _______               _______ _______  ______ _______   

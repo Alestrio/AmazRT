@@ -124,3 +124,5 @@ application/routes/__pycache__/
 application/routes/frontend/__pycache__/
 
 application/util/__pycache__/
+
+application/frontend/forms/__pycache__/

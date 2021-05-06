@@ -126,3 +126,14 @@ application/routes/frontend/__pycache__/
 application/util/__pycache__/
 
 application/frontend/forms/__pycache__/
+
+
+application/data/entities/platforms/__pycache__/
+
+application/tests/data/entities/__pycache__/
+
+application/data/entities/people/__pycache__/
+
+application/data/entities/actions/__pycache__/
+
+application/tests/__pycache__/

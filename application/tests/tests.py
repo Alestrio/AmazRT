@@ -5,7 +5,7 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-from application import Base, engine, Session
+from application.data.base import Base, engine, Session
 from application.tests.data.entities import actions_test, platforms_test, misc_test, people_test
 from application.util.config import test_motd
 

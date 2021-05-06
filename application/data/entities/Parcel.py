@@ -4,22 +4,9 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from sqlalchemy import Column, Integer, VARCHAR
 
-from application import Base
+from application.data.base import Base
 
 
 class Parcel(Base):

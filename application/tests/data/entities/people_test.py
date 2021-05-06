@@ -4,14 +4,7 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-from application import Base, engine, Session
+from application.data.base import Base, engine, Session
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier

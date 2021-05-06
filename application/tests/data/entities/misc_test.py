@@ -4,7 +4,7 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-from application import Base, engine, Session
+from application.data.base import Base, engine, Session
 from application.data.entities.City import City
 from application.data.entities.Parcel import Parcel
 

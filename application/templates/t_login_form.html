@@ -1,0 +1,27 @@
+<form action="/login" method="post" class="w-3/4 bg-yellow-600 rounded-full p-3">
+    {{ login_form.csrf_token }}
+    <div class="flex flex-row justify-end items-end space-x-10">
+        <div class="">
+            <label class="">
+                <span class="icon-user text-white text-2xl"></span>
+                {{ login_form.uname_field(class_='rounded-full outline-none py-1 px-2') }}
+            </label>
+        </div>
+
+        <div class="">
+            <label class="">
+                <span class="icon-key text-white text-2xl"></span>
+                {{ login_form.password_field(class_='rounded-full outline-none py-1 px-2') }}
+            </label>
+        </div>
+
+        {{ login_form.submit(class_='rounded-full border-2 border-white bg-yellow-500 py-1 px-2 text-white w-28 text-center') }}
+        <br>
+    </div>
+    <div class="flex flex-row justify-end items-end space-x-3 mt-2">
+        <a href="#" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Forgot
+            password?</a>
+        <a href="#" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Create
+            account</a>
+    </div>
+</form>

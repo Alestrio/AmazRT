@@ -4,22 +4,10 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from application import Base
+from application.data.base import Base
 
 
 class Customer(Base):
@@ -36,7 +24,7 @@ class Customer(Base):
     firstname = Column('prenom_client', VARCHAR(30))
     address = Column('adresse_client', VARCHAR(100))
     login = Column('login_client', VARCHAR(15))
-    password = Column("mdp_client", VARCHAR(15))
+    password = Column("mdp_client", VARCHAR(255))
 
     def __init__(self,
                  id_city, ref, lastname, firstname, address, login, password):
@@ -49,3 +37,8 @@ class Customer(Base):
         self.login = login
         self.password = password
 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)

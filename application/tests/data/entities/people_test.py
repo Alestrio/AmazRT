@@ -94,7 +94,7 @@ def operator_test(asession):
         if op.firstname == 'Alice':
             assert (op.login == 'toto')
             break
-    supplier_removedummydata(asession)
+    operator_removedummydata(asession)
 
 
 def execute_test(asession):

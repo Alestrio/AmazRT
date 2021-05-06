@@ -11,6 +11,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from application.data.base import Base
 
 
+def hash_password(password):
+    return generate_password_hash(password)
+
+
 class Operator(Base):
     """
     @Entity
@@ -34,8 +38,8 @@ class Operator(Base):
         self.login = login
         self.password = password
 
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+    def hash_password(self, password):
+        self.password = generate_password_hash(self.password)
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)

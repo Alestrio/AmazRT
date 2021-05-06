@@ -4,18 +4,12 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from flask import render_template
 
 from application import app
+from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 
 @app.route('/tracking_expedition')
 def tracking_expedition():
-    return render_template('t_tracking_expedition.html')
+    return render_template('t_tracking_expedition.html', login_form=SimpleLoginForm())

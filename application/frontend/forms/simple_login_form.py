@@ -10,6 +10,6 @@ from wtforms.validators import InputRequired
 
 
 class SimpleLoginForm(FlaskForm):
-    email_field = StringField('email', [InputRequired()])
-    password_field = PasswordField('Mot de passe', [InputRequired()])
+    uname_field = StringField('uname', [InputRequired()], render_kw={"placeholder": "Enter Username"})
+    password_field = PasswordField('Mot de passe', [InputRequired()], render_kw={"placeholder": "Enter Password"})
     submit = SubmitField('Se connecter !')

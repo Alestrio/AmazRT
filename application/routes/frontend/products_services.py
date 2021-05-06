@@ -4,18 +4,12 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from flask import render_template
 
 from application import app
+from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 
 @app.route('/products_services')
 def products_services():
-    return render_template('t_products_services.html')
+    return render_template('t_products_services.html', login_form=SimpleLoginForm())

@@ -69,12 +69,15 @@ def supplier_test(asession):
 
 
 def operator_dummydata(asession):
-    asession.add(
-        Operator(6, 'Elica', 'Alice', 'toto', 'totopass'))
-    asession.add(
-        Operator(7, 'Bob', 'Bob', 'titi', 'titipass'))
-    asession.add(
-        Operator(8, 'Cirdec', 'Cedric', 'tata', 'tatapass'))
+    op = Operator(6, 'Elica', 'Alice', 'toto', 'totopass')
+    op.hash_password()
+    asession.add(op)
+    op = Operator(7, 'Bob', 'Bob', 'titi', 'titipass')
+    op.hash_password()
+    asession.add(op)
+    op = Operator(8, 'Cirdec', 'Cedric', 'tata', 'tatapass')
+    op.hash_password()
+    asession.add(op)
     asession.commit()
 
 

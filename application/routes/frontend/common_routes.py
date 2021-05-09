@@ -4,8 +4,10 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
+from datetime import timedelta
+
 from flask import request, flash
-from flask_login import current_user, login_user, LoginManager
+from flask_login import current_user, login_user
 from werkzeug.utils import redirect
 
 from application import app
@@ -13,8 +15,6 @@ from application.data.base import session
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier
-
-login = LoginManager()
 
 
 def create_customer(req):
@@ -29,31 +29,18 @@ def create_operator(req):
     pass
 
 
-@login.user_loader
-def load_user(user_ref):
-    user = {
-        'as_customer': session.query(Customer).filter_by(login=login).first(),
-        'as_operator': session.query(Operator).filter_by(login=login).first(),
-        'as_supplier': session.query(Supplier).filter_by(login=login).first()
-    }
-    for i in user:
-        if user[i] is not None:
-            return user[i]
-    return None
-
-
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        login = request.form['uname_field']
+        u_login = request.form['uname_field']
         user = {
-            'as_customer': session.query(Customer).filter_by(login=login).first(),
-            'as_operator': session.query(Operator).filter_by(login=login).first(),
-            'as_supplier': session.query(Supplier).filter_by(login=login).first()
+            'as_customer': session.query(Customer).filter_by(login=u_login).first(),
+            'as_operator': session.query(Operator).filter_by(login=u_login).first(),
+            'as_supplier': session.query(Supplier).filter_by(login=u_login).first()
         }
         for i in user:
             if user[i] is not None and user[i].check_password(request.form['password_field']):
-                login_user(user[i])
+                login_user(user[i], duration=timedelta(6300))
     return redirect('/')
 
 

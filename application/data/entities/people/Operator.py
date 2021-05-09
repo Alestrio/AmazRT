@@ -4,7 +4,7 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
+from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -15,7 +15,7 @@ def hash_password(password):
     return generate_password_hash(password)
 
 
-class Operator(Base):
+class Operator(Base, UserMixin):
     """
     @Entity
     This is the entity class responsible for operator data management.
@@ -38,8 +38,11 @@ class Operator(Base):
         self.login = login
         self.password = password
 
-    def hash_password(self, password):
+    def hash_password(self):
         self.password = generate_password_hash(self.password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password, password)
+
+    def get_id(self):
+        return self.login

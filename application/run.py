@@ -16,11 +16,7 @@ if __name__ == "__main__":
     SECRET_KEY = os.urandom(32)
     app.config['SECRET_KEY'] = SECRET_KEY
     app.config['WTF_CSRF_SECRET_KEY'] = SECRET_KEY
+    session = Session()
     csrf.init_app(app)
     app.run(debug=True)
     Base.metadata.create_all(engine)
-
-    print('hello')
-
-    session = Session()
-    app.config['SESSION_SQLALCHEMY'] = session

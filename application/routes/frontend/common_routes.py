@@ -4,7 +4,6 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-from datetime import timedelta
 
 from flask import request, flash
 from flask_login import current_user, login_user
@@ -40,7 +39,7 @@ def login():
         }
         for i in user:
             if user[i] is not None and user[i].check_password(request.form['password_field']):
-                login_user(user[i], duration=timedelta(6300))
+                login_user(user[i])
     return redirect('/')
 
 

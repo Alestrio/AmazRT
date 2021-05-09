@@ -9,6 +9,7 @@ import os
 from flask_wtf import CSRFProtect
 
 from application import app
+from application.data.base import Base, engine, Session
 
 if __name__ == "__main__":
     csrf = CSRFProtect(app)
@@ -17,8 +18,9 @@ if __name__ == "__main__":
     app.config['WTF_CSRF_SECRET_KEY'] = SECRET_KEY
     csrf.init_app(app)
     app.run(debug=True)
-    #    Base.metadata.create_all(engine)
+    Base.metadata.create_all(engine)
 
     print('hello')
 
-#    session = Session()
+    session = Session()
+    app.config['SESSION_SQLALCHEMY'] = session

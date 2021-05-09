@@ -4,13 +4,14 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
+from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from application.data.base import Base
 
 
-class Supplier(Base):
+class Supplier(Base, UserMixin):
     """
     @Entity
     This is the entity class responsible for supplier data management.
@@ -35,8 +36,11 @@ class Supplier(Base):
         self.login = login
         self.password = password
 
-    def hash_password(self, password):
+    def hash_password(self):
         self.password = generate_password_hash(self.password)
 
     def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
+        return check_password_hash(self.password, password)
+
+    def get_id(self):
+        return self.login

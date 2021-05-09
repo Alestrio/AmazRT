@@ -94,6 +94,7 @@ Those tests currently supports database operations, by will soon support web ope
 ## Dependencies :
 - Flask : `# pip3 install flask`
 - Flask-wtforms : `# pip3 install flask-wtf`
+- Flask-login : `# pip3 install flask-login`
 - Psycopg2 : `# pip3 install psycopg2-binary`
 - SQLAlchemy : `# pip3 install sqlalchemy`
 

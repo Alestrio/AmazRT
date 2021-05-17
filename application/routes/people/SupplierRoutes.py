@@ -11,7 +11,7 @@
 #  AmazRT  -  Parcel Management System
 #  First semester Technical Degree project
 #
-from flask import jsonify
+from flask import jsonify, request
 from werkzeug.exceptions import abort
 
 from application import app
@@ -27,26 +27,30 @@ def getSuppliers():
 
 @app.route("/api/v1/supplier/<int: id_sup>", methods=['GET'])
 def getSupplierByID(id_sup: int):
-    suppliers = session.query(Supplier).all()
-    for sup in suppliers:
-        if sup.id_supplier == id_sup:
-            return jsonify(sup)
+    supplier = session.query(Supplier).filter_by(id_supplier=id_sup).first()
+    if supplier is not None:
+        return jsonify(supplier)
     abort(404)
 
 
 @app.route("/api/v1/supplier/<int: id_sup>", methods=['PUT'])
 def updateSupplierByID(id_sup: int):
-    suppliers = session.query(Supplier).update()
-    for sup in suppliers:
-        if sup.id_supplier == id_sup:
-            return jsonify(sup) #TODO
+    supplier = session.query(Supplier).filter_by(id_supplier=id_sup).first()
+    if supplier is not None:
+        return jsonify(supplier)
     abort(404)
 
 
 @app.route("/api/v1/supplier/<int: id_sup>", methods=['DELETE'])
 def deleteSupplierByID(id_sup: int):
-    suppliers = session.query(Supplier).delete()
-    for sup in suppliers:
-        if sup.id_supplier == id_sup:
-            return jsonify(sup) #TODO
+    supplier = session.query(Supplier).filter_by(id_supplier=id_sup).first()
+    new_data = request.get_json()
+    if supplier is not None:
+        supplier.id_city = new_data['id_city']
+        supplier.ref = new_data['ref']
+        supplier.name = new_data['name']
+        supplier.address = new_data['address']
+        supplier.login = new_data['login']
+        supplier.password = new_data['password']
+        session.query(Supplier).add()
     abort(404)

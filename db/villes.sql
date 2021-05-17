@@ -1,4 +1,13 @@
-COPY ville(id_ville, id_pld, nom_ville, cp, insee_code, gps_lat, gps_lng) FROM stdin;
+/*
+ * AmazRT  -  Parcel Management System
+ * First semester Technical Degree project
+ *   Copyright  (c) 2021 - 2022
+ *  - Meryem KAYA @MeryemKy
+ *  - Alexis LEBEL @Alestrio
+ *  - Malo LEGRAND @HoesMaaad
+ */
+
+COPY ville (id_ville, id_pld, nom_ville, cp, insee_code, gps_lat, gps_lng) FROM stdin;
 1	1	L\'Abergement-Clémenciat	1400	1001	46.156781992032	4.9246992031872
 2	1	L\'Abergement-de-Varey	1640	1002	46.010085625	5.4287591666667
 3	1	Ambérieu-en-Bugey	1500	1004	45.958409392265	5.3759920441989

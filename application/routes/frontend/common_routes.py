@@ -5,7 +5,7 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-from flask import request, flash
+from flask import request, flash, render_template
 from flask_login import current_user, login_user
 from werkzeug.utils import redirect
 
@@ -14,6 +14,8 @@ from application.data.base import session
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier
+from application.frontend.forms.register_form import RegisterForm
+from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 
 def create_customer(req):
@@ -66,3 +68,6 @@ def register():
             'supplier': create_supplier
         }
         user_creator[user_type](request)
+
+    else:
+        return render_template('t_register.html', login_form=SimpleLoginForm(), register_form=RegisterForm())

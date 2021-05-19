@@ -109,15 +109,44 @@ def create_supplier(req):
         session.commit()
 
 
-def create_operator(req):
+def sanity_check_operator_request(req):
     firstname_field = req.form['firstname_field']
     lastname_field = req.form['lastname_field']
     login_field = req.form['login_field']
     password_field = req.form['password_field']
     confirm_password_field = req.form['confirm_password_field']
+    id_pld_field = req.form['id_pld_field']
 
-    if password_field == confirm_password_field:
-        pass
+    if (firstname_field is not None and
+            lastname_field is not None and
+            login_field is not None and
+            password_field is not None and password_field == confirm_password_field and
+            id_pld_field is not None):
+        return {
+            "id_pld": id_pld_field,
+            "firstname": firstname_field,
+            "lastname": lastname_field,
+            "login": login_field,
+            "password": password_field,
+        }
+    abort(400)
+
+
+def create_operator(req):
+    data = sanity_check_operator_request(req)
+
+    # Generates random reference :
+    rand_ref = ''
+    for i in range(10):
+        rand_ref += random.choice(string.ascii_letters)
+    rand_ref = rand_ref.upper()
+
+    if data is not None:
+        operator = Operator(data['id_pld'], data['lastname'], data['firstname'],
+                            data['login'], data['password'], rand_ref)
+        operator.hash_password()
+        session.add(operator)
+        session.commit()
 
 
 @app.route('/login', methods=['POST', 'GET'])

@@ -41,11 +41,11 @@ def customer_test(asession):
 
 def supplier_dummydata(asession):
     asession.add(
-        Supplier(6, 'supplierRef', 'Toto Industries', '12 rue de Toto', 'toto', 'totopass'))
+        Supplier(6, 'supplierRef', 'Toto Industries', 'toto', 'totopass'))
     asession.add(
-        Supplier(7, 'anotherRef', 'Titi Incorporate', '42 avenue titi', 'titi', 'titipass'))
+        Supplier(7, 'anotherRef', 'Titi Incorporate', 'titi', 'titipass'))
     asession.add(
-        Supplier(8, 'lastRef', 'Tata Ltd', '69 boulevard tata', 'tata', 'tatapass'))
+        Supplier(8, 'lastRef', 'Tata Ltd', 'tata', 'tatapass'))
     asession.commit()
 
 
@@ -69,12 +69,15 @@ def supplier_test(asession):
 
 
 def operator_dummydata(asession):
-    asession.add(
-        Operator(6, 'Elica', 'Alice', 'toto', 'totopass'))
-    asession.add(
-        Operator(7, 'Bob', 'Bob', 'titi', 'titipass'))
-    asession.add(
-        Operator(8, 'Cirdec', 'Cedric', 'tata', 'tatapass'))
+    op = Operator(6, 'Elica', 'Alice', 'toto', 'totopass')
+    op.hash_password()
+    asession.add(op)
+    op = Operator(7, 'Bob', 'Bob', 'titi', 'titipass')
+    op.hash_password()
+    asession.add(op)
+    op = Operator(8, 'Cirdec', 'Cedric', 'tata', 'tatapass')
+    op.hash_password()
+    asession.add(op)
     asession.commit()
 
 

@@ -5,19 +5,6 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -37,7 +24,7 @@ dbname = 'postgres'  # os.getenv("DB_NAME")
 address = f'postgresql://{username}:{password}@{address}:{port}/{dbname}'
 
 try:
-    engine = create_engine(address, isolation_level='AUTOCOMMIT')
+    engine = create_engine(address, isolation_level='AUTOCOMMIT', pool_pre_ping=True)
     Session = sessionmaker(bind=engine)
     session = Session()
     Base = declarative_base()

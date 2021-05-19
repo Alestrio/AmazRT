@@ -42,9 +42,13 @@ Those files are the data models used by the programm :
 |[Operator.py](application/data/entities/people/Operator.py)|This is the data model for an operator.
 |[Supplier.py](application/data/entities/people/Supplier.py)|This is the data model for a supplier.
 |[Pld.py](application/data/entities/platforms/Pld.py)|This is the data model for a PLD.
-|[Plr.py](application/data/entities/platforms/Plr.py)|This is the data model for a PLr.
+|[Plr.py](application/data/entities/platforms/Plr.py)|This is the data model for a PLR.
+
+People entities (such as Operator, Supplier and Customer) are subclasses of the UserMixin class. UserMixin implements
+attributes and methods related to user management, login and register.
 
 ### Routes:
+
 Those files are flask routes
 
 __API routes :__
@@ -59,14 +63,14 @@ __API routes :__
 |[PldRoutes.py](application/routes/platforms/PldRoutes.py)|This file contains the routes related to PLD management
 |[PlrRoutes.py](application/routes/platforms/PlrRoutes.py)|This file contains the routes related to PLR management
 
-
 __Frontend routes :__
 
 |File name|Use case
 |---|---
 |[index.py](application/routes/frontend/index.py)|This file contains the routes related to the index page.
 |[products_services.py](application/routes/frontend/products_services.py)|This file contains the routes related to the products and services page.
-|[tracking_expedition.py](application/routes/frontend/[tracking_expedition.py)|This file contains the routes related to the index page.
+|[tracking_expedition.py](application/routes/frontend/tracking_expedition.py)|This file contains the routes related to the index page.
+|[common_routes.py](application/routes/frontend/common_routes.py)|This file contains the routes related to login, register, and data processing logic.
 
 ### Static :
 
@@ -90,6 +94,7 @@ Those tests currently supports database operations, by will soon support web ope
 ## Dependencies :
 - Flask : `# pip3 install flask`
 - Flask-wtforms : `# pip3 install flask-wtf`
+- Flask-login : `# pip3 install flask-login`
 - Psycopg2 : `# pip3 install psycopg2-binary`
 - SQLAlchemy : `# pip3 install sqlalchemy`
 

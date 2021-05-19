@@ -24,11 +24,11 @@
 <header>
     <div class="w-full h-32 flex flex-row items-center justify-center space-x-32 px-10">
         <img alt="logo" class="w-1/4 object-cover" src="../../static/img/logo_large.png">
-        {% if username == None %}
+        {% if not current_user.is_authenticated %}
             {% include 't_login_form.html' %}
         {% else %}
             <p class="w-1/2 bg-yellow-600 rounded-full p-3 font-black font-bold text-center text-xl">
-                Bonjour {{ username }} !</p>
+                Bonjour {{ current_user.firstname }} {{ current_user.name }} !</p>
         {% endif %}
     </div>
     <nav class="bg-yellow-600">
@@ -55,7 +55,7 @@
 
 </header>
 {% block content %}{% endblock %}
-<footer>
+<footer class="object-bottom">
     <div class="flex flex-row justify-center items-center px-20 mt-32 h-64 space-x-32">
         <div class="flex flex-col justify-center items-center space-y-2">
             <a href="#">Responsabilités sociales</a>

@@ -1,5 +1,5 @@
 <form action="/login" method="post" class="w-3/4 bg-yellow-600 rounded-full p-3">
-    {{ login_form.csrf_token }}
+    {{ login_form.hidden_tag() }}
     <div class="flex flex-row justify-end items-end space-x-10">
         <div class="">
             <label class="">
@@ -21,7 +21,7 @@
     <div class="flex flex-row justify-end items-end space-x-3 mt-2">
         <a href="#" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Forgot
             password?</a>
-        <a href="#" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Create
+        <a href="/register" class="text-white cursor-pointer hover:text-gray-300 transition duration-150 ease-in-out">Create
             account</a>
     </div>
 </form>

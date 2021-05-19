@@ -22,19 +22,19 @@ class Supplier(Base, UserMixin):
     id_city = Column('id_ville', Integer, ForeignKey('ville.id_ville'))
     ref = Column('ref_fournisseur', VARCHAR(15))
     name = Column('nom_fournisseur', VARCHAR(30))
-    address = Column('adresse_fournisseur', VARCHAR(100))
     login = Column('login_fournisseur', VARCHAR(15))
     password = Column("mdp_fournisseur", VARCHAR(255))
+    activity = Column("activite", VARCHAR(50))
 
     def __init__(self,
-                 id_city, ref, name, address, login, password):
+                 id_city, ref, name, login, password, activity):
         """Constructor"""
         self.id_city = id_city
         self.ref = ref
         self.name = name
-        self.address = address
         self.login = login
         self.password = password
+        self.activity = activity
 
     def hash_password(self):
         self.password = generate_password_hash(self.password)

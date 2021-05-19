@@ -64,7 +64,7 @@ def create_customer(req):
         session.commit()
 
 
-def create_supplier(req):
+def sanity_check_supplier_request(req):
     firstname_field = req.form['firstname_field']
     lastname_field = req.form['lastname_field']
     login_field = req.form['login_field']
@@ -73,8 +73,40 @@ def create_supplier(req):
     address_field = req.form['address_field']
     activity_field = req.form['activity_field']
 
-    if password_field == confirm_password_field:
-        pass
+    if (firstname_field is not None and
+            login_field is not None and
+            password_field is not None and password_field == confirm_password_field and
+            address_field is not None and
+            activity_field is not None):
+        city_id = session.query(City).filter_by(name=address_field).first()
+        city_id = city_id.id_city
+        if city_id is not None:
+            return {
+                "firstname": firstname_field,
+                "lastname": lastname_field,
+                "login": login_field,
+                "password": password_field,
+                "city_id": city_id,
+                "activity": activity_field
+            }
+    abort(400)
+
+
+def create_supplier(req):
+    data = sanity_check_supplier_request(req)
+
+    # Generates random reference :
+    rand_ref = ''
+    for i in range(10):
+        rand_ref += random.choice(string.ascii_letters)
+    rand_ref = rand_ref.upper()
+
+    if data is not None:
+        supplier = Supplier(data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
+                            data['login'], data['password'], data['activity'])
+        supplier.hash_password()
+        session.add(supplier)
+        session.commit()
 
 
 def create_operator(req):

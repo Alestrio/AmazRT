@@ -9,6 +9,9 @@ from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from application.data.base import Base
+from application.data.entities.platforms.Pld import Pld  # this is needed in order to use the associated foreign key
+
+Pld(1, 1, 'dummy', 'dummy')  # This is needed because PyCharm tries to delete the import (╯°□°）╯︵ ┻━┻
 
 
 def hash_password(password):

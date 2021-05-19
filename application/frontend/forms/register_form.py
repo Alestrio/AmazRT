@@ -33,3 +33,6 @@ class RegisterForm(FlaskForm):
     # Those are supplier-only fields
     activity_field = StringField('activity',
                                  render_kw={"placeholder": "Enter your activity"})
+
+    # Those are operator-only fields
+    id_pld_field = StringField('id_pld', render_kw={"placeholder": "Enter your PLD ID"})

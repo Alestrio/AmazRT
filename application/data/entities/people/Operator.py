@@ -31,12 +31,13 @@ class Operator(Base, UserMixin):
     password = Column('mdp_personnel', VARCHAR(255))
 
     def __init__(self,
-                 id_pld, lastname, firstname, login, password):
-        self.id_pld = id_pld
+                 id_pld, lastname, firstname, login, password, ref):
+        self.id_pld = int(id_pld)
         self.lastname = lastname
         self.firstname = firstname
         self.login = login
         self.password = password
+        self.ref = ref
 
     def hash_password(self):
         self.password = generate_password_hash(self.password)

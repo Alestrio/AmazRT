@@ -28,7 +28,7 @@
             {% include 't_login_form.html' %}
         {% else %}
             <p class="w-1/2 bg-yellow-600 rounded-full p-3 font-black font-bold text-center text-xl">
-                Bonjour {{ current_user.firstname }} !</p>
+                Bonjour {{ current_user.firstname }} {{ current_user.name }} !</p>
         {% endif %}
     </div>
     <nav class="bg-yellow-600">

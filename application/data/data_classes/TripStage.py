@@ -7,6 +7,11 @@
 import datetime
 import enum
 
+from application.data.entities.actions.Leave import Leave
+from application.data.entities.actions.Pull import Pull
+from application.data.entities.actions.Send import Send
+from application.data.entities.actions.Transmit import Transmit
+
 
 class TripStageType(enum.Enum):
     """
@@ -50,7 +55,7 @@ class TripStage:
     reception_date: datetime.date
 
     def __init__(self,
-                 stage_id:int, ts_type: TripStageType, source_type: LocationType, source: str,
+                 stage_id: int, ts_type: TripStageType, source_type: LocationType, source: str,
                  destination_type: LocationType, destination: str, send_date: datetime.date = DEFAULT_DATE,
                  reception_date: datetime.date = DEFAULT_DATE):
         self.stage_id = stage_id
@@ -61,3 +66,41 @@ class TripStage:
         self.destination = destination
         self.send_date = send_date
         self.reception_date = reception_date
+
+
+def from_leave(leave: Leave):
+    stage = TripStage(
+        0, TripStageType.LEAVE, LocationType.SUPPLIER, leave.supplier, LocationType.PLD, leave.pld,
+        reception_date=leave.deposit_date
+    )
+    return stage
+
+
+def from_pull(stage_id, pull: Pull):
+    stage = TripStage(
+        stage_id, TripStageType.PULL, LocationType.PLD, pull.pld, LocationType.CUSTOMER, pull.customer,
+        send_date=pull.pull_date
+    )
+    return stage
+
+
+def from_send(stage_id, send: Send):
+    if send.pld_to_plr:
+        stage = TripStage(
+            stage_id, TripStageType.SEND, LocationType.PLR, send.plr, LocationType.PLD, send.pld, send.send_date,
+            send.reception_date
+        )
+    else:
+        stage = TripStage(
+            stage_id, TripStageType.SEND, LocationType.PLD, send.pld, LocationType.PLR, send.plr, send.send_date,
+            send.reception_date
+        )
+    return stage
+
+
+def from_transmit(stage_id, transmit: Transmit):
+    stage = TripStage(
+        stage_id, TripStageType.TRANSMIT, LocationType.PLR, transmit.plr, LocationType.PLR, transmit.dest_plr,
+        transmit.send_date, transmit.reception_date
+    )
+    return stage

@@ -4,7 +4,7 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-from sqlalchemy import Column, Integer, VARCHAR
+from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 
 from application.data.base import Base
 

@@ -4,7 +4,7 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
-from flask import request, abort
+from flask import request, abort, jsonify
 
 from application import app
 from application.data.base import session
@@ -43,10 +43,19 @@ def track_parcel():
 
     package_trip = [TripStage.from_leave(package_all_actions[TripStageType.LEAVE])]
     j = 1
-    for i in package_all_actions[TripStageType.SEND]:
-        package_trip.append(TripStage.from_send(j, i))
-        j += 1
-    for i in package_all_actions[TripStageType.TRANSMIT]:
-        package_trip.append(TripStage.from_transmit(j, i))
-        j += 1
-        pass
+    if package_all_actions[TripStageType.SEND] is not None:
+        for i in package_all_actions[TripStageType.SEND]:
+            package_trip.append(TripStage.from_send(j, i))
+            j += 1
+    if package_all_actions[TripStageType.TRANSMIT] is not None:
+        for i in package_all_actions[TripStageType.TRANSMIT]:
+            package_trip.append(TripStage.from_transmit(j, i))
+            j += 1
+    if package_all_actions[TripStageType.PULL] is not None:
+        package_trip.append(TripStage.from_pull(j, package_all_actions[TripStageType.PULL]))
+
+    ordered = TripStage.orderByDate(package_trip)
+    jsonified = []
+    for i in ordered:
+        jsonified.append(i.__dict__())
+    return jsonify(jsonified)

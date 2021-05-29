@@ -7,6 +7,8 @@
 import datetime
 import enum
 
+from flask import jsonify
+
 from application.data.entities.actions.Leave import Leave
 from application.data.entities.actions.Pull import Pull
 from application.data.entities.actions.Send import Send
@@ -67,6 +69,21 @@ class TripStage:
         self.send_date = send_date
         self.reception_date = reception_date
 
+    def __dict__(self):
+        return {
+            "stage_id": self.stage_id,
+            "ts_type": self.ts_type.value,
+            "source_type": self.source_type.value,
+            "source": self.source,
+            "destination_type": self.destination_type.value,
+            "destination": self.destination,
+            "send_date": self.send_date,
+            "reception_date": self.reception_date
+        }
+
+    def toJson(self):
+        return jsonify(self.__dict__())
+
 
 def from_leave(leave: Leave):
     stage = TripStage(
@@ -104,3 +121,22 @@ def from_transmit(stage_id, transmit: Transmit):
         transmit.send_date, transmit.reception_date
     )
     return stage
+
+
+def orderByDate(stages: list[TripStage]()):
+    ordered = [stages[0]]
+    stages.pop(0)
+    pull = None
+    for i in stages:
+        if i.ts_type != TripStageType.PULL:
+            k = -1
+            for j in ordered:
+                if i.reception_date > j.reception_date:
+                    ordered.insert(k, i)
+                    break
+                k -= 1
+        else:
+            pull = i
+    if pull is not None:
+        ordered.insert(-1, pull)
+    return ordered

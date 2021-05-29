@@ -12,11 +12,11 @@ from application.data.entities.people.Supplier import Supplier
 
 def customer_dummydata(asession):
     asession.add(
-        Customer(6, 'aCustomerRef', 'Ecila', 'Alice', '32 Rue des Caribous 32000 Caribouville', 'login1', 'pass1'))
+        Customer(6, 'aCustomerRef', 'Ecila', 'Alice', 'login1', 'pass1'))
     asession.add(
-        Customer(7, 'anoCustomerRef', 'Bob', 'Bob', '64 Avenue binaire 64000 Base2Ville', 'login2', 'pass2'))
+        Customer(7, 'anoCustomerRef', 'Bob', 'Bob', 'login2', 'pass2'))
     asession.add(
-        Customer(8, 'lastCustomerRef', 'Cirdec', 'Cedric', '128 Rue du Python 42000 Pythonville', 'login3', 'pass3'))
+        Customer(8, 'lastCustomerRef', 'Cirdec', 'Cedric', 'login3', 'pass3'))
     asession.commit()
 
 
@@ -41,11 +41,11 @@ def customer_test(asession):
 
 def supplier_dummydata(asession):
     asession.add(
-        Supplier(6, 'supplierRef', 'Toto Industries', 'toto', 'totopass'))
+        Supplier(6, 'supplierRef', 'Toto Industries', 'toto', 'totopass', 'Cordonnier'))
     asession.add(
-        Supplier(7, 'anotherRef', 'Titi Incorporate', 'titi', 'titipass'))
+        Supplier(7, 'anotherRef', 'Titi Incorporate', 'titi', 'titipass', 'Coutelier'))
     asession.add(
-        Supplier(8, 'lastRef', 'Tata Ltd', 'tata', 'tatapass'))
+        Supplier(8, 'lastRef', 'Tata Ltd', 'tata', 'tatapass', 'Charpentier'))
     asession.commit()
 
 

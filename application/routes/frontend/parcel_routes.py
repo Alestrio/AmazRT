@@ -8,6 +8,8 @@ from flask import request, abort
 
 from application import app
 from application.data.base import session
+from application.data.data_classes.TripStage import TripStageType
+from application.data.data_classes import TripStage
 from application.data.entities.Parcel import Parcel
 from application.data.entities.actions.Leave import Leave
 from application.data.entities.actions.Pull import Pull
@@ -18,17 +20,18 @@ from application.data.entities.actions.Transmit import Transmit
 def getAllPackageActions(tracking_number):
     parcel: Parcel = session.query(Parcel).filter_by(ref=tracking_number).first()
     if parcel is not None:
-        leaves = session.query(Leave).filter_by(id_colis=parcel.id_parcel)
-        pulls = session.query(Pull).filter_by(id_colis=parcel.id_parcel)
-        sends = session.query(Send).filter_by(id_colis=parcel.id_parcel)
-        transmits = session.query(Transmit).filter_by(id_colis=parcel.id_parcel)
+        leave = session.query(Leave).filter_by(parcel=parcel.id_parcel).first()  # those are intended to be unique
+        # that's why we are taking the first element
+        pull = session.query(Pull).filter_by(parcel=parcel.id_parcel).first()
+        sends = session.query(Send).filter_by(parcel=parcel.id_parcel)
+        transmits = session.query(Transmit).filter_by(parcel=parcel.id_parcel)
 
         return {
             "parcel": parcel,
-            "leaves": leaves,
-            "pulls": pulls,
-            "sends": sends,
-            "transmits": transmits
+            TripStageType.LEAVE: leave,
+            TripStageType.PULL: pull,
+            TripStageType.SEND: sends,
+            TripStageType.TRANSMIT: transmits
         }
     abort(404)
 
@@ -36,4 +39,14 @@ def getAllPackageActions(tracking_number):
 @app.route('/track_parcel', methods=['GET'])
 def track_parcel():
     settings = str(request.query_string).split('&')
-    package_all_actions = getAllPackageActions(settings[0].split('=')[1])
+    package_all_actions = getAllPackageActions(settings[0].split('=')[1])  # This is ugly, but it works
+
+    package_trip = [TripStage.from_leave(package_all_actions[TripStageType.LEAVE])]
+    j = 1
+    for i in package_all_actions[TripStageType.SEND]:
+        package_trip.append(TripStage.from_send(j, i))
+        j += 1
+    for i in package_all_actions[TripStageType.TRANSMIT]:
+        package_trip.append(TripStage.from_transmit(j, i))
+        j += 1
+        pass

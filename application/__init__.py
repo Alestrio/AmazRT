@@ -8,4 +8,5 @@ from flask import Flask
 
 app = Flask(__name__)
 
-from application.routes.frontend import index, products_services, tracking_expedition, common_routes, parcel_routes
+from application.routes.frontend import index, products_services, tracking_expedition, common_routes, parcel_routes,\
+     operator_routes

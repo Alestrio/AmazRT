@@ -81,9 +81,6 @@ class TripStage:
             "reception_date": self.reception_date
         }
 
-    def toJson(self):
-        return jsonify(self.__dict__())
-
 
 def from_leave(leave: Leave):
     stage = TripStage(

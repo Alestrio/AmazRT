@@ -120,7 +120,7 @@ def from_transmit(stage_id, transmit: Transmit):
     return stage
 
 
-def orderByDate(stages: list[TripStage]()):
+def orderByDate(stages):
     ordered = [stages[0]]
     stages.pop(0)
     pull = None

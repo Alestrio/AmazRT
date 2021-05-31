@@ -4,12 +4,18 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
-from flask import render_template, jsonify, request
+import datetime
+import random
+import string
+
+from flask import render_template, jsonify, request, redirect
 from flask_login import current_user
 from werkzeug.exceptions import abort
 
 from application import app
 from application.data.base import session
+from application.data.entities.Parcel import Parcel
+from application.data.entities.actions.Leave import Leave
 from application.data.entities.people.Customer import Customer, todict
 from application.data.entities.people.Operator import Operator
 from application.frontend.forms.parcel_register_form import ParcelRegisterForm
@@ -28,6 +34,29 @@ def parcel_register():
         else:
             abort(403)
     elif request.method == 'POST':
-        pass
+        data = request.form
+
+        # Generates random reference :
+        rand_ref = ''
+        for i in range(10):
+            rand_ref += random.choice(string.ascii_letters)
+        rand_ref = rand_ref.upper()
+
+        datadict = {
+            "type": data['type_radio'],
+            "supplier_id": data['supplier_id_field'],
+            "customer_id": data['customer_id_field'],
+            "ref": rand_ref,
+            "pld_id": data['pld_id_field']
+        }
+
+        parcel = Parcel(datadict['ref'], datadict['type'], datadict['customer_id'], datadict['supplier_id'])
+        session.add(parcel)
+        session.commit()
+        parcel = session.query(Parcel).filter_by(ref=datadict['ref']).first()
+        leave = Leave(parcel.id_parcel, datadict['pld_id'], datadict['supplier_id'], datetime.datetime.now())
+        session.add(leave)
+        session.commit()
+        return redirect('/')
     else:
         abort(502)

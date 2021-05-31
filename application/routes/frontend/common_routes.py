@@ -8,7 +8,7 @@ import random
 import string
 
 from flask import request, flash, render_template, abort
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, logout_user
 from werkzeug.utils import redirect
 
 from application import app
@@ -163,6 +163,11 @@ def login():
                 login_user(user[i])
     return redirect('/')
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect('/')
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():

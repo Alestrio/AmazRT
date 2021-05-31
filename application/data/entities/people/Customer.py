@@ -44,3 +44,15 @@ class Customer(Base, UserMixin):
 
     def get_id(self):
         return self.login
+
+
+def todict(customer):
+    return {
+        "id_client": customer.id_client,
+        "id_city": customer.id_city,
+        "ref": customer.ref,
+        "lastname": customer.lastname,
+        "firstname": customer.firstname,
+        "login": customer.login,
+        "password": customer.password
+    }

@@ -11,6 +11,7 @@ from application import app
 from application.data.base import session
 from application.data.entities.Parcel import Parcel
 from application.data.entities.people.Customer import Customer
+from application.data.entities.people.Supplier import Supplier
 from application.frontend.forms.simple_login_form import SimpleLoginForm
 from application.frontend.forms.simple_tracking_form import SimpleTrackingForm
 
@@ -24,12 +25,25 @@ def userTrackedParcels(user: Customer):
     return parcel_array
 
 
+def userTrackedParcelsSupplier(user: Supplier):
+    cid = user.id_supplier
+    parcels = session.query(Parcel).filter_by(id_supplier=cid).all()
+    parcel_array = []
+    for i in parcels:
+        parcel_array.append(i.asDict())
+    return parcel_array
+
+
 @app.route('/tracking_expedition')
 def tracking_expedition():
     if isinstance(current_user, Customer):
         user_parcels = userTrackedParcels(current_user)
         return render_template('t_customer_trackingPage.html', login_form=SimpleLoginForm(),
                                user_tracked_parcels=user_parcels)
-
+    elif isinstance(current_user, Supplier):
+        user_parcels = userTrackedParcelsSupplier(current_user)
+        return render_template('t_customer_trackingPage.html', login_form=SimpleLoginForm(),
+                               user_tracked_parcels=user_parcels)
     else:
-        return render_template('t_tracking_expedition.html', login_form=SimpleLoginForm(), tracking_form=SimpleTrackingForm())
+        return render_template('t_tracking_expedition.html', login_form=SimpleLoginForm(),
+                               tracking_form=SimpleTrackingForm())

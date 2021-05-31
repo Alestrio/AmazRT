@@ -28,3 +28,9 @@ class Parcel(Base):
         self.type = ptype
         self.id_supplier = id_supplier
         self.id_customer = id_customer
+
+    def asDict(self):
+        return {
+            "ref": self.ref,
+            "type": self.type
+        }

@@ -4,13 +4,33 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-from flask import render_template
+from flask import render_template, jsonify
+from flask_login import current_user
 
 from application import app
+from application.data.base import session
+from application.data.entities.Parcel import Parcel
+from application.data.entities.people.Customer import Customer
 from application.frontend.forms.simple_login_form import SimpleLoginForm
 from application.frontend.forms.simple_tracking_form import SimpleTrackingForm
 
 
+def userTrackedParcels(user: Customer):
+    cid = user.id_client
+    parcels = session.query(Parcel).filter_by(id_customer=cid).all()
+    print(parcels)
+    parcel_array = []
+    for i in parcels:
+        parcel_array.append(i.asDict())
+    return parcel_array
+
+
 @app.route('/tracking_expedition')
 def tracking_expedition():
-    return render_template('t_tracking_expedition.html', login_form=SimpleLoginForm(), tracking_form=SimpleTrackingForm())
+    if isinstance(current_user, Customer):
+        user_parcels = userTrackedParcels(current_user)
+        return render_template('t_customer_trackingPage.html', login_form=SimpleLoginForm(),
+                               user_tracked_parcels=user_parcels)
+
+    else:
+        return render_template('t_tracking_expedition.html', login_form=SimpleLoginForm(), tracking_form=SimpleTrackingForm())

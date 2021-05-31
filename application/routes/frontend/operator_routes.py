@@ -18,6 +18,7 @@ from application.data.entities.Parcel import Parcel
 from application.data.entities.actions.Leave import Leave
 from application.data.entities.people.Customer import Customer, todict
 from application.data.entities.people.Operator import Operator
+from application.data.entities.people.Supplier import Supplier
 from application.frontend.forms.parcel_register_form import ParcelRegisterForm
 
 
@@ -35,6 +36,12 @@ def parcel_register():
             abort(403)
     elif request.method == 'POST':
         data = request.form
+
+        supplier_test = session.query(Supplier).filter_by(id_supplier=data['supplier_id_field']).first()
+        customer_test = session.query(Customer).filter_by(id_client=data['supplier_id_field']).first()
+
+        if supplier_test is None or customer_test is None or data['type_radio'] == '':
+            abort(400)
 
         # Generates random reference :
         rand_ref = ''

@@ -41,3 +41,13 @@ if __name__ == "__main__":
     csrf.init_app(app)
     login.init_app(app)
     app.run(debug=True)
+else:
+    csrf = CSRFProtect(app)
+    SECRET_KEY = os.urandom(32)
+    app.config['SECRET_KEY'] = SECRET_KEY
+    app.config['WTF_CSRF_SECRET_KEY'] = SECRET_KEY
+    session = Session()
+    Base.metadata.create_all(engine)
+    csrf.init_app(app)
+    login.init_app(app)
+    application = app

@@ -16,4 +16,5 @@ class ParcelRegisterForm(FlaskForm):
     ], render_kw={'id': 'register_radio'})
     supplier_id_field = StringField('supplier_id', [InputRequired()])
     customer_id_field = StringField('customer_id', [InputRequired()])
+    pld_id_field = StringField('pld_id', [InputRequired()])
     submit = SubmitField('Envoyer !')

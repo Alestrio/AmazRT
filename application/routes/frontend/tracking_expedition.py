@@ -18,7 +18,6 @@ from application.frontend.forms.simple_tracking_form import SimpleTrackingForm
 def userTrackedParcels(user: Customer):
     cid = user.id_client
     parcels = session.query(Parcel).filter_by(id_customer=cid).all()
-    print(parcels)
     parcel_array = []
     for i in parcels:
         parcel_array.append(i.asDict())

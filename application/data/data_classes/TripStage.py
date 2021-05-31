@@ -58,8 +58,8 @@ class TripStage:
 
     def __init__(self,
                  stage_id: int, ts_type: TripStageType, source_type: LocationType, source: str,
-                 destination_type: LocationType, destination: str, send_date: datetime.date = DEFAULT_DATE,
-                 reception_date: datetime.date = DEFAULT_DATE):
+                 destination_type: LocationType, destination: str, send_date: datetime.datetime = DEFAULT_DATE,
+                 reception_date: datetime.datetime = DEFAULT_DATE):
         self.stage_id = stage_id
         self.ts_type = ts_type
         self.source_type = source_type

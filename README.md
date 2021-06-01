@@ -95,6 +95,7 @@ Those tests currently supports database operations, by will soon support web ope
 - Flask : `# pip3 install flask`
 - Flask-wtforms : `# pip3 install flask-wtf`
 - Flask-login : `# pip3 install flask-login`
+- Flask-qrcode : `# pip3 install flask-qrcode`
 - Psycopg2 : `# pip3 install psycopg2-binary`
 - SQLAlchemy : `# pip3 install sqlalchemy`
 

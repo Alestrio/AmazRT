@@ -38,7 +38,7 @@ def parcel_register():
         data = request.form
 
         supplier_test = session.query(Supplier).filter_by(id_supplier=data['supplier_id_field']).first()
-        customer_test = session.query(Customer).filter_by(id_client=data['supplier_id_field']).first()
+        customer_test = session.query(Customer).filter_by(id_client=data['customer_id_field']).first()
 
         if supplier_test is None or customer_test is None or data['type_radio'] == '':
             abort(400)

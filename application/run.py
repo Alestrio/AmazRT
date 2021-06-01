@@ -8,6 +8,7 @@ import os
 
 from flask_login import LoginManager
 from flask_wtf import CSRFProtect
+from flask_qrcode import QRcode
 
 from application import app
 from application.data.base import Base, engine, Session
@@ -40,6 +41,7 @@ if __name__ == "__main__":
     Base.metadata.create_all(engine)
     csrf.init_app(app)
     login.init_app(app)
+    QRcode(app)
     app.run(debug=True)
 else:
     csrf = CSRFProtect(app)
@@ -50,4 +52,5 @@ else:
     Base.metadata.create_all(engine)
     csrf.init_app(app)
     login.init_app(app)
+    QRCode(app)
     application = app

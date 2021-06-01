@@ -52,5 +52,5 @@ else:
     Base.metadata.create_all(engine)
     csrf.init_app(app)
     login.init_app(app)
-    QRCode(app)
+    QRcode(app)
     application = app

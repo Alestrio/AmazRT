@@ -17,14 +17,16 @@
             <h2 class="text-3xl text-black">Suivre un colis</h2>
             <hr class="w-1/4 h-2">
             <p class="text-baxe text-xl">Renseigner votre numéro de colis ou d'enlèvement sans insérer d'espace.</p>
-            <label class="text-2xl text-black">
-                Numéro de suivi :
-                <input type="text" class="outline-none border-2 border-yellow-600 px-2 py-1"
-                       placeholder="Ex. : EF000238FR"/>
-            </label>
-            <button class="rounded-full border-2 border-white bg-yellow-600 py-3 px-9 text-white w-32 text-center hover:bg-yellow-500 transition ease-in-out duration-150"
-                    type="submit">Suivre
-            </button>
+            <form action="/track_parcel" method="get">
+                <label class="text-2xl text-black">
+                    Numéro de suivi :
+                    {{ tracking_form.tracking_number_field(class_="outline-none border-2 border-yellow-600 px-2 py-1") }}
+                </label>
+                <div>
+                    {{ tracking_form.submit(class_="rounded-full border-2 border-white bg-yellow-600 py-3 px-9
+                     text-white w-32 text-center hover:bg-yellow-500 transition ease-in-out duration-150") }}
+                </div>
+            </form>
         </article>
     </div>
 </section>

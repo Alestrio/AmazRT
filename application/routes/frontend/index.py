@@ -8,8 +8,9 @@ from flask import render_template
 
 from application import app
 from application.frontend.forms.simple_login_form import SimpleLoginForm
+from application.frontend.forms.simple_tracking_form import SimpleTrackingForm
 
 
 @app.route('/')
 def index():
-    return render_template('t_index.html', login_form=SimpleLoginForm())
+    return render_template('t_index.html', login_form=SimpleLoginForm(), tracking_form=SimpleTrackingForm())

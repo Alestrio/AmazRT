@@ -48,45 +48,34 @@
             </p>
         </div>
         <div class="w-full flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">
-            <form class="flex flex-col justify-center items-center text-center space-y-3" action="" method="post">
+            <form class="flex flex-col justify-center items-center text-center space-y-3" action="/preregister" method="post">
+                {{ preregister_form.hidden_tag() }}
                 <h3 class="text-2xl">Expéditeur</h3>
                 <div class="space-x-2">
                     <label class="">
                         Pays
-                        <input class="outline-none border-2 border-yellow-600 px-2 py-1" type="text" name="FRANCE"/>
+                        {{ preregister_form.source_country_field(class_='outline-none border-2 border-yellow-600 px-2 py-1') }}
                     </label>
                     <label class="">
-                        Code postal/Ville
-                        <input class="outline-none border-2 border-yellow-600 px-2 py-1" type="text"/>
+                        Ville
+                        {{ preregister_form.source_city_field(class_='outline-none border-2 border-yellow-600 px-2 py-1') }}
                     </label>
                 </div>
                 <h3 class="text-2xl">Destinataire</h3>
                 <div class="space-x-2">
                     <label class="">
                         Pays
-                        <input class="outline-none border-2 border-yellow-600 px-2 py-1" type="text" name="FRANCE"/>
+                        {{ preregister_form.dest_country_field(class_='outline-none border-2 border-yellow-600 px-2 py-1') }}
                     </label>
                     <label class="">
-                        Code postal/Ville
-                        <input class="outline-none border-2 border-yellow-600 px-2 py-1" type="text"/>
+                        Ville
+                        {{ preregister_form.dest_city_field(class_='outline-none border-2 border-yellow-600 px-2 py-1') }}
                     </label>
                 </div>
                 <h3 class="text-2xl">Type d'envoi</h3>
-                <div class="">
-                    <label>
-                        <input type="radio" name="type"/>
-                        Documents
-                    </label>
-                </div>
-                <div class="">
-                    <label>
-                        <input type="radio" name="type"/>
-                        Marchandises
-                    </label>
-                </div>
-                <button class="rounded-full border-2 border-white bg-yellow-600 py-3 px-9 text-white text-xl w-40 text-center hover:bg-yellow-500 transition ease-in-out duration-150"
-                        type="submit">Voir les offres
-                </button>
+                {{ preregister_form.parcel_type_field }}
+                {{ preregister_form.submit(class_='rounded-full border-2 border-white bg-yellow-600 py-3 px-9 text-white
+                 text-xl w-40 text-center hover:bg-yellow-500 transition ease-in-out duration-150') }}
             </form>
         </div>
         <div class="w-full h-40 mt-32 flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">

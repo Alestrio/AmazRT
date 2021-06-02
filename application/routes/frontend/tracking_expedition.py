@@ -38,12 +38,12 @@ def userTrackedParcelsSupplier(user: Supplier):
 def tracking_expedition():
     if isinstance(current_user, Customer):
         user_parcels = userTrackedParcels(current_user)
-        return render_template('t_customer_trackingPage.html', login_form=SimpleLoginForm(),
+        return render_template('pages/t_customer_trackingPage.html', login_form=SimpleLoginForm(),
                                user_tracked_parcels=user_parcels)
     elif isinstance(current_user, Supplier):
         user_parcels = userTrackedParcelsSupplier(current_user)
-        return render_template('t_customer_trackingPage.html', login_form=SimpleLoginForm(),
+        return render_template('pages/t_customer_trackingPage.html', login_form=SimpleLoginForm(),
                                user_tracked_parcels=user_parcels)
     else:
-        return render_template('t_tracking_expedition.html', login_form=SimpleLoginForm(),
+        return render_template('pages/t_tracking_expedition.html', login_form=SimpleLoginForm(),
                                tracking_form=SimpleTrackingForm())

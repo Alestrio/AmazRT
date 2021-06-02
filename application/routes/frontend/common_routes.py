@@ -195,4 +195,4 @@ def register():
         return redirect('/')
 
     else:
-        return render_template('t_register.html', login_form=SimpleLoginForm(), register_form=RegisterForm())
+        return render_template('pages/t_register.html', login_form=SimpleLoginForm(), register_form=RegisterForm())

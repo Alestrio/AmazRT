@@ -25,7 +25,7 @@
     <div class="w-full h-32 flex flex-row items-center justify-center space-x-32 px-10">
         <img alt="logo" class="w-1/4 object-cover" src="../../static/img/logo_large.png">
         {% if not current_user.is_authenticated %}
-            {% include 't_login_form.html' %}
+            {% include 'pages/t_login_form.html' %}
         {% else %}
             <p class="w-1/2 bg-yellow-600 rounded-full p-3 font-black font-bold text-center text-xl">
                 Bonjour {{ current_user.firstname }} {{ current_user.name }} !</p>

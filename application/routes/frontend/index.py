@@ -18,7 +18,7 @@ from application.frontend.forms.simple_tracking_form import SimpleTrackingForm
 
 @app.route('/')
 def index():
-    return render_template('t_index.html', login_form=SimpleLoginForm(), tracking_form=SimpleTrackingForm(),
+    return render_template('pages/t_index.html', login_form=SimpleLoginForm(), tracking_form=SimpleTrackingForm(),
                            preregister_form=PreRegisterForm())
 
 
@@ -45,4 +45,4 @@ def preregister():
     datadict['source_city_id'] = source_city_id.id_city
     datadict['dest_city_id'] = dest_city_id.id_city
 
-    return render_template('t_expedition_invoice.html', data=datadict, login_form=SimpleLoginForm())
+    return render_template('pages/t_expedition_invoice.html', data=datadict, login_form=SimpleLoginForm())

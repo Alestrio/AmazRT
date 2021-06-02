@@ -5,13 +5,7 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-from flask import jsonify
+from flask import jsonify, request
 from werkzeug.exceptions import abort
 
 from application import app
@@ -27,27 +21,32 @@ def getCustomers():
 
 @app.route("/api/v1/customer/<int: id_cli>", methods=['GET'])
 def getCustomerByID(id_cli: int):
-    customers = session.query(Customer).all()
-    for cli in customers:
-        if cli.id_client == id_cli:
-            return jsonify(cli)
+    customer = session.query(Customer).filter_by(id_client=id_cli).first()
+    if customer is not None:
+        return jsonify(customer)
     abort(404)
 
 
 @app.route("/api/v1/customer/<int: id_cli>", methods=['PUT'])
 def updateCustomerByID(id_cli: int):
-    customers = session.query(Customer).update()
-    for cli in customers:
-        if cli.id_client == id_cli:
-            return jsonify(cli) #TODO
+    customer = session.query(Customer).filter_by(id_client=id_cli).first()
+    if customer is not None:
+        return jsonify(customer)
     abort(404)
 
 
 @app.route("/api/v1/customer/<int: id_cli>", methods=['DELETE'])
 def deleteCustomerByID(id_cli: int):
-    customers = session.query(Customer).delete()
-    for cli in customers:
-        if cli.id_client == id_cli:
-            return jsonify(cli) #TODO
+    customer = session.query(Customer).filter_by(id_client=id_cli).first()
+    new_data = request.get_json()
+    if customer is not None:
+        session.query(Customer).delete()
+        customer.id_city = new_data['id_city']
+        customer.ref = new_data['ref']
+        customer.lastname = new_data['lastname']
+        customer.firstname = new_data['firstname']
+        customer.address = new_data['address']
+        customer.login = new_data['login']
+        customer.password = new_data['password']
+        session.query(Customer).add()
     abort(404)
-

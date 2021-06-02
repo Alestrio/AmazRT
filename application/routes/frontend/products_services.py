@@ -12,4 +12,4 @@ from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 @app.route('/products_services')
 def products_services():
-    return render_template('t_products_services.html', login_form=SimpleLoginForm())
+    return render_template('pages/t_products_services.html', login_form=SimpleLoginForm())

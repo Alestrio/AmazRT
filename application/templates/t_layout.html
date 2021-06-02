@@ -28,7 +28,8 @@
             {% include 't_login_form.html' %}
         {% else %}
             <p class="w-1/2 bg-yellow-600 rounded-full p-3 font-black font-bold text-center text-xl">
-                Bonjour {{ current_user.firstname }} !</p>
+                Bonjour {{ current_user.firstname }} {{ current_user.name }} !</p>
+            <a href="/logout">Se déconnecter !</a>
         {% endif %}
     </div>
     <nav class="bg-yellow-600">
@@ -44,6 +45,11 @@
                         <a href="/tracking_expedition"
                            class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">Suivi
                             Expédition</a>
+                        {% if current_user.id_operator != null %}
+                            <a href="/parcel-register"
+                               class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">
+                                Inscription de colis</a>
+                        {% endif %}
                         <label class="">
                             <input type="search" class="rounded-full px-2 py-1 outline-none" placeholder="Rechercher"/>
                         </label>
@@ -55,8 +61,11 @@
 
 </header>
 {% block content %}{% endblock %}
-<footer>
-    <div class="flex flex-row justify-center items-center px-20 mt-32 h-64 space-x-32">
+<footer class="object-bottom">
+    <div class="flex flex-row justify-center items-center h-64">
+        <hr class="bg-yellow-600 w-3/4 items-center" />
+    </div>
+    <div class="flex flex-row justify-center items-center px-20 space-x-32">
         <div class="flex flex-col justify-center items-center space-y-2">
             <a href="#">Responsabilités sociales</a>
             <a href="#">Protection des données personnelles</a>

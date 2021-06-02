@@ -1,0 +1,28 @@
+<!--
+  ~ AmazRT  -  Parcel Management System
+  ~ First semester Technical Degree project
+  ~
+  ~   Copyright  (c) 2021 - 2022
+  ~  - Meryem KAYA @MeryemKy
+  ~  - Alexis LEBEL @Alestrio
+  ~  - Malo LEGRAND @HoesMaaad
+  -->
+{% extends 't_layout.html' %}
+{% block content %}
+    <main>
+        <div class="block">
+            <div class="w-full flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">
+                <h1 class="text-3xl text-base">Votre devis d'envoi :</h1>
+                <p>Vérifions ensemble, votre devis d'expédition. Si tout est bon pour vous, alors vous pourrez présenter
+                le QRCode généré à l'opérateur du PLD</p>
+                <div class="w-1/4 justify-center items-center text-center bg-gray-300 rounded">
+                    <p>Expéditeur : {{ data['source_city'] }}/{{ data['source_country'] }}</p>
+                    <p>Destinataire : {{ data['dest_city'] }}/{{ data['dest_country'] }}</p>
+                    <p>Type de colis : {{ data['parcel_type'] }}</p>
+                    <p class="bg-yellow-600 rounded-full p-2 m-4">Prix : {{ data['invoice_price'] }}€</p>
+                    <p>QRCode : <img src='{{ qrcode(data | tojson) }}' alt='QRCode' /></p>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

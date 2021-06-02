@@ -5,11 +5,12 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 from datetime import date
-from sqlite3.dbapi2 import Date
 
-from sqlalchemy import ForeignKey, Column, Boolean
+from sqlalchemy import ForeignKey, Column, Boolean, Date
 
 from application.data.base import Base
+from application.data.entities.platforms.Plr import Plr
+from application.data.entities.platforms.Pld import Pld
 
 
 class Send(Base):

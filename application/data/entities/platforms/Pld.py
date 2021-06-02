@@ -7,6 +7,7 @@
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 
 from application.data.base import Base
+from application.data.entities.platforms.Plr import Plr
 
 
 class Pld(Base):
@@ -17,7 +18,7 @@ class Pld(Base):
     """
     __tablename__ = 'pld'
     id_pld = Column('id_pld', Integer, primary_key=True)
-    id_plr = ForeignKey('plr.id_plr')
+    id_plr = Column('id_plr', ForeignKey('plr.id_plr'))
     ref = Column('ref_pld', VARCHAR(6))
     name = Column('nom_pld', VARCHAR(50))
 

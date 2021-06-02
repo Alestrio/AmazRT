@@ -1,0 +1,120 @@
+<!--
+  ~ AmazRT  -  Parcel Management System
+  ~ First semester Technical Degree project
+  ~
+  ~   Copyright  (c) 2021 - 2022
+  ~  - Meryem KAYA @MeryemKy
+  ~  - Alexis LEBEL @Alestrio
+  ~  - Malo LEGRAND @HoesMaaad
+  -->
+{% extends 't_layout.html' %}
+{% block content %}
+    <main>
+        <div class="block">
+            <div class="w-full flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">
+                <h1 class="text-3xl text-base">Enregistrement d'un nouveau colis</h1>
+                <form class="w-full max-w-lg" action="/parcel-register" method="post">
+                    {{ register_form.hidden_tag() }}
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-full px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                                Type de colis
+                            </label>
+                            {{ register_form.type_radio(class_="py-4") }}
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="firstname_field">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                                   for="grid-first-name">
+                                ID de Fournisseur
+                            </label>
+                            {{ register_form.supplier_id_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white') }}
+                        </div>
+                        <div class="w-full md:w-1/2 px-3" id="lastname_field">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                                   for="grid-last-name">
+                                ID de Client
+                            </label>
+                            {{ register_form.customer_id_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey') }}
+                        </div>
+                    </div>
+                    <div class="w-full md:w-full px-3 mb-6" id="lastname_field">
+                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                               for="grid-last-name">
+                            ID de PLD
+                        </label>
+                        {{ register_form.pld_id_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey') }}
+                    </div>
+                    {{ register_form.submit(class_="shadow bg-yellow-600 hover:bg-purple-light focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded") }}
+                    <hr class="bg-yellow-600 mt-10 mb-10" />
+                    <h2 class="text-3xl text-base">Un trou de mémoire ?</h2>
+                </form>
+                <label for="userTableSearch">
+                    Rechercher un client :
+                    <input type="search" id="userTableSearch" class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                </label>
+                <table id="userTable" class="table-auto border-2 border-yellow-600 border-collapse">
+                    <tr class="border" id="header">
+                        <th class="border p-2">ID Client</th>
+                        <th class="border p-2">ID Ville</th>
+                        <th class="border p-2">Référence</th>
+                        <th class="border p-2">Nom</th>
+                        <th class="border p-2">Prénom</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </main>
+    <script>
+        data = {{ userdata | tojson }};
+        userTable = document.getElementById('userTable');
+        rowCellClass = "border p-2";
+        header = document.getElementById('header');
+        
+        searchField = document.getElementById('userTableSearch')
+
+        function addRow(content){
+            let row = userTable.insertRow(-1)
+            row.className = rowCellClass
+            let customerIdCell = row.insertCell(-1)
+            customerIdCell.className = rowCellClass
+            let cityIdCell = row.insertCell(-1)
+            cityIdCell.className = rowCellClass
+            let refCell = row.insertCell(-1)
+            refCell.className = rowCellClass
+            let lastnameCell = row.insertCell(-1)
+            lastnameCell.className = rowCellClass
+            let firstnameCell = row.insertCell(-1)
+            firstnameCell.className = rowCellClass
+
+            customerIdCell.innerHTML = content['id_client']
+            cityIdCell.innerHTML = content['id_city']
+            refCell.innerHTML = content['ref']
+            lastnameCell.innerHTML = content['lastname']
+            firstnameCell.innerHTML = content['firstname']
+        }
+
+        for (let i = 0; i < data.length; i++) {
+            addRow(data[i])
+        }
+        
+        searchField.oninput = function () {
+            userTable.innerHTML = '';
+            userTable.innerHTML = header.outerHTML;
+            if(searchField.value === ""){
+                for (let i = 0; i < data.length; i++) {
+                    addRow(data[i])
+                }
+            }
+            else{
+                for (let i = 0; i < data.length; i++) {
+                    if(data[i]['lastname'].toString().toLowerCase().includes(searchField.value.toLowerCase()) ||
+                    data[i]['firstname'].toString().toLowerCase().includes(searchField.value.toLowerCase())){
+                        addRow(data[i])
+                    }
+                }
+            }
+        }
+    </script>
+{% endblock %}

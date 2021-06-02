@@ -39,7 +39,7 @@ def updateCityByID(id_cit: int):
     city = session.query(City).update()
     for cit in city:
         if cit.id_city == id_cit:
-            return jsonify(city)
+            return jsonify(city) #TODO
     abort(404)
 
 
@@ -48,5 +48,5 @@ def deleteCityByID(id_cit: int):
     city = session.query(City).delete()
     for cit in city:
         if cit.id_city == id_cit:
-            return jsonify(city)
+            return jsonify(city) #TODO
     abort(404)

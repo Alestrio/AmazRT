@@ -9,13 +9,14 @@ from datetime import date
 from sqlalchemy import Column, ForeignKey, Date
 
 from application.data.base import Base
+from application.data.entities.platforms.Plr import Plr
 
 
 class Transmit(Base):
     """
     @Entity
-    This is the entity class responsible for the last step of the parcel pull.
-    The tablename is "retirer"
+    This is the entity class responsible parcel transmission between two PLRs
+    The tablename is "transmettre"
     """
     __tablename__ = 'transmetre'
     plr = Column('id_plr', ForeignKey('plr.id_plr'), primary_key=True)

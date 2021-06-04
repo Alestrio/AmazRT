@@ -1,0 +1,38 @@
+<!--
+  ~ AmazRT  -  Parcel Management System
+  ~ First semester Technical Degree project
+  ~
+  ~   Copyright  (c) 2021 - 2022
+  ~  - Meryem KAYA @MeryemKy
+  ~  - Alexis LEBEL @Alestrio
+  ~  - Malo LEGRAND @HoesMaaad
+  -->
+{% extends 't_layout.html' %}
+{% block content %}
+    <main>
+        <div class="block">
+            <div class="w-full flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">
+                <h1 class="text-3xl text-base">Votre tableau de bord :</h1>
+                    <table class="table-auto border-2 border-yellow-600 border-collapse">
+                        <tr class="border">
+                            <th class="border p-2">Référence de colis</th>
+                            <th class="border p-2">Type de colis</th>
+                            <th class="border p-2">Lien de tracking</th>
+                        </tr>
+                        {% if user_tracked_parcels != None %}
+                            {% for i in user_tracked_parcels %}
+                                <tr class="border">
+                                    <td class="border p-2">{{ i['ref'] }}</td>
+                                    <td class="border p-2">{{ i['type'] }}</td>
+                                    <td class="border">
+                                        <a href="/track_parcel?tracking_number_field={{ i['ref'] }}&submit=Envoyer+%21"
+                                        class="p-2 m-3 rounded-full bg-yellow-600 hover:bg-blue-300">
+                                        Informations de livraison</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -11,4 +11,4 @@ from wtforms.validators import InputRequired
 
 class SimpleTrackingForm(FlaskForm):
     tracking_number_field = StringField('Ex : EF000238FR', [InputRequired()])
-    submit = SubmitField('Envoyer !')
+    submit = SubmitField(render_kw={'value': 'Envoyer !'})

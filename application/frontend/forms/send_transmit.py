@@ -9,12 +9,14 @@ from wtforms import RadioField, StringField, SubmitField
 from wtforms.validators import InputRequired
 
 
-class ParcelRegisterForm(FlaskForm):
+class SendTransmitForm(FlaskForm):
     type_radio = RadioField('type', [InputRequired()], choices=[
-        ('documents', 'Documents'),
-        ('goods', 'Marchandises'),
+        ('send', 'Envoyer'),
+        ('transmit', 'Transmettre'),
     ], render_kw={'id': 'register_radio'})
-    supplier_id_field = StringField('supplier_id', [InputRequired()])
-    customer_id_field = StringField('customer_id', [InputRequired()])
+    plr_id_field = StringField('plr_id', [InputRequired()])
     pld_id_field = StringField('pld_id', [InputRequired()])
+    dest_plr_field = StringField('plr_id_plr', [InputRequired()])
+    parcel_field = StringField('id_colis', [InputRequired()])
+    pld_to_plr_field = StringField('pld_to_plr', [InputRequired()])
     submit = SubmitField('Envoyer !')

@@ -50,8 +50,10 @@ class Customer(AbstractEntity, UserMixin):
         return self.login
 
     @staticmethod
-    def fromdict(param):
-        pass  # TODO
+    def fromdict(origin_dict):
+        if origin_dict is not None:
+            return Customer(0, origin_dict['id_city'], origin_dict['ref'], origin_dict['lastname'],
+                            origin_dict['firstname'], origin_dict['login'], origin_dict['password'])
 
     @staticmethod
     def filter_by(customer, **kwargs):

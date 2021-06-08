@@ -10,28 +10,27 @@ from flask_login import LoginManager
 from flask_wtf import CSRFProtect
 from flask_qrcode import QRcode
 from flask import session
+from requests.auth import HTTPBasicAuth
 
-from application import app
-from application.data.ApiService import ApiService
+from application import app, service
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier
 
 login = LoginManager()
 
+
 @login.user_loader
 def load_user(u_login):
     user = {
-        'as_customer': Customer.fromdict(Customer.filter_by(service.getall(Customer()), login=u_login)),
-        'as_operator': Operator.fromdict(Operator.filter_by(service.getall(Operator()), login=u_login)),
-        'as_supplier': Supplier.fromdict(Supplier.filter_by(service.getall(Supplier()), login=u_login))
+        'as_customer': Customer.fromdict(service.getOne(Customer(), u_login)),
+        'as_operator': Operator.fromdict(service.getOne(Operator(), u_login)),
+        'as_supplier': Supplier.fromdict(service.getOne(Supplier(), u_login))
     }
     for i in user:
         if user[i] is not None:
             return user[i]
     return None
-
-
 
 
 if __name__ == "__main__":

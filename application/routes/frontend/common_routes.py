@@ -12,8 +12,7 @@ from flask_login import current_user, login_user, logout_user
 from requests.auth import HTTPBasicAuth
 from werkzeug.utils import redirect
 
-from application import app
-from application.data.ApiService import ApiService
+from application import app, service
 from application.data.entities.City import City
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
@@ -23,7 +22,6 @@ from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 
 def sanity_check_customer_request(req):
-    service = ApiService()
     firstname_field = req.form['firstname_field']
     lastname_field = req.form['lastname_field']
     login_field = req.form['login_field']
@@ -51,7 +49,6 @@ def sanity_check_customer_request(req):
 
 
 def create_customer(req):
-    service = ApiService()
     data = sanity_check_customer_request(req)
 
     # Generates random reference :
@@ -68,7 +65,6 @@ def create_customer(req):
 
 
 def sanity_check_supplier_request(req):
-    service = ApiService()
     firstname_field = req.form['firstname_field']
     lastname_field = req.form['lastname_field']
     login_field = req.form['login_field']
@@ -98,7 +94,6 @@ def sanity_check_supplier_request(req):
 
 
 def create_supplier(req):
-    service = ApiService()
     data = sanity_check_supplier_request(req)
 
     # Generates random reference :
@@ -138,7 +133,6 @@ def sanity_check_operator_request(req):
 
 
 def create_operator(req):
-    service = ApiService()
     data = sanity_check_operator_request(req)
 
     # Generates random reference :
@@ -156,7 +150,6 @@ def create_operator(req):
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
-    service = ApiService()
     if request.method == 'POST':
         u_login = request.form['uname_field']
         u_pass = request.form['password_field']
@@ -171,6 +164,8 @@ def login():
         for i in user:
             if user[i] is not None and user[i].check_password(request.form['password_field']):
                 login_user(user[i])
+                service.user = user[i]
+                service.user.password = request.form['password_field']
     return redirect('/')
 
 
@@ -182,7 +177,6 @@ def logout():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    service = ApiService()
     if current_user.is_authenticated:
         return redirect('/')
 

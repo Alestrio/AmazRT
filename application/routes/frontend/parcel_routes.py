@@ -4,10 +4,9 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
-from flask import request, abort, jsonify
+from flask import request, abort, jsonify, render_template
 
 from application import app
-from application.data.base import session
 from application.data.data_classes.TripStage import TripStageType
 from application.data.data_classes import TripStage
 from application.data.entities.Parcel import Parcel
@@ -55,7 +54,7 @@ def track_parcel():
         package_trip.append(TripStage.from_pull(j, package_all_actions[TripStageType.PULL]))
 
     ordered = TripStage.orderByDate(package_trip)
-    jsonified = []
+    tripstages = []
     for i in ordered:
-        jsonified.append(i.__dict__())
-    return jsonify(jsonified)
+        tripstages.append(i.__dict__())
+    return render_template('pages/t_parcel_tracking.html', tripstages=tripstages)

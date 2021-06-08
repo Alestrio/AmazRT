@@ -8,7 +8,6 @@ from flask import render_template, jsonify
 from flask_login import current_user
 
 from application import app
-from application.data.base import session
 from application.data.entities.Parcel import Parcel
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Supplier import Supplier

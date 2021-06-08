@@ -7,12 +7,13 @@
 import random
 import string
 
-from flask import request, flash, render_template, abort
+from flask import request, flash, render_template, abort, session
 from flask_login import current_user, login_user, logout_user
+from requests.auth import HTTPBasicAuth
 from werkzeug.utils import redirect
 
 from application import app
-from application.data.base import session
+from application.data.ApiService import ApiService
 from application.data.entities.City import City
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
@@ -22,6 +23,7 @@ from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 
 def sanity_check_customer_request(req):
+    service = ApiService()
     firstname_field = req.form['firstname_field']
     lastname_field = req.form['lastname_field']
     login_field = req.form['login_field']
@@ -34,7 +36,8 @@ def sanity_check_customer_request(req):
             login_field is not None and
             password_field is not None and password_field == confirm_password_field and
             address_field is not None):
-        city_id = session.query(City).filter_by(name=address_field).first()
+        # city_id = session.query(City).filter_by(name=address_field).first()
+        city_id = City.fromdict(City.filter_by(service.getall(City()), name=address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {
@@ -48,6 +51,7 @@ def sanity_check_customer_request(req):
 
 
 def create_customer(req):
+    service = ApiService()
     data = sanity_check_customer_request(req)
 
     # Generates random reference :
@@ -57,14 +61,14 @@ def create_customer(req):
     rand_ref = rand_ref.upper()
 
     if data is not None:
-        customer = Customer(data['city_id'], rand_ref, data['lastname'], data['firstname'],
+        customer = Customer(0, data['city_id'], rand_ref, data['lastname'], data['firstname'],
                             data['login'], data['password'])
         customer.hash_password()
-        session.add(customer)
-        session.commit()
+        service.add(customer)
 
 
 def sanity_check_supplier_request(req):
+    service = ApiService()
     firstname_field = req.form['firstname_field']
     lastname_field = req.form['lastname_field']
     login_field = req.form['login_field']
@@ -78,7 +82,8 @@ def sanity_check_supplier_request(req):
             password_field is not None and password_field == confirm_password_field and
             address_field is not None and
             activity_field is not None):
-        city_id = session.query(City).filter_by(name=address_field).first()
+        # city_id = session.query(City).filter_by(name=address_field).first()
+        city_id = City.fromdict(City.filter_by(service.getall(City()), name=address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {
@@ -93,6 +98,7 @@ def sanity_check_supplier_request(req):
 
 
 def create_supplier(req):
+    service = ApiService()
     data = sanity_check_supplier_request(req)
 
     # Generates random reference :
@@ -102,11 +108,10 @@ def create_supplier(req):
     rand_ref = rand_ref.upper()
 
     if data is not None:
-        supplier = Supplier(data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
+        supplier = Supplier(0, data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
                             data['login'], data['password'], data['activity'])
         supplier.hash_password()
-        session.add(supplier)
-        session.commit()
+        service.add(supplier)
 
 
 def sanity_check_operator_request(req):
@@ -133,6 +138,7 @@ def sanity_check_operator_request(req):
 
 
 def create_operator(req):
+    service = ApiService()
     data = sanity_check_operator_request(req)
 
     # Generates random reference :
@@ -142,21 +148,25 @@ def create_operator(req):
     rand_ref = rand_ref.upper()
 
     if data is not None:
-        operator = Operator(data['id_pld'], data['lastname'], data['firstname'],
+        operator = Operator(0, data['id_pld'], data['lastname'], data['firstname'],
                             data['login'], data['password'], rand_ref)
         operator.hash_password()
-        session.add(operator)
-        session.commit()
+        service.add(operator)
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
+    service = ApiService()
     if request.method == 'POST':
         u_login = request.form['uname_field']
+        u_pass = request.form['password_field']
         user = {
-            'as_customer': session.query(Customer).filter_by(login=u_login).first(),
-            'as_operator': session.query(Operator).filter_by(login=u_login).first(),
-            'as_supplier': session.query(Supplier).filter_by(login=u_login).first()
+            'as_customer': Customer.fromdict(service.getOneSupplyAuth(Customer(),
+                                                                      u_login, HTTPBasicAuth(u_login, u_pass))),
+            'as_operator': Operator.fromdict(service.getOneSupplyAuth(Operator(),
+                                                                      u_login, HTTPBasicAuth(u_login, u_pass))),
+            'as_supplier': Supplier.fromdict(service.getOneSupplyAuth(Supplier(),
+                                                                      u_login, HTTPBasicAuth(u_login, u_pass)))
         }
         for i in user:
             if user[i] is not None and user[i].check_password(request.form['password_field']):
@@ -169,8 +179,10 @@ def logout():
     logout_user()
     return redirect('/')
 
+
 @app.route('/register', methods=['POST', 'GET'])
 def register():
+    service = ApiService()
     if current_user.is_authenticated:
         return redirect('/')
 
@@ -178,9 +190,9 @@ def register():
         u_login = request.form['login_field']
         user_type = request.form['user_type_field']
         user = {
-            'as_customer': session.query(Customer).filter_by(login=u_login).first(),
-            'as_operator': session.query(Operator).filter_by(login=u_login).first(),
-            'as_supplier': session.query(Supplier).filter_by(login=u_login).first()
+            'as_customer': Customer.fromdict(Customer.filter_by(service.getall(Customer()), login=u_login)),
+            'as_operator': Operator.fromdict(Operator.filter_by(service.getall(Operator()), login=u_login)),
+            'as_supplier': Supplier.fromdict(Supplier.filter_by(service.getall(Supplier()), login=u_login))
         }
         for i in user:
             if user[i] is not None:

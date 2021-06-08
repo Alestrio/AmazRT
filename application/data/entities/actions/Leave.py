@@ -9,24 +9,29 @@ from datetime import date
 
 from sqlalchemy import Column, ForeignKey, Date, DateTime
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 from application.data.entities.platforms.Pld import Pld
 
 
-class Leave(Base):
+class Leave(AbstractEntity):
     """
     @Entity
     This is the entity class responsible for the initial deposit of the parcel.
     The tablename is "deposer"
     """
-    __tablename__ = 'deposer'
-    parcel = Column('id_colis', ForeignKey('colis.id_colis'), primary_key=True)
-    pld = Column('id_pld', ForeignKey('pld.id_pld'), primary_key=True)
-    supplier = Column('id_fournisseur', ForeignKey('fournisseur.id_fournisseur'), primary_key=True)
-    deposit_date = Column('date_depot', DateTime)
 
-    def __init__(self, parcel, pld, supplier, deposit_date: datetime.datetime):
+    def todict(self):
+        return {
+            'id': super().ide,
+            'parcel': self.parcel,
+            'pld': self.pld,
+            'supplier': self.supplier,
+            'deposit_date': self.deposit_date
+        }
+
+    def __init__(self, ide, parcel, pld, supplier, deposit_date: datetime.datetime):
         """Constructor"""
+        super().__init__(ide)
         self.parcel = parcel
         self.pld = pld
         self.supplier = supplier

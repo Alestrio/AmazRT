@@ -8,27 +8,31 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 
 
-class Supplier(Base, UserMixin):
+class Supplier(AbstractEntity, UserMixin):
     """
     @Entity
     This is the entity class responsible for supplier data management.
     The tablename is "fournisseur"
     """
-    __tablename__ = 'fournisseur'
-    id_supplier = Column('id_fournisseur', Integer, primary_key=True)
-    id_city = Column('id_ville', Integer, ForeignKey('ville.id_ville'))
-    ref = Column('ref_fournisseur', VARCHAR(15))
-    name = Column('nom_fournisseur', VARCHAR(30))
-    login = Column('login_fournisseur', VARCHAR(15))
-    password = Column("mdp_fournisseur", VARCHAR(255))
-    activity = Column("activite", VARCHAR(50))
+    root_url = 'supplier/'
 
-    def __init__(self,
-                 id_city, ref, name, login, password, activity):
+    def todict(self):
+        return {
+            'id': self.ide,
+            'id_city': self.id_city,
+            'ref': self.ref,
+            'name': self.name,
+            'login': self.login,
+            'password': self.password,
+            'activity': self.activity
+        }
+
+    def __init__(self, ide=0, id_city=0, ref='', name='', login='', password='', activity=''):
         """Constructor"""
+        super().__init__(ide)
         self.id_city = id_city
         self.ref = ref
         self.name = name
@@ -44,3 +48,11 @@ class Supplier(Base, UserMixin):
 
     def get_id(self):
         return self.login
+
+    @staticmethod
+    def fromdict(param):
+        pass  # TODO
+
+    @staticmethod
+    def filter_by(param, **kwargs):
+        pass  # TODO

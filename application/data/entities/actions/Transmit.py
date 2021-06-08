@@ -8,25 +8,30 @@ from datetime import date
 
 from sqlalchemy import Column, ForeignKey, Date
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 from application.data.entities.platforms.Plr import Plr
 
 
-class Transmit(Base):
+class Transmit(AbstractEntity):
     """
     @Entity
     This is the entity class responsible parcel transmission between two PLRs
     The tablename is "transmettre"
     """
-    __tablename__ = 'transmetre'
-    plr = Column('id_plr', ForeignKey('plr.id_plr'), primary_key=True)
-    dest_plr = Column('plr_id_plr', ForeignKey('plr.id_plr'), primary_key=True)
-    parcel = Column('id_colis', ForeignKey('colis.id_colis'), primary_key=True)
-    send_date = Column('plr_date_envoi', Date)
-    reception_date = Column('plr_date_reception', Date)
 
-    def __init__(self, parcel, plr, dest_plr, send_date: date, reception_date: date):
+    def todict(self):
+        return {
+            'id': super().ide,
+            'parcel': self.parcel,
+            'dest_plr': self.dest_plr,
+            'plr': self.plr,
+            'send_date': self.send_date,
+            'reception_date': self.reception_date
+        }
+
+    def __init__(self, ide, parcel, plr, dest_plr, send_date: date, reception_date: date):
         """Constructor"""
+        super().__init__(ide)
         self.parcel = parcel
         self.dest_plr = dest_plr
         self.plr = plr

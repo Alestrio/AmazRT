@@ -8,33 +8,37 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 from application.data.entities.platforms.Pld import Pld  # this is needed in order to use the associated foreign key
 
-Pld(1, 1, 'dummy', 'dummy')  # This is needed because PyCharm tries to delete the import (╯°□°）╯︵ ┻━┻
+Pld(1, 1, 1, 'dummy', 'dummy')  # This is needed because PyCharm tries to delete the import (╯°□°）╯︵ ┻━┻
 
 
 def hash_password(password):
     return generate_password_hash(password)
 
 
-class Operator(Base, UserMixin):
+class Operator(AbstractEntity, UserMixin):
     """
     @Entity
     This is the entity class responsible for operator data management.
     The tablename is "personnel"
     """
-    __tablename__ = 'personnel'
-    id_operator = Column('id_personnel', Integer, primary_key=True)
-    id_pld = Column('id_pld', Integer, ForeignKey('pld.id_pld'))
-    ref = Column('ref_personnel', VARCHAR(100))
-    lastname = Column('nom_personnel', VARCHAR(50))
-    firstname = Column('prenom_personnel', VARCHAR(50))
-    login = Column('login_personnel', VARCHAR(15))
-    password = Column('mdp_personnel', VARCHAR(255))
+    root_url = 'operator/'
 
-    def __init__(self,
-                 id_pld, lastname, firstname, login, password, ref):
+    def todict(self):
+        return {
+            'id': super().ide,
+            'id_pld': self.id_pld,
+            'lastname': self.lastname,
+            'firstname': self.firstname,
+            'login': self.login,
+            'password': self.password,
+            'ref': self.ref
+        }
+
+    def __init__(self, ide=0, id_pld=0, lastname='', firstname='', login='', password='', ref=''):
+        super().__init__(ide)
         self.id_pld = int(id_pld)
         self.lastname = lastname
         self.firstname = firstname
@@ -50,3 +54,11 @@ class Operator(Base, UserMixin):
 
     def get_id(self):
         return self.login
+
+    @staticmethod
+    def fromdict(param):
+        pass  # TODO
+
+    @staticmethod
+    def filter_by(operator, login):
+        pass  # TODO

@@ -32,7 +32,7 @@ def parcel_register():
             allUsers = session.query(Customer).all()
             for i in allUsers:
                 tolist.append(todict(i))
-            return render_template('t_parcel_register.html', register_form=ParcelRegisterForm(),
+            return render_template('pages/t_parcel_register.html', register_form=ParcelRegisterForm(),
                                    userdata=tolist)
         else:
             abort(403)

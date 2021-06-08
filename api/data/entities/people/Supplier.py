@@ -8,7 +8,7 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from application.data.base import Base
+from api.data.base import Base
 
 
 class Supplier(Base, UserMixin):

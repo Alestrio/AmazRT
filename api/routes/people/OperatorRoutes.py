@@ -8,18 +8,21 @@
 from flask import jsonify, request
 from werkzeug.exceptions import abort
 
-from application import app
-from application.data.base import session
-from application.data.entities.people.Operator import Operator
+from api import auth
+from api import app
+from api.data.base import session
+from api.data.entities.people.Operator import Operator
 
 
 @app.route("/api/v1/operator", methods=['GET'])
+@auth.login_required('operator')
 def getOperators():
     operators = session.query(Operator).all()  # Récuperer tous les opérateurs
     return jsonify(operators)
 
 
 @app.route("/api/v1/operator/<int: id_op>", methods=['GET'])
+@auth.login_required('operator')
 def getOperatorByID(id_op: int):
     operator = session.query(Operator).filter_by(id_operator=id_op).first()
     if operator is not None:
@@ -28,6 +31,7 @@ def getOperatorByID(id_op: int):
 
 
 @app.route("/api/v1/operator/<int: id_op>", methods=['PUT'])
+@auth.login_required('operator')
 def updateOperatorByID(id_op: int):
     operator = session.query(Operator).filter_by(id_operator=id_op).first()
     if operator is not None:
@@ -36,15 +40,8 @@ def updateOperatorByID(id_op: int):
 
 
 @app.route("/api/v1/operator/<int: id_op>", methods=['DELETE'])
+@auth.login_required('operator')
 def deleteOperatorByID(id_op: int):
     operator = session.query(Operator).filter_by(id_operator=id_op).first()
-    new_data = request.get_json()
-    if operator is not None:
-        session.query(Operator).delete()
-        operator.id_pld = new_data['id_pld']
-        operator.lastname = new_data['lastname']
-        operator.firstname = new_data['firstname']
-        operator.login = new_data['login']
-        operator.password = new_data['password']
-        session.query(Operator).add()
+    session.delete(operator)
     abort(404)

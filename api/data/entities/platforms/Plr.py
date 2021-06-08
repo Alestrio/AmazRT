@@ -6,7 +6,7 @@
 #   - Malo LEGRAND @HoesMaaad
 from sqlalchemy import Column, Integer, VARCHAR
 
-from application.data.base import Base
+from api.data.base import Base
 
 
 class Plr(Base):

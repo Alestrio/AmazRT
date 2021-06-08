@@ -8,10 +8,10 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from application.data.base import Base
+from api.data.base import Base
 
 
-class Customer(Base, UserMixin):
+class Customer(Base):
     """
     @Entity
     This is the entity class responsible for customer data management.
@@ -45,14 +45,13 @@ class Customer(Base, UserMixin):
     def get_id(self):
         return self.login
 
-
-def todict(customer):
-    return {
-        "id_client": customer.id_client,
-        "id_city": customer.id_city,
-        "ref": customer.ref,
-        "lastname": customer.lastname,
-        "firstname": customer.firstname,
-        "login": customer.login,
-        "password": customer.password
-    }
+    def todict(self):
+        return {
+            "id_client": self.id_client,
+            "id_city": self.id_city,
+            "ref": self.ref,
+            "lastname": self.lastname,
+            "firstname": self.firstname,
+            "login": self.login,
+            "password": self.password
+        }

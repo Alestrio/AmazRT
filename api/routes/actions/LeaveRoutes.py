@@ -12,6 +12,7 @@ from werkzeug.exceptions import abort
 from api import auth
 from api import app
 from api.data.base import session
+from api.data.entities.Parcel import Parcel
 from api.data.entities.people.Customer import Customer
 from api.data.entities.people.Operator import Operator
 from api.data.entities.people.Supplier import Supplier
@@ -41,6 +42,15 @@ def getLeaves():
 @auth.login_required(role='operator')
 def getLeaveByID(id_leave: int):
     leave = session.query(Leave).filter_by(ide=id_leave).first()
+    if leave is not None:
+        return jsonify(leave.todict())
+    abort(404)
+
+
+@app.route("/api/v1/leave/<string:parcel_ref>", methods=['GET'])
+def getLeaveByParcelRef(parcel_ref: str):
+    parcel = session.query(Parcel).filter_by(ref=parcel_ref).first()
+    leave = session.query(Leave).filter_by(parcel=parcel.id_parcel).first()
     if leave is not None:
         return jsonify(leave.todict())
     abort(404)

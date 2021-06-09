@@ -11,6 +11,8 @@ from werkzeug.exceptions import abort
 from api import auth
 from api import app
 from api.data.base import session
+from api.data.entities.Parcel import Parcel
+from api.data.entities.actions.Send import Send
 from api.data.entities.people.Customer import Customer
 from api.data.entities.people.Operator import Operator
 from api.data.entities.people.Supplier import Supplier
@@ -35,6 +37,18 @@ def getTransmits():
     for i in transmits:
         dicts.append(i.todict())
     return jsonify(dicts)
+
+
+@app.route("/api/v1/transmit/<string:parcel_ref>", methods=['GET'])
+def getTransmitsByParcelRef(parcel_ref: str):
+    parcel = session.query(Parcel).filter_by(ref=parcel_ref).first()
+    transmits = session.query(Transmit).filter_by(parcel=parcel.id_parcel)
+    if transmits is not None:
+        transmitlist = []
+        for i in transmits:
+            transmitlist.append(i.todict())
+        return jsonify(transmitlist)
+    abort(404)
 
 
 @app.route("/api/v1/transmit/<int:id_transmit>", methods=['GET'])

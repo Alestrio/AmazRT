@@ -14,13 +14,14 @@ from api.data.base import session
 from api.data.entities.people.Customer import Customer
 from api.data.entities.people.Operator import Operator
 from api.data.entities.people.Supplier import Supplier
-from application.data.entities.actions.Send import Send
+from api.data.entities.Parcel import Parcel
+from api.data.entities.actions.Send import Send
 
 
 @app.route('/api/v1/send', methods=['POST'])
 def addSend():
     req = request.get_json()
-    send = Send(req['ide'], req['id_parcel'], req['id_pld'], req['id_plr'], req['send_date'], req['reception_date'],
+    send = Send(req['id_parcel'], req['id_pld'], req['id_plr'], req['send_date'], req['reception_date'],
                 req['pld_to_plr'])
     session.add(send)
     session.commit()
@@ -35,6 +36,18 @@ def getSends():
     for i in sends:
         dicts.append(i.todict())
     return jsonify(dicts)
+
+
+@app.route("/api/v1/send/<string:parcel_ref>", methods=['GET'])
+def getSendsByParcelRef(parcel_ref: str):
+    parcel = session.query(Parcel).filter_by(ref=parcel_ref).first()
+    sends = session.query(Send).filter_by(parcel=parcel.id_parcel)
+    if sends is not None:
+        sendlist = []
+        for i in sends:
+            sendlist.append(i.todict())
+        return jsonify(sendlist)
+    abort(404)
 
 
 @app.route("/api/v1/send/<int:id_send>", methods=['GET'])

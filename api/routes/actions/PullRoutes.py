@@ -14,7 +14,8 @@ from api.data.base import session
 from api.data.entities.people.Customer import Customer
 from api.data.entities.people.Operator import Operator
 from api.data.entities.people.Supplier import Supplier
-from application.data.entities.actions.Pull import Pull
+from api.data.entities.Parcel import Parcel
+from api.data.entities.actions.Pull import Pull
 
 
 @app.route('/api/v1/pull', methods=['POST'])
@@ -41,6 +42,15 @@ def getPulls():
 def getPullByID(id_pull: int):
     pull = session.query(Pull).filter_by(ide=id_pull).first()
     if Pull is not None:
+        return jsonify(pull.todict())
+    abort(404)
+
+
+@app.route("/api/v1/pull/<string:parcel_ref>", methods=['GET'])
+def getPullByParcelRef(parcel_ref: str):
+    parcel = session.query(Parcel).filter_by(ref=parcel_ref).first()
+    pull = session.query(Pull).filter_by(parcel=parcel.id_parcel).first()
+    if pull is not None:
         return jsonify(pull.todict())
     abort(404)
 

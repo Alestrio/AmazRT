@@ -32,3 +32,11 @@ class Leave(Base):
         self.supplier = supplier
         self.deposit_date = deposit_date
 
+    def todict(self):
+        return {
+            'parcel': self.parcel,
+            'pld': self.pld,
+            'supplier': self.supplier,
+            'deposit_date': self.deposit_date.timestamp()
+        }
+

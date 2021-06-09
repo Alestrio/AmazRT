@@ -35,7 +35,6 @@ def getParcelByID(id_parcel: int):
 
 
 @app.route("/api/v1/parcel/<string:ref>", methods=['GET'])
-@auth.login_required(role=['operator', 'supplier', 'customer'])
 def getParcelByREF(ref: str):
     parcel = session.query(Parcel).filter_by(ref=ref).first()
     if parcel:

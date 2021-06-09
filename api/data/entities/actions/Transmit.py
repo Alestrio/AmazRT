@@ -4,6 +4,7 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
+import datetime
 from datetime import date
 
 from sqlalchemy import Column, ForeignKey, Date
@@ -25,10 +26,19 @@ class Transmit(Base):
     send_date = Column('plr_date_envoi', Date)
     reception_date = Column('plr_date_reception', Date)
 
-    def __init__(self, parcel, plr, dest_plr, send_date: date, reception_date: date):
+    def __init__(self, parcel, plr, dest_plr, send_date: datetime.datetime, reception_date: datetime.datetime):
         """Constructor"""
         self.parcel = parcel
         self.dest_plr = dest_plr
         self.plr = plr
         self.send_date = send_date
         self.reception_date = reception_date
+
+    def todict(self):
+        return {
+            'parcel': self.parcel,
+            'dest_plr': self.dest_plr,
+            'plr': self.plr,
+            'send_date': self.send_date.timestamp(),
+            'reception_date': self.reception_date.timestamp()
+        }

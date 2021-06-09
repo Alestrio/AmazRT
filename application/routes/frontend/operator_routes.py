@@ -8,15 +8,14 @@ import datetime
 import random
 import string
 
-from flask import render_template, jsonify, request, redirect
+from flask import render_template, jsonify, request, redirect, session
 from flask_login import current_user
 from werkzeug.exceptions import abort
 
-from application import app
-from application.data.base import session
+from application import app, service
 from application.data.entities.Parcel import Parcel
 from application.data.entities.actions.Leave import Leave
-from application.data.entities.people.Customer import Customer, todict
+from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier
 from application.frontend.forms.parcel_register_form import ParcelRegisterForm
@@ -27,9 +26,10 @@ def parcel_register():
     if request.method == 'GET':
         if isinstance(current_user, Operator):
             tolist = []
-            allUsers = session.query(Customer).all()
+            #allUsers = session.query(Customer).all()
+            allUsers = Customer.fromdict(service.getall(Customer()))
             for i in allUsers:
-                tolist.append(todict(i))
+                tolist.append(i.todict())
             return render_template('pages/t_parcel_register.html', register_form=ParcelRegisterForm(),
                                    userdata=tolist)
         else:
@@ -37,8 +37,8 @@ def parcel_register():
     elif request.method == 'POST':
         data = request.form
 
-        supplier_test = session.query(Supplier).filter_by(id_supplier=data['supplier_id_field']).first()
-        customer_test = session.query(Customer).filter_by(id_client=data['customer_id_field']).first()
+        supplier_test = Supplier.fromdict(service.getOne(Supplier(), data['supplier_id_field']))
+        customer_test = Customer.fromdict(service.getOne(Customer(), data['customer_id_field']))
 
         if supplier_test is None or customer_test is None or data['type_radio'] == '':
             abort(400)
@@ -57,13 +57,12 @@ def parcel_register():
             "pld_id": data['pld_id_field']
         }
 
-        parcel = Parcel(datadict['ref'], datadict['type'], datadict['customer_id'], datadict['supplier_id'])
-        session.add(parcel)
-        session.commit()
-        parcel = session.query(Parcel).filter_by(ref=datadict['ref']).first()
-        leave = Leave(parcel.id_parcel, datadict['pld_id'], datadict['supplier_id'], datetime.datetime.now())
-        session.add(leave)
-        session.commit()
+        parcel = Parcel(0, datadict['ref'], datadict['type'], datadict['customer_id'], datadict['supplier_id'])
+        service.add(parcel)
+        #parcel = session.query(Parcel).filter_by(ref=datadict['ref']).first()
+        parcel = Parcel.fromdict(service.getOne(Parcel(), datadict['ref']))
+        leave = Leave(0, parcel.ide, datadict['pld_id'], datadict['supplier_id'], datetime.datetime.now())
+        service.add(leave)
         return redirect('/')
     else:
         abort(502)

@@ -4,10 +4,9 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
-from flask import request, abort, jsonify
+from flask import request, abort, jsonify, render_template
 
-from application import app
-from application.data.base import session
+from application import app, service
 from application.data.data_classes.TripStage import TripStageType
 from application.data.data_classes import TripStage
 from application.data.entities.Parcel import Parcel
@@ -15,16 +14,17 @@ from application.data.entities.actions.Leave import Leave
 from application.data.entities.actions.Pull import Pull
 from application.data.entities.actions.Send import Send
 from application.data.entities.actions.Transmit import Transmit
+from application.frontend.forms.simple_login_form import SimpleLoginForm
 
 
 def getAllPackageActions(tracking_number):
-    parcel: Parcel = session.query(Parcel).filter_by(ref=tracking_number).first()
+    parcel: Parcel = Parcel.fromdict(service.getOne(Parcel(), tracking_number))
     if parcel is not None:
-        leave = session.query(Leave).filter_by(parcel=parcel.id_parcel).first()  # those are intended to be unique
+        leave = Leave.fromdict(service.getOne(Leave(), parcel.ref))  # those are intended to be unique
         # that's why we are taking the first element
-        pull = session.query(Pull).filter_by(parcel=parcel.id_parcel).first()
-        sends = session.query(Send).filter_by(parcel=parcel.id_parcel)
-        transmits = session.query(Transmit).filter_by(parcel=parcel.id_parcel)
+        pull = Pull.fromdict(service.getOne(Pull(), parcel.ref))
+        sends = Send.fromdict(service.getOne(Send(), parcel.ref))
+        transmits = Transmit.fromdict(service.getOne(Transmit(), parcel.ref))
 
         return {
             "parcel": parcel,
@@ -55,7 +55,7 @@ def track_parcel():
         package_trip.append(TripStage.from_pull(j, package_all_actions[TripStageType.PULL]))
 
     ordered = TripStage.orderByDate(package_trip)
-    jsonified = []
+    tripstages = []
     for i in ordered:
-        jsonified.append(i.__dict__())
-    return jsonify(jsonified)
+        tripstages.append(i.__dict__())
+    return render_template('pages/t_parcel_tracking.html', tripstages=tripstages, login_form=SimpleLoginForm())

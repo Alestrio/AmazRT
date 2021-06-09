@@ -1,0 +1,45 @@
+<!--
+  ~ AmazRT  -  Parcel Management System
+  ~ First semester Technical Degree project
+  ~
+  ~ Copyright  (c) 2021 - 2022
+  ~ - Meryem KAYA @MeryemKy
+  ~ - Alexis LEBEL @Alestrio
+  ~ - Malo LEGRAND @HoesMaaad
+  -->
+{% extends 'pages/t_layout.html' %}
+{% block content %}
+    <main>
+        <div class="block">
+            <div class="w-full flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">
+                <h1 class="text-3xl text-base">Suivi de votre colis :</h1>
+                    <table class="table-auto border-2 border-yellow-600 border-collapse">
+                        <tr class="border">
+                            <th class="border p-2">Numéro d'étape</th>
+                            <th class="border p-2">Type d'étape</th>
+                            <th class="border p-2">Type de source</th>
+                            <th class="border p-2">Identifiant de source</th>
+                            <th class="border p-2">Type de destination</th>
+                            <th class="border p-2">Identifiant de destination</th>
+                            <th class="border p-2">Date d'envoi</th>
+                            <th class="border p-2">Date de réception</th>
+                        </tr>
+                        {% if tripstages != None %}
+                            {% for i in tripstages %}
+                                <tr class="border">
+                                    <td class="border p-2">{{ i.stage_id }}</td>
+                                    <td class="border p-2">{{ i.ts_type }}</td>
+                                    <td class="border p-2">{{ i.source_type }}</td>
+                                    <td class="border p-2">{{ i.source }}</td>
+                                    <td class="border p-2">{{ i.destination_type }}</td>
+                                    <td class="border p-2">{{ i.destination }}</td>
+                                    <td class="border p-2">{{ i.send_date }}</td>
+                                    <td class="border p-2">{{ i.reception_date }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}

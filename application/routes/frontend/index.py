@@ -6,10 +6,9 @@
 #   - Malo LEGRAND @HoesMaaad
 import random
 
-from flask import render_template, request, abort
+from flask import render_template, request, abort, session
 
-from application import app
-from application.data.base import session
+from application import app, service
 from application.data.entities.City import City
 from application.frontend.forms.parcel_preregister_form import PreRegisterForm
 from application.frontend.forms.simple_login_form import SimpleLoginForm
@@ -36,8 +35,8 @@ def preregister():
         "dest_city_id": None
     }  # Again, we are wrapping the data in a dict to provide data as one object to Jinja
 
-    source_city_id = session.query(City).filter_by(name=datadict['source_city']).first()
-    dest_city_id = session.query(City).filter_by(name=datadict['dest_city']).first()
+    source_city_id = City.fromdict(service.getOne(City(), datadict['source_city']))
+    dest_city_id = City.fromdict(service.getOne(City(), datadict['dest_city']))
 
     if source_city_id is None or dest_city_id is None:
         abort(400)

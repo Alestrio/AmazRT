@@ -7,12 +7,12 @@
 import random
 import string
 
-from flask import request, flash, render_template, abort
+from flask import request, flash, render_template, abort, session
 from flask_login import current_user, login_user, logout_user
+from requests.auth import HTTPBasicAuth
 from werkzeug.utils import redirect
 
-from application import app
-from application.data.base import session
+from application import app, service
 from application.data.entities.City import City
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
@@ -34,7 +34,8 @@ def sanity_check_customer_request(req):
             login_field is not None and
             password_field is not None and password_field == confirm_password_field and
             address_field is not None):
-        city_id = session.query(City).filter_by(name=address_field).first()
+        # city_id = session.query(City).filter_by(name=address_field).first()
+        city_id = City.fromdict(service.getOne(City, address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {
@@ -57,11 +58,9 @@ def create_customer(req):
     rand_ref = rand_ref.upper()
 
     if data is not None:
-        customer = Customer(data['city_id'], rand_ref, data['lastname'], data['firstname'],
+        customer = Customer(0, data['city_id'], rand_ref, data['lastname'], data['firstname'],
                             data['login'], data['password'])
-        customer.hash_password()
-        session.add(customer)
-        session.commit()
+        service.add(customer)
 
 
 def sanity_check_supplier_request(req):
@@ -78,7 +77,8 @@ def sanity_check_supplier_request(req):
             password_field is not None and password_field == confirm_password_field and
             address_field is not None and
             activity_field is not None):
-        city_id = session.query(City).filter_by(name=address_field).first()
+        # city_id = session.query(City).filter_by(name=address_field).first()
+        city_id = City.fromdict(City.filter_by(service.getall(City()), name=address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {
@@ -102,11 +102,9 @@ def create_supplier(req):
     rand_ref = rand_ref.upper()
 
     if data is not None:
-        supplier = Supplier(data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
+        supplier = Supplier(0, data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
                             data['login'], data['password'], data['activity'])
-        supplier.hash_password()
-        session.add(supplier)
-        session.commit()
+        service.add(supplier)
 
 
 def sanity_check_operator_request(req):
@@ -142,32 +140,38 @@ def create_operator(req):
     rand_ref = rand_ref.upper()
 
     if data is not None:
-        operator = Operator(data['id_pld'], data['lastname'], data['firstname'],
+        operator = Operator(0, data['id_pld'], data['lastname'], data['firstname'],
                             data['login'], data['password'], rand_ref)
-        operator.hash_password()
-        session.add(operator)
-        session.commit()
+        service.add(operator)
 
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         u_login = request.form['uname_field']
+        u_pass = request.form['password_field']
         user = {
-            'as_customer': session.query(Customer).filter_by(login=u_login).first(),
-            'as_operator': session.query(Operator).filter_by(login=u_login).first(),
-            'as_supplier': session.query(Supplier).filter_by(login=u_login).first()
+            'as_customer': Customer.fromdict(service.getOneSupplyAuth(Customer(),
+                                                                      u_login, HTTPBasicAuth(u_login, u_pass))),
+            'as_operator': Operator.fromdict(service.getOneSupplyAuth(Operator(),
+                                                                      u_login, HTTPBasicAuth(u_login, u_pass))),
+            'as_supplier': Supplier.fromdict(service.getOneSupplyAuth(Supplier(),
+                                                                      u_login, HTTPBasicAuth(u_login, u_pass)))
         }
         for i in user:
             if user[i] is not None and user[i].check_password(request.form['password_field']):
                 login_user(user[i])
+                service.user = user[i]
+                service.user.password = request.form['password_field']
     return redirect('/')
 
 
 @app.route('/logout')
 def logout():
     logout_user()
+    service.user = None
     return redirect('/')
+
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -177,15 +181,7 @@ def register():
     if request.method == 'POST':
         u_login = request.form['login_field']
         user_type = request.form['user_type_field']
-        user = {
-            'as_customer': session.query(Customer).filter_by(login=u_login).first(),
-            'as_operator': session.query(Operator).filter_by(login=u_login).first(),
-            'as_supplier': session.query(Supplier).filter_by(login=u_login).first()
-        }
-        for i in user:
-            if user[i] is not None:
-                flash("Cet utilisateur existe déjà !")
-
+        exists = service.checkIfLoginExists(u_login)
         user_creator = {
             'customer': create_customer,
             'operator': create_operator,

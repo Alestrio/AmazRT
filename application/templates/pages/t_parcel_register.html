@@ -48,7 +48,7 @@
                     </div>
                     {{ register_form.submit(class_="shadow bg-yellow-600 hover:bg-purple-light focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded") }}
                     <hr class="bg-yellow-600 mt-10 mb-10" />
-                    <h2 class="text-3xl text-base">Un trou de mémoire ?</h2>
+                    <h2 class="text-3xl text-base">Trouver un ID de client :</h2>
                 </form>
                 <label for="userTableSearch">
                     Rechercher un client :
@@ -88,7 +88,7 @@
             let firstnameCell = row.insertCell(-1)
             firstnameCell.className = rowCellClass
 
-            customerIdCell.innerHTML = content['id_client']
+            customerIdCell.innerHTML = content['ide']
             cityIdCell.innerHTML = content['id_city']
             refCell.innerHTML = content['ref']
             lastnameCell.innerHTML = content['lastname']

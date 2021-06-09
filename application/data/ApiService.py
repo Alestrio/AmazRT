@@ -76,3 +76,14 @@ class ApiService:
             return req.json()
         else:
             print('nope', req.status_code)
+
+
+    def getWithPayload(self, entity: AbstractEntity, payload):
+        geturl = self.__api_url + entity.root_url.replace('/', '')
+        if self.user:
+            req = requests.get(geturl, auth=HTTPBasicAuth(self.user.login, self.user.password), params=payload)
+        else:
+            req = requests.get(geturl, params=payload)
+
+        if req.status_code == 200:
+            return req.json()

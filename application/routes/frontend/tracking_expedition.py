@@ -7,7 +7,7 @@
 from flask import render_template, jsonify
 from flask_login import current_user
 
-from application import app
+from application import app, service
 from application.data.entities.Parcel import Parcel
 from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Supplier import Supplier
@@ -16,8 +16,8 @@ from application.frontend.forms.simple_tracking_form import SimpleTrackingForm
 
 
 def userTrackedParcels(user: Customer):
-    cid = user.id_client
-    parcels = session.query(Parcel).filter_by(id_customer=cid).all()
+    cid = user.ide
+    parcels = Parcel.fromdict(service.getWithPayload(Parcel(), {'id_user': cid}))
     parcel_array = []
     for i in parcels:
         parcel_array.append(i.asDict())
@@ -25,8 +25,8 @@ def userTrackedParcels(user: Customer):
 
 
 def userTrackedParcelsSupplier(user: Supplier):
-    cid = user.id_supplier
-    parcels = session.query(Parcel).filter_by(id_supplier=cid).all()
+    cid = user.ide
+    parcels = Parcel.fromdict(service.getWithPayload(Parcel(), {'id_supplier': cid}))
     parcel_array = []
     for i in parcels:
         parcel_array.append(i.asDict())

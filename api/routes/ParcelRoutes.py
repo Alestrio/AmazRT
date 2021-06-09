@@ -5,13 +5,7 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-from flask import jsonify
+from flask import jsonify, request
 from werkzeug.exceptions import abort
 
 from api import auth
@@ -21,14 +15,17 @@ from api.data.entities.Parcel import Parcel
 
 
 @app.route("/api/v1/parcel", methods=['GET'])
-@auth.login_required('operator')
+@auth.login_required(role='operator')
 def getParcels():
-    parcel = session.query(Parcel).all()
-    return jsonify(parcel)
+    parcels = session.query(Parcel).all()
+    plist = []
+    for i in parcels:
+        plist.append(i.todict())
+    return jsonify(plist)
 
 
-@app.route("/api/v1/parcel/<int: id_parcel>", methods=['GET'])
-@auth.login_required(['operator', 'supplier', 'customer'])
+@app.route("/api/v1/parcel/<int:id_parcel>", methods=['GET'])
+@auth.login_required(role=['operator', 'supplier', 'customer'])
 def getParcelByID(id_parcel: int):
     parcel = session.query(Parcel).all()
     for par in parcel:
@@ -37,18 +34,36 @@ def getParcelByID(id_parcel: int):
     abort(404)
 
 
-@app.route("/api/v1/parcel/<int: id_parcel>", methods=['PUT'])
-@auth.login_required('operator')
+@app.route("/api/v1/parcel/<string:ref>", methods=['GET'])
+@auth.login_required(role=['operator', 'supplier', 'customer'])
+def getParcelByREF(ref: str):
+    parcel = session.query(Parcel).filter_by(ref=ref).first()
+    if parcel:
+        return jsonify(parcel.todict())
+    abort(404)
+
+
+@app.route('/api/v1/parcel', methods=['POST'])
+def addParcel():
+    req = request.get_json()
+    par = Parcel(req['ref'], req['type'], req['id_customer'], req['id_supplier'])
+    session.add(par)
+    session.commit()
+    return jsonify(201)
+
+
+@app.route("/api/v1/parcel/<int:id_parcel>", methods=['PUT'])
+@auth.login_required(role='operator')
 def updateParcelByID(id_parcel: int):
-    parcel = session.query(Parcel).update()
+    parcel = session.query(Parcel)
     for par in parcel:
         if par.id_parcel == id_parcel:
             return jsonify(par)  # TODO
     abort(404)
 
 
-@app.route("/api/v1/parcel/<int: id_parcel>", methods=['DELETE'])
-@auth.login_required('operator')
+@app.route("/api/v1/parcel/<int:id_parcel>", methods=['DELETE'])
+@auth.login_required(role='operator')
 def deleteParcelByID(id_parcel: int):
     parcel = session.query(Parcel).delete()
     for par in parcel:

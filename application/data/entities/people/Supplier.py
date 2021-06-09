@@ -51,9 +51,17 @@ class Supplier(AbstractEntity, UserMixin):
 
     @staticmethod
     def fromdict(origin_dict):
-        if origin_dict:
-            return Supplier(origin_dict['ide'], origin_dict['id_city'], origin_dict['ref'], origin_dict['name'],
-                            origin_dict['login'], origin_dict['password'], origin_dict['activity'])
+        if origin_dict is not None:
+            custlist = []
+            if not isinstance(origin_dict, dict):
+                for i in origin_dict:
+                    print(i)
+                    custlist.append(Supplier(i['ide'], i['id_city'], i['ref'], i['name'],
+                                    i['login'], i['password'], i['activity']))
+                return custlist
+            else:
+                return Supplier(origin_dict['ide'], origin_dict['id_city'], origin_dict['ref'], origin_dict['name'],
+                                origin_dict['login'], origin_dict['password'], origin_dict['activity'])
 
     @staticmethod
     def filter_by(param, **kwargs):

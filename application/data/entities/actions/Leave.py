@@ -19,10 +19,11 @@ class Leave(AbstractEntity):
     This is the entity class responsible for the initial deposit of the parcel.
     The tablename is "deposer"
     """
+    root_url = 'leave/'
 
     def todict(self):
         return {
-            'id': super().ide,
+            'ide': self.ide,
             'parcel': self.parcel,
             'pld': self.pld,
             'supplier': self.supplier,
@@ -32,8 +33,9 @@ class Leave(AbstractEntity):
     def __init__(self, ide, parcel, pld, supplier, deposit_date: datetime.datetime):
         """Constructor"""
         super().__init__(ide)
+        self.ide = ide
         self.parcel = parcel
         self.pld = pld
         self.supplier = supplier
-        self.deposit_date = deposit_date
+        self.deposit_date = deposit_date.timestamp()
 

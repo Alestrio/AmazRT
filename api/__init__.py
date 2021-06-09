@@ -12,4 +12,5 @@ app = Flask(__name__)
 auth = HTTPBasicAuth()
 
 from api.routes.people import CustomerRoutes, OperatorRoutes, SupplierRoutes
-from api.routes import CityRoutes
+from api.routes import CityRoutes, ParcelRoutes
+from api.routes.actions import LeaveRoutes

@@ -61,7 +61,7 @@ def parcel_register():
         service.add(parcel)
         #parcel = session.query(Parcel).filter_by(ref=datadict['ref']).first()
         parcel = Parcel.fromdict(service.getOne(Parcel(), datadict['ref']))
-        leave = Leave(0, parcel.id_parcel, datadict['pld_id'], datadict['supplier_id'], datetime.datetime.now())
+        leave = Leave(0, parcel.ide, datadict['pld_id'], datadict['supplier_id'], datetime.datetime.now())
         service.add(leave)
         return redirect('/')
     else:

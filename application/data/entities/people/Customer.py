@@ -54,7 +54,7 @@ class Customer(AbstractEntity, UserMixin):
     def fromdict(origin_dict):
         if origin_dict is not None:
             custlist = []
-            if origin_dict is not dict:
+            if not isinstance(origin_dict, dict):
                 for i in origin_dict:
                     print(i)
                     custlist.append(Customer(i['ide'], i['id_city'], i['ref'], i['lastname'],

@@ -4,6 +4,7 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
+import datetime
 
 from flask import jsonify, request
 from werkzeug.exceptions import abort
@@ -14,13 +15,13 @@ from api.data.base import session
 from api.data.entities.people.Customer import Customer
 from api.data.entities.people.Operator import Operator
 from api.data.entities.people.Supplier import Supplier
-from application.data.entities.actions.Leave import Leave
+from api.data.entities.actions.Leave import Leave
 
 
 @app.route('/api/v1/leave', methods=['POST'])
 def addLeave():
     req = request.get_json()
-    leave = Leave(req['ide'], req['id_parcel'], req['id_pld'], req['supplier'], req['deposit_date'])
+    leave = Leave(req['parcel'], req['pld'], req['supplier'], datetime.datetime.fromtimestamp(req['deposit_date']))
     session.add(leave)
     session.commit()
     return jsonify(201)

@@ -43,8 +43,12 @@ class ApiService:
 
     def getall(self, entity: AbstractEntity):
         geturl = self.__api_url + entity.root_url.replace('/', '')
-        req = requests.get(geturl, auth=HTTPBasicAuth(self.user.login, self.user.password))
-        if req.status_code == 200:
+        if self.user:
+            req = requests.get(geturl, auth=HTTPBasicAuth(self.user.login, self.user.password))
+        else:
+            req = requests.get(geturl)
+
+        if req.status_code == 200 or req.status_code == 201:
             return req.json()
 
     def getOne(self, entity: AbstractEntity, value):

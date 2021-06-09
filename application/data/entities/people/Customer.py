@@ -21,6 +21,7 @@ class Customer(AbstractEntity, UserMixin):
 
     def todict(self):
         return {
+            'ide': self.ide,
             'id_city': self.id_city,
             'ref': self.ref,
             'lastname': self.lastname,
@@ -32,6 +33,7 @@ class Customer(AbstractEntity, UserMixin):
     def __init__(self, ide=0, id_city=0, ref=0, lastname='', firstname='', login='', password=''):
         """Constructor"""
         super().__init__(ide)
+        self.ide = ide
         self.id_city = id_city
         self.ref = ref
         self.lastname = lastname
@@ -51,8 +53,16 @@ class Customer(AbstractEntity, UserMixin):
     @staticmethod
     def fromdict(origin_dict):
         if origin_dict is not None:
-            return Customer(0, origin_dict['id_city'], origin_dict['ref'], origin_dict['lastname'],
-                            origin_dict['firstname'], origin_dict['login'], origin_dict['password'])
+            custlist = []
+            if origin_dict is not dict:
+                for i in origin_dict:
+                    print(i)
+                    custlist.append(Customer(i['ide'], i['id_city'], i['ref'], i['lastname'],
+                                    i['firstname'], i['login'], i['password']))
+                return custlist
+            else:
+                return Customer(origin_dict['ide'], origin_dict['id_city'], origin_dict['ref'], origin_dict['lastname'],
+                                origin_dict['firstname'], origin_dict['login'], origin_dict['password'])
 
     @staticmethod
     def filter_by(customer, **kwargs):

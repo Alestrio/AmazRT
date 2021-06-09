@@ -47,7 +47,7 @@ class Customer(Base):
 
     def todict(self):
         return {
-            "id_client": self.id_client,
+            "ide": self.id_client,
             "id_city": self.id_city,
             "ref": self.ref,
             "lastname": self.lastname,

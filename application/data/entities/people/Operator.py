@@ -56,8 +56,10 @@ class Operator(AbstractEntity, UserMixin):
         return self.login
 
     @staticmethod
-    def fromdict(param):
-        pass  # TODO
+    def fromdict(origin_dict):
+        if origin_dict:
+            return Operator(origin_dict['ide'], origin_dict['id_pld'], origin_dict['lastname'], origin_dict['firstname'],
+                            origin_dict['login'], origin_dict['password'], origin_dict['ref'])
 
     @staticmethod
     def filter_by(operator, login):

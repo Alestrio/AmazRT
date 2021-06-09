@@ -50,8 +50,10 @@ class Supplier(AbstractEntity, UserMixin):
         return self.login
 
     @staticmethod
-    def fromdict(param):
-        pass  # TODO
+    def fromdict(origin_dict):
+        if origin_dict:
+            return Supplier(origin_dict['ide'], origin_dict['id_city'], origin_dict['ref'], origin_dict['name'],
+                            origin_dict['login'], origin_dict['password'], origin_dict['activity'])
 
     @staticmethod
     def filter_by(param, **kwargs):

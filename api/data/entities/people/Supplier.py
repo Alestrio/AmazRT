@@ -44,3 +44,14 @@ class Supplier(Base, UserMixin):
 
     def get_id(self):
         return self.login
+
+    def todict(self):
+        return {
+            'ide': self.id_supplier,
+            'id_city': self.id_city,
+            'ref': self.ref,
+            'name': self.name,
+            'login': self.login,
+            'password': self.password,
+            'activity': self.activity
+        }

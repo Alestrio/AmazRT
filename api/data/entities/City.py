@@ -35,3 +35,13 @@ class City(Base):
         self.gps_lat = gps_lat
         self.gps_long = gps_long
 
+    def todict(self):
+        return {
+            'ide': self.id_city,
+            'id_pld': self.id_pld,
+            'name': self.name,
+            'insee_code': self.insee_code,
+            'postalcode': self.postalcode,
+            'gps_lat': self.gps_lat,
+            'gps_long': self.gps_long
+        }

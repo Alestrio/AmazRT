@@ -50,3 +50,14 @@ class Operator(Base):
 
     def get_id(self):
         return self.login
+
+    def todict(self):
+        return {
+            'ide': self.id_operator,
+            'id_pld': self.id_pld,
+            'ref': self.ref,
+            'lastname': self.lastname,
+            'firstname': self.firstname,
+            'login': self.login,
+            'password': self.password
+        }

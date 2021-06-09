@@ -15,23 +15,32 @@ from api.data.entities.people.Operator import Operator
 
 
 @app.route("/api/v1/operator", methods=['GET'])
-@auth.login_required('operator')
+@auth.login_required(role='operator')
 def getOperators():
     operators = session.query(Operator).all()  # Récuperer tous les opérateurs
     return jsonify(operators)
 
 
-@app.route("/api/v1/operator/<int: id_op>", methods=['GET'])
-@auth.login_required('operator')
+@app.route("/api/v1/operator/<int:id_op>", methods=['GET'])
+@auth.login_required(role='operator')
 def getOperatorByID(id_op: int):
     operator = session.query(Operator).filter_by(id_operator=id_op).first()
     if operator is not None:
-        return jsonify(operator)
+        return jsonify(operator.todict())
     abort(404)
 
 
-@app.route("/api/v1/operator/<int: id_op>", methods=['PUT'])
-@auth.login_required('operator')
+@app.route("/api/v1/operator/<string:login>", methods=['GET'])
+@auth.login_required(role='operator')
+def getOperatorByLOGIN(login: str):
+    operator = session.query(Operator).filter_by(login=login).first()
+    if operator is not None:
+        return jsonify(operator.todict())
+    abort(404)
+
+
+@app.route("/api/v1/operator/<int:id_op>", methods=['PUT'])
+@auth.login_required(role='operator')
 def updateOperatorByID(id_op: int):
     operator = session.query(Operator).filter_by(id_operator=id_op).first()
     if operator is not None:
@@ -39,8 +48,8 @@ def updateOperatorByID(id_op: int):
     abort(404)
 
 
-@app.route("/api/v1/operator/<int: id_op>", methods=['DELETE'])
-@auth.login_required('operator')
+@app.route("/api/v1/operator/<int:id_op>", methods=['DELETE'])
+@auth.login_required(role='operator')
 def deleteOperatorByID(id_op: int):
     operator = session.query(Operator).filter_by(id_operator=id_op).first()
     session.delete(operator)

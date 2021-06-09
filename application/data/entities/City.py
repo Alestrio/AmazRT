@@ -6,27 +6,31 @@
 #   - Malo LEGRAND @HoesMaaad
 from sqlalchemy import Column, Integer, VARCHAR, CHAR, Numeric, ForeignKey
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 
 
-class City(Base):
+class City(AbstractEntity):
     """
     @Entity
     This is the entity class responsible for cities data management.
     The tablename is "ville"
     """
-    __tablename__ = 'ville'
-    id_city = Column('id_ville', Integer, primary_key=True)
-    id_pld = ForeignKey('pld.id_pld')
-    name = Column('nom_ville', VARCHAR(50))
-    postalcode = Column('cp', CHAR(5))
-    insee_code = Column('insee_code', VARCHAR(5))
-    gps_lat = Column('gps_lat', Numeric)
-    gps_long = Column('gps_lng', Numeric)
+    root_url = 'city/'
 
-    def __init__(self,
-                 id_city, id_pld, name, postalcode, insee_code, gps_lat, gps_long):
-        super().__init__()
+    def todict(self):
+        return {
+            'id': super().ide,
+            'id_pld': self.id_pld,
+            'id_city': self.id_city,
+            'name': self.name,
+            'insee_code': self.insee_code,
+            'postalcode': self.postalcode,
+            'gps_lat': self.gps_lat,
+            'gps_long': self.gps_long
+        }
+
+    def __init__(self, id_city=0, id_pld=0, name='', postalcode=0, insee_code=0, gps_lat=0, gps_long=0):
+        super().__init__(id_city)
         self.id_pld = id_pld
         self.id_city = id_city
         self.name = name
@@ -35,3 +39,35 @@ class City(Base):
         self.gps_lat = gps_lat
         self.gps_long = gps_long
 
+    @staticmethod
+    def filter_by(cities, **kwargs):
+        filters = kwargs
+        filtered = []
+        for city in cities:
+            fil_pass = []
+            for fil in filters:
+                fil_pass = []
+                if city[fil] == filters[fil]:
+                    fil_pass.append(True)
+                else:
+                    fil_pass.append(False)
+            if False not in fil_pass:
+                filtered.append(city)
+        return filtered
+
+    @staticmethod
+    def fromdict(cities):
+        citieslist = []
+        if cities is list:
+            for cit in cities:
+                cities.append(City(
+                    cit['ide'], cit['id_pld'], cit['name'], cit['postalcode'], cit['insee_code'],
+                    cit['gps_lat'], cit['gps_long']
+                ))
+            return citieslist
+        else:
+            cities = City(
+                cities['ide'], cities['id_pld'], cities['name'], cities['postalcode'],
+                cities['insee_code'], cities['gps_lat'], cities['gps_long']
+            )
+            return cities

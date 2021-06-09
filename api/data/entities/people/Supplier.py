@@ -8,7 +8,7 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from application.data.base import Base
+from api.data.base import Base
 
 
 class Supplier(Base, UserMixin):
@@ -44,3 +44,14 @@ class Supplier(Base, UserMixin):
 
     def get_id(self):
         return self.login
+
+    def todict(self):
+        return {
+            'ide': self.id_supplier,
+            'id_city': self.id_city,
+            'ref': self.ref,
+            'name': self.name,
+            'login': self.login,
+            'password': self.password,
+            'activity': self.activity
+        }

@@ -4,6 +4,7 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
+import datetime
 from datetime import date
 
 from sqlalchemy import ForeignKey, Column, Boolean, Date
@@ -27,7 +28,8 @@ class Send(Base):
     reception_date = Column('date_reception', Date)
     pld_to_plr = Column('pld_to_plr', Boolean)
 
-    def __init__(self, parcel, pld, plr, send_date: date, reception_date: date, pld_to_plr: bool):
+    def __init__(self, parcel, pld, plr, send_date: datetime.datetime, reception_date: datetime.datetime,
+                 pld_to_plr: bool):
         """Constructor"""
         self.parcel = parcel
         self.pld = pld
@@ -35,3 +37,13 @@ class Send(Base):
         self.send_date = send_date
         self.reception_date = reception_date
         self.pld_to_plr = pld_to_plr
+
+    def todict(self):
+        return {
+            'parcel': self.parcel,
+            'pld': self.pld,
+            'plr': self.plr,
+            'send_date': self.send_date.timestamp(),
+            'reception_date': self.reception_date.timestamp(),
+            'pld_to_plr': self.pld_to_plr
+        }

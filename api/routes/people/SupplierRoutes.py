@@ -4,36 +4,51 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from flask import jsonify, request
 from werkzeug.exceptions import abort
 
-from application import app
-from application.data.base import session
-from application.data.entities.people.Supplier import Supplier
+from api import auth
+from api import app
+from api.data.base import session
+from api.data.entities.people.Supplier import Supplier
+
+
+@app.route('/api/v1/supplier', methods=['POST'])
+def addSupplier():
+    req = request.get_json()
+    sup = Supplier(req['id_city'], req['ref'], req['name'], req['login'], req['password'], req['activity'])
+    sup.hash_password()
+    session.add(sup)
+    return jsonify(201)
 
 
 @app.route("/api/v1/supplier", methods=['GET'])
+@auth.login_required(role='operator')
 def getSuppliers():
     suppliers = session.query(Supplier).all()
     return jsonify(suppliers)
 
 
-@app.route("/api/v1/supplier/<int: id_sup>", methods=['GET'])
+@app.route("/api/v1/supplier/<int:id_sup>", methods=['GET'])
+@auth.login_required(role='operator')
 def getSupplierByID(id_sup: int):
     supplier = session.query(Supplier).filter_by(id_supplier=id_sup).first()
     if supplier is not None:
-        return jsonify(supplier)
+        return jsonify(supplier.todict())
     abort(404)
 
 
-@app.route("/api/v1/supplier/<int: id_sup>", methods=['PUT'])
+@app.route("/api/v1/supplier/<string:login>", methods=['GET'])
+@auth.login_required(role=['operator', 'supplier'])
+def getSupplierByLOGIN(login: str):
+    supplier = session.query(Supplier).filter_by(login=login).first()
+    if supplier is not None:
+        return jsonify(supplier.todict())
+    abort(404)
+
+
+@app.route("/api/v1/supplier/<int:id_sup>", methods=['PUT'])
+@auth.login_required(role='operator')
 def updateSupplierByID(id_sup: int):
     supplier = session.query(Supplier).filter_by(id_supplier=id_sup).first()
     if supplier is not None:
@@ -41,16 +56,9 @@ def updateSupplierByID(id_sup: int):
     abort(404)
 
 
-@app.route("/api/v1/supplier/<int: id_sup>", methods=['DELETE'])
+@app.route("/api/v1/supplier/<int:id_sup>", methods=['DELETE'])
+@auth.login_required(role='operator')
 def deleteSupplierByID(id_sup: int):
     supplier = session.query(Supplier).filter_by(id_supplier=id_sup).first()
-    new_data = request.get_json()
-    if supplier is not None:
-        supplier.id_city = new_data['id_city']
-        supplier.ref = new_data['ref']
-        supplier.name = new_data['name']
-        supplier.address = new_data['address']
-        supplier.login = new_data['login']
-        supplier.password = new_data['password']
-        session.query(Supplier).add()
+    session.delete(supplier)
     abort(404)

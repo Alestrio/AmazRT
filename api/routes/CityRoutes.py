@@ -4,49 +4,56 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
-
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 from flask import jsonify
 from werkzeug.exceptions import abort
 
-from application import app
-from application.data.base import session
-from application.data.entities.City import City
+from api import auth
+from api import app
+from api.data.base import session
+from api.data.entities.City import City
 
 
 @app.route("/api/v1/city", methods=['GET'])
+@auth.login_required(role=['operator', 'supplier', 'customer'])
 def getCities():
     city = session.query(City).all()
     return jsonify(city)
 
 
-@app.route("/api/v1/city/<int: id_cit>", methods=['GET'])
-def getCityByID(id_cit: int):
+@app.route("/api/v1/city/<int:id_city>", methods=['GET'])
+@auth.login_required(role=['operator', 'supplier', 'customer'])
+def getCityByID(id_city: int):
     city = session.query(City).all()
     for cit in city:
-        if cit.id_city == id_cit:
+        if cit.id_city == id_city:
             return jsonify(city)
     abort(404)
 
 
-@app.route("/api/v1/city/<int: id_cit>", methods=['PUT'])
-def updateCityByID(id_cit: int):
+@app.route("/api/v1/city/<string:name_city>", methods=['GET'])
+def getCityByNAME(name_city: str):
+    city = session.query(City).filter_by(name=name_city).first()
+    if city:
+        return jsonify(city.todict())
+    abort(404)
+
+
+@app.route("/api/v1/city/<int:id_city>", methods=['PUT'])
+@auth.login_required(role='operator')
+def updateCityByID(id_city: int):
     city = session.query(City).update()
     for cit in city:
-        if cit.id_city == id_cit:
-            return jsonify(city)
+        if cit.id_city == id_city:
+            return jsonify(city)  # TODO
     abort(404)
 
 
-@app.route("/api/v1/city/<int: id_cit>", methods=['DELETE'])
-def deleteCityByID(id_cit: int):
-    city = session.query(City).delete()
-    for cit in city:
-        if cit.id_city == id_cit:
-            return jsonify(city)
-    abort(404)
+@app.route("/api/v1/city/<int:id_city>", methods=['DELETE'])
+@auth.login_required(role='operator')
+def deleteCityByID(id_city: int):
+    city = session.query(City).filter_by(id_city=id_city)
+    try:
+        session.delete(city)
+        session.commit()
+    except Exception:
+        abort(404)

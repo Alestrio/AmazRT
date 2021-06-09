@@ -8,45 +8,77 @@
 from flask import jsonify, request
 from werkzeug.exceptions import abort
 
-from application import app
-from application.data.base import session
-from application.data.entities.people.Customer import Customer
+from api import auth
+from api import app
+from api.data.base import session
+from api.data.entities.people.Customer import Customer
+from api.data.entities.people.Operator import Operator
+from api.data.entities.people.Supplier import Supplier
+
+
+@app.route('/api/v1/customer', methods=['POST'])
+def addCustomer():
+    req = request.get_json()
+    cust = Customer(req['id_city'], req['ref'], req['lastname'], req['firstname'], req['login'], req['password'])
+    cust.hash_password()
+    session.add(cust)
+    session.commit()
+    return jsonify(201)
 
 
 @app.route("/api/v1/customer", methods=['GET'])
+@auth.login_required(role='operator')
 def getCustomers():
     customers = session.query(Customer).all()
-    return jsonify(customers)
+    dicts = []
+    for i in customers:
+        dicts.append(i.todict())
+    return jsonify(dicts)
 
 
-@app.route("/api/v1/customer/<int: id_cli>", methods=['GET'])
+@app.route("/api/v1/customer/<int:id_cli>", methods=['GET'])
+@auth.login_required(role='operator')
 def getCustomerByID(id_cli: int):
     customer = session.query(Customer).filter_by(id_client=id_cli).first()
     if customer is not None:
-        return jsonify(customer)
+        return jsonify(customer.todict())
     abort(404)
 
 
-@app.route("/api/v1/customer/<int: id_cli>", methods=['PUT'])
+@app.route("/api/v1/customer/<string:login_cli>", methods=['GET'])
+@auth.login_required(role=['customer', 'operator'])
+def getCustomerByLOGIN(login_cli: str):
+    customer = session.query(Customer).filter_by(login=login_cli).first()
+    if customer is not None:
+        return jsonify(customer.todict())
+    abort(404)
+
+
+@app.route("/api/v1/customer/<int:id_cli>", methods=['PUT'])
+@auth.login_required(role='operator')
 def updateCustomerByID(id_cli: int):
     customer = session.query(Customer).filter_by(id_client=id_cli).first()
     if customer is not None:
-        return jsonify(customer)
+        return jsonify(customer)  # TODO
     abort(404)
 
 
-@app.route("/api/v1/customer/<int: id_cli>", methods=['DELETE'])
+@app.route("/api/v1/customer/<int:id_cli>", methods=['DELETE'])
+@auth.login_required(role='operator')
 def deleteCustomerByID(id_cli: int):
     customer = session.query(Customer).filter_by(id_client=id_cli).first()
-    new_data = request.get_json()
-    if customer is not None:
-        session.query(Customer).delete()
-        customer.id_city = new_data['id_city']
-        customer.ref = new_data['ref']
-        customer.lastname = new_data['lastname']
-        customer.firstname = new_data['firstname']
-        customer.address = new_data['address']
-        customer.login = new_data['login']
-        customer.password = new_data['password']
-        session.query(Customer).add()
+    session.delete(customer)
     abort(404)
+
+
+@app.route('/api/v1/login/<string:login>')
+def checkIfLoginExists(login: str):
+    user = {
+        'as_customer': session.query(Customer).filter_by(login=login).first(),
+        'as_operator': session.query(Operator).filter_by(login=login).first(),
+        'as_supplier': session.query(Supplier).filter_by(login=login).first()
+    }
+    for i in user:
+        if user[i] is not None:
+            return jsonify(True)
+    return jsonify(False)

@@ -8,8 +8,8 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from application.data.base import Base
-from application.data.entities.platforms.Pld import Pld  # this is needed in order to use the associated foreign key
+from api.data.base import Base
+from api.data.entities.platforms.Pld import Pld  # this is needed in order to use the associated foreign key
 
 Pld(1, 1, 'dummy', 'dummy')  # This is needed because PyCharm tries to delete the import (╯°□°）╯︵ ┻━┻
 
@@ -18,7 +18,7 @@ def hash_password(password):
     return generate_password_hash(password)
 
 
-class Operator(Base, UserMixin):
+class Operator(Base):
     """
     @Entity
     This is the entity class responsible for operator data management.
@@ -50,3 +50,14 @@ class Operator(Base, UserMixin):
 
     def get_id(self):
         return self.login
+
+    def todict(self):
+        return {
+            'ide': self.id_operator,
+            'id_pld': self.id_pld,
+            'ref': self.ref,
+            'lastname': self.lastname,
+            'firstname': self.firstname,
+            'login': self.login,
+            'password': self.password
+        }

@@ -6,7 +6,7 @@
 #   - Malo LEGRAND @HoesMaaad
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 
-from application.data.base import Base
+from api.data.base import Base
 
 
 class Parcel(Base):
@@ -33,4 +33,13 @@ class Parcel(Base):
         return {
             "ref": self.ref,
             "type": self.type
+        }
+
+    def todict(self):
+        return {
+            'ide': self.id_parcel,
+            'ref': self.ref,
+            'type': self.type,
+            'id_supplier': self.id_supplier,
+            'id_customer': self.id_customer
         }

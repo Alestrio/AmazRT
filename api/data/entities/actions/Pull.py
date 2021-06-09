@@ -31,3 +31,11 @@ class Pull(Base):
         self.pld = pld
         self.customer = customer
         self.pull_date = pull_date
+
+    def todict(self):
+        return {
+            'parcel': self.parcel,
+            'pld': self.pld,
+            'customer': self.customer,
+            'pull_date': self.pull_date
+        }

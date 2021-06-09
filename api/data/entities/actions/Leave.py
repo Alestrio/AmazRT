@@ -9,8 +9,8 @@ from datetime import date
 
 from sqlalchemy import Column, ForeignKey, Date, DateTime
 
-from application.data.base import Base
-from application.data.entities.platforms.Pld import Pld
+from api.data.base import Base
+from api.data.entities.platforms.Pld import Pld
 
 
 class Leave(Base):
@@ -31,4 +31,12 @@ class Leave(Base):
         self.pld = pld
         self.supplier = supplier
         self.deposit_date = deposit_date
+
+    def todict(self):
+        return {
+            'parcel': self.parcel,
+            'pld': self.pld,
+            'supplier': self.supplier,
+            'deposit_date': self.deposit_date.timestamp()
+        }
 

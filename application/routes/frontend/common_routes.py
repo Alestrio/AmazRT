@@ -60,7 +60,6 @@ def create_customer(req):
     if data is not None:
         customer = Customer(0, data['city_id'], rand_ref, data['lastname'], data['firstname'],
                             data['login'], data['password'])
-        customer.hash_password()
         service.add(customer)
 
 
@@ -105,7 +104,6 @@ def create_supplier(req):
     if data is not None:
         supplier = Supplier(0, data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
                             data['login'], data['password'], data['activity'])
-        supplier.hash_password()
         service.add(supplier)
 
 
@@ -144,7 +142,6 @@ def create_operator(req):
     if data is not None:
         operator = Operator(0, data['id_pld'], data['lastname'], data['firstname'],
                             data['login'], data['password'], rand_ref)
-        operator.hash_password()
         service.add(operator)
 
 

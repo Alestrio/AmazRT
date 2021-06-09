@@ -20,14 +20,10 @@ from application.frontend.forms.simple_login_form import SimpleLoginForm
 def getAllPackageActions(tracking_number):
     parcel: Parcel = Parcel.fromdict(service.getOne(Parcel(), tracking_number))
     if parcel is not None:
-        #leave = session.query(Leave).filter_by(parcel=parcel.id_parcel).first()
         leave = Leave.fromdict(service.getOne(Leave(), parcel.ref))  # those are intended to be unique
         # that's why we are taking the first element
-        #pull = session.query(Pull).filter_by(parcel=parcel.id_parcel).first()
         pull = Pull.fromdict(service.getOne(Pull(), parcel.ref))
-        #sends = session.query(Send).filter_by(parcel=parcel.id_parcel)
         sends = Send.fromdict(service.getOne(Send(), parcel.ref))
-        #transmits = session.query(Transmit).filter_by(parcel=parcel.id_parcel)
         transmits = Transmit.fromdict(service.getOne(Transmit(), parcel.ref))
 
         return {

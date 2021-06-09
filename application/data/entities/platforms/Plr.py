@@ -6,22 +6,25 @@
 #   - Malo LEGRAND @HoesMaaad
 from sqlalchemy import Column, Integer, VARCHAR
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 
 
-class Plr(Base):
+class Plr(AbstractEntity):
     """
     @Entity
     This is the entity class responsible for region-level platform data management.
     The tablename is "plr"
     """
-    __tablename__ = 'plr'
-    id_plr = Column('id_plr', Integer, primary_key=True)
-    ref = Column('ref_plr', VARCHAR(6))
-    name = Column('nom_plr', VARCHAR(50))
 
-    def __init__(self,
+    def todict(self):
+        return {
+            'id': super().ide,
+            'ref': self.ref,
+            'name': self.name
+        }
+
+    def __init__(self, ide,
                  ref, name):
-        super().__init__()
+        super().__init__(ide)
         self.ref = ref
         self.name = name

@@ -8,27 +8,32 @@ from flask_login import UserMixin
 from sqlalchemy import Column, Integer, VARCHAR, ForeignKey
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from application.data.base import Base
+from application.data.entities.AbstractEntity import AbstractEntity
 
 
-class Customer(Base, UserMixin):
+class Customer(AbstractEntity, UserMixin):
     """
     @Entity
     This is the entity class responsible for customer data management.
     The tablename is "client"
     """
-    __tablename__ = 'client'
-    id_client = Column('id_client', Integer, primary_key=True)
-    id_city = Column('id_ville', Integer, ForeignKey('ville.id_ville'))
-    ref = Column('ref_client', VARCHAR(15))
-    lastname = Column('nom_client', VARCHAR(30))
-    firstname = Column('prenom_client', VARCHAR(30))
-    login = Column('login_client', VARCHAR(15))
-    password = Column("mdp_client", VARCHAR(255))
+    root_url = 'customer/'
 
-    def __init__(self,
-                 id_city, ref, lastname, firstname, login, password):
+    def todict(self):
+        return {
+            'ide': self.ide,
+            'id_city': self.id_city,
+            'ref': self.ref,
+            'lastname': self.lastname,
+            'firstname': self.firstname,
+            'login': self.login,
+            'password': self.password
+        }
+
+    def __init__(self, ide=0, id_city=0, ref=0, lastname='', firstname='', login='', password=''):
         """Constructor"""
+        super().__init__(ide)
+        self.ide = ide
         self.id_city = id_city
         self.ref = ref
         self.lastname = lastname
@@ -45,14 +50,21 @@ class Customer(Base, UserMixin):
     def get_id(self):
         return self.login
 
+    @staticmethod
+    def fromdict(origin_dict):
+        if origin_dict is not None:
+            custlist = []
+            if not isinstance(origin_dict, dict):
+                for i in origin_dict:
+                    print(i)
+                    custlist.append(Customer(i['ide'], i['id_city'], i['ref'], i['lastname'],
+                                    i['firstname'], i['login'], i['password']))
+                return custlist
+            else:
+                return Customer(origin_dict['ide'], origin_dict['id_city'], origin_dict['ref'], origin_dict['lastname'],
+                                origin_dict['firstname'], origin_dict['login'], origin_dict['password'])
 
-def todict(customer):
-    return {
-        "id_client": customer.id_client,
-        "id_city": customer.id_city,
-        "ref": customer.ref,
-        "lastname": customer.lastname,
-        "firstname": customer.firstname,
-        "login": customer.login,
-        "password": customer.password
-    }
+    @staticmethod
+    def filter_by(customer, **kwargs):
+        pass  # TODO
+

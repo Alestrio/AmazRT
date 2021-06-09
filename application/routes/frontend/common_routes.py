@@ -35,7 +35,7 @@ def sanity_check_customer_request(req):
             password_field is not None and password_field == confirm_password_field and
             address_field is not None):
         # city_id = session.query(City).filter_by(name=address_field).first()
-        city_id = City.fromdict(City.filter_by(service.getall(City()), name=address_field))
+        city_id = City.fromdict(service.getOne(City, address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {
@@ -172,6 +172,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    service.user = None
     return redirect('/')
 
 
@@ -183,15 +184,7 @@ def register():
     if request.method == 'POST':
         u_login = request.form['login_field']
         user_type = request.form['user_type_field']
-        user = {
-            'as_customer': Customer.fromdict(Customer.filter_by(service.getall(Customer()), login=u_login)),
-            'as_operator': Operator.fromdict(Operator.filter_by(service.getall(Operator()), login=u_login)),
-            'as_supplier': Supplier.fromdict(Supplier.filter_by(service.getall(Supplier()), login=u_login))
-        }
-        for i in user:
-            if user[i] is not None:
-                flash("Cet utilisateur existe déjà !")
-
+        exists = service.checkIfLoginExists(u_login)
         user_creator = {
             'customer': create_customer,
             'operator': create_operator,

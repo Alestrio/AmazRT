@@ -14,6 +14,15 @@ from api.data.base import session
 from api.data.entities.people.Operator import Operator
 
 
+@app.route('/api/v1/operator', methods=['POST'])
+def addOperator():
+    req = request.get_json()
+    op = Operator(req['id_pld'], req['lastname'], req['firstname'], req['login'], req['password'], req['ref'])
+    op.hash_password()
+    session.add(op)
+    return jsonify(201)
+
+
 @app.route("/api/v1/operator", methods=['GET'])
 @auth.login_required(role='operator')
 def getOperators():

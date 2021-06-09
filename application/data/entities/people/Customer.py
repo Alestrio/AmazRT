@@ -21,7 +21,6 @@ class Customer(AbstractEntity, UserMixin):
 
     def todict(self):
         return {
-            'id': super().ide,
             'id_city': self.id_city,
             'ref': self.ref,
             'lastname': self.lastname,

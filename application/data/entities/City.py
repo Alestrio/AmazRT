@@ -15,6 +15,7 @@ class City(AbstractEntity):
     This is the entity class responsible for cities data management.
     The tablename is "ville"
     """
+    root_url = 'city/'
 
     def todict(self):
         return {
@@ -28,9 +29,8 @@ class City(AbstractEntity):
             'gps_long': self.gps_long
         }
 
-    def __init__(self, ide=0,
-                 id_city=0, id_pld=0, name='', postalcode=0, insee_code=0, gps_lat=0, gps_long=0):
-        super().__init__(ide)
+    def __init__(self, id_city=0, id_pld=0, name='', postalcode=0, insee_code=0, gps_lat=0, gps_long=0):
+        super().__init__(id_city)
         self.id_pld = id_pld
         self.id_city = id_city
         self.name = name
@@ -57,15 +57,17 @@ class City(AbstractEntity):
 
     @staticmethod
     def fromdict(cities):
-        cities = []
+        citieslist = []
         if cities is list:
             for cit in cities:
                 cities.append(City(
-                    cit['id'], cit['id_city'], cit['id_pld'], cit['name'], cit['postalcode'], cit['insee_code'],
+                    cit['ide'], cit['id_pld'], cit['name'], cit['postalcode'], cit['insee_code'],
                     cit['gps_lat'], cit['gps_long']
                 ))
+            return citieslist
         else:
             cities = City(
-                cities['id'], cities['id_city'], cities['id_pld'], cities['name'], cities['postalcode'],
+                cities['ide'], cities['id_pld'], cities['name'], cities['postalcode'],
                 cities['insee_code'], cities['gps_lat'], cities['gps_long']
             )
+            return cities

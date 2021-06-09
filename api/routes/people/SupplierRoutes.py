@@ -13,6 +13,15 @@ from api.data.base import session
 from api.data.entities.people.Supplier import Supplier
 
 
+@app.route('/api/v1/supplier', methods=['POST'])
+def addSupplier():
+    req = request.get_json()
+    sup = Supplier(req['id_city'], req['ref'], req['name'], req['login'], req['password'], req['activity'])
+    sup.hash_password()
+    session.add(sup)
+    return jsonify(201)
+
+
 @app.route("/api/v1/supplier", methods=['GET'])
 @auth.login_required(role='operator')
 def getSuppliers():

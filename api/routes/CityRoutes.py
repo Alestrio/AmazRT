@@ -14,14 +14,14 @@ from api.data.entities.City import City
 
 
 @app.route("/api/v1/city", methods=['GET'])
-@auth.login_required(['operator', 'supplier', 'customer'])
+@auth.login_required(role=['operator', 'supplier', 'customer'])
 def getCities():
     city = session.query(City).all()
     return jsonify(city)
 
 
 @app.route("/api/v1/city/<int:id_city>", methods=['GET'])
-@auth.login_required(['operator', 'supplier', 'customer'])
+@auth.login_required(role=['operator', 'supplier', 'customer'])
 def getCityByID(id_city: int):
     city = session.query(City).all()
     for cit in city:
@@ -31,7 +31,6 @@ def getCityByID(id_city: int):
 
 
 @app.route("/api/v1/city/<string:name_city>", methods=['GET'])
-@auth.login_required(['operator', 'supplier', 'customer'])
 def getCityByNAME(name_city: str):
     city = session.query(City).filter_by(name=name_city).first()
     if city:
@@ -40,7 +39,7 @@ def getCityByNAME(name_city: str):
 
 
 @app.route("/api/v1/city/<int:id_city>", methods=['PUT'])
-@auth.login_required('operator')
+@auth.login_required(role='operator')
 def updateCityByID(id_city: int):
     city = session.query(City).update()
     for cit in city:
@@ -50,7 +49,7 @@ def updateCityByID(id_city: int):
 
 
 @app.route("/api/v1/city/<int:id_city>", methods=['DELETE'])
-@auth.login_required('operator')
+@auth.login_required(role='operator')
 def deleteCityByID(id_city: int):
     city = session.query(City).filter_by(id_city=id_city)
     try:

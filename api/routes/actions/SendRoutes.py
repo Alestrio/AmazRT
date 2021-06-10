@@ -4,6 +4,7 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
+import datetime
 
 from flask import jsonify, request
 from werkzeug.exceptions import abort
@@ -21,7 +22,8 @@ from api.data.entities.actions.Send import Send
 @app.route('/api/v1/send', methods=['POST'])
 def addSend():
     req = request.get_json()
-    send = Send(req['id_parcel'], req['id_pld'], req['id_plr'], req['send_date'], req['reception_date'],
+    send = Send(req['parcel'], req['pld'], req['plr'], datetime.datetime.fromtimestamp(req['send_date']),
+                datetime.datetime.fromtimestamp(req['reception_date']),
                 req['pld_to_plr'])
     session.add(send)
     session.commit()

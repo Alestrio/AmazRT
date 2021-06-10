@@ -77,7 +77,6 @@ class ApiService:
         else:
             print('nope', req.status_code)
 
-
     def getWithPayload(self, entity: AbstractEntity, payload):
         geturl = self.__api_url + entity.root_url.replace('/', '')
         if self.user:

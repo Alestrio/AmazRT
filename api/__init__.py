@@ -13,4 +13,4 @@ auth = HTTPBasicAuth()
 
 from api.routes.people import CustomerRoutes, OperatorRoutes, SupplierRoutes
 from api.routes import CityRoutes, ParcelRoutes
-from api.routes.actions import LeaveRoutes
+from api.routes.actions import LeaveRoutes, SendRoutes, PullRoutes, TransmitRoutes

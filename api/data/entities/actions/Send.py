@@ -9,9 +9,9 @@ from datetime import date
 
 from sqlalchemy import ForeignKey, Column, Boolean, Date
 
-from application.data.base import Base
-from application.data.entities.platforms.Plr import Plr
-from application.data.entities.platforms.Pld import Pld
+from api.data.base import Base
+from api.data.entities.platforms.Plr import Plr
+from api.data.entities.platforms.Pld import Pld
 
 
 class Send(Base):

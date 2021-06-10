@@ -45,10 +45,13 @@
                         <a href="/tracking_expedition"
                            class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">Suivi
                             Expédition</a>
-                        {% if current_user.id_operator != null %}
+                        {% if current_user.id_pld != null %}
                             <a href="/parcel-register"
                                class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">
                                 Inscription de colis</a>
+                            <a href="/send-transmit"
+                               class="text-white hover:bg-gray-700 px-3 py-2 rounded-md text-xl font-medium">
+                                Envoi/Transmission</a>
                         {% endif %}
                         <label class="">
                             <input type="search" class="rounded-full px-2 py-1 outline-none" placeholder="Rechercher"/>

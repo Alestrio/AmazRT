@@ -54,8 +54,8 @@ def track_parcel():
     if package_all_actions[TripStageType.PULL] is not None:
         package_trip.append(TripStage.from_pull(j, package_all_actions[TripStageType.PULL]))
 
-    ordered = TripStage.orderByDate(package_trip)
+    #ordered = TripStage.orderByDate(package_trip)
     tripstages = []
-    for i in ordered:
+    for i in package_trip:
         tripstages.append(i.__dict__())
     return render_template('pages/t_parcel_tracking.html', tripstages=tripstages, login_form=SimpleLoginForm())

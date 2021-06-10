@@ -8,8 +8,8 @@ from datetime import date
 
 from sqlalchemy import Column, ForeignKey, Date
 
-from application.data.base import Base
-from application.data.entities.platforms.Pld import Pld
+from api.data.base import Base
+from api.data.entities.platforms.Pld import Pld
 
 
 

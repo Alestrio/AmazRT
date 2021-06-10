@@ -15,6 +15,7 @@
                 <h1 class="text-3xl text-base">Votre tableau de bord :</h1>
                     <table class="table-auto border-2 border-yellow-600 border-collapse">
                         <tr class="border">
+                            <th class="border p-2">ID Colis</th>
                             <th class="border p-2">Référence de colis</th>
                             <th class="border p-2">Type de colis</th>
                             <th class="border p-2">Lien de tracking</th>
@@ -22,6 +23,7 @@
                         {% if user_tracked_parcels != None %}
                             {% for i in user_tracked_parcels %}
                                 <tr class="border">
+                                    <td class="border p-2">{{ i['ide'] }}</td>
                                     <td class="border p-2">{{ i['ref'] }}</td>
                                     <td class="border p-2">{{ i['type'] }}</td>
                                     <td class="border">

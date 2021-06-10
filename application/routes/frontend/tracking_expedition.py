@@ -20,7 +20,7 @@ def userTrackedParcels(user: Customer):
     parcels = Parcel.fromdict(service.getWithPayload(Parcel(), {'id_user': cid}))
     parcel_array = []
     for i in parcels:
-        parcel_array.append(i.asDict())
+        parcel_array.append(i.todict())
     return parcel_array
 
 
@@ -29,7 +29,7 @@ def userTrackedParcelsSupplier(user: Supplier):
     parcels = Parcel.fromdict(service.getWithPayload(Parcel(), {'id_supplier': cid}))
     parcel_array = []
     for i in parcels:
-        parcel_array.append(i.asDict())
+        parcel_array.append(i.todict())
     return parcel_array
 
 

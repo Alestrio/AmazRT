@@ -1,0 +1,60 @@
+{% extends 'pages/t_layout.html' %}
+{% block content %}
+    <main>
+        <div class="block">
+            <div class="w-full flex flex-col justify-center items-center text-center py-12 px-2 bg-white space-y-3">
+                <h1 class="text-3xl text-base">Envoyer et transmettre un colis</h1>
+                <form class="w-full max-w-lg" action="/send-transmit" method="post">
+                    {{ send_transmit_form.hidden_tag() }}
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-full px-3 mb-6 md:mb-0">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">
+                                Type d'action
+                            </label>
+                            {{ send_transmit_form.type_radio(class_="py-4") }}
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0" id="id_pld_field">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                                   for="grid-first-name">
+                                ID de PLD
+                            </label>
+                            {{ send_transmit_form.pld_id_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white') }}
+                        </div>
+                        <div class="w-full md:w-1/2 px-3" id="id_plr_field">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                                   for="grid-last-name">
+                                ID de PLR
+                            </label>
+                            {{ send_transmit_form.plr_id_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey') }}
+                        </div>
+                        <div class="w-full md:w-1/2 px-3" id="dest_plr_field">
+                            <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                                   for="grid-last-name">
+                                ID de PLR de destination
+                            </label>
+                            {{ send_transmit_form.dest_plr_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey') }}
+                        </div>
+                    </div>
+                    <div class="w-full md:w-full px-3 mb-6" id="parcel_id_field">
+                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                               for="grid-last-name">
+                            ID de Colis
+                        </label>
+                        {{ send_transmit_form.parcel_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey') }}
+                    </div>
+                    <div class="w-full md:w-full px-3 mb-6" id="pld_to_plr_field">
+                        <label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+                               for="grid-last-name">
+                            Sens de parcours
+                        </label>
+                        {{ send_transmit_form.pld_to_plr_field(class='appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-grey') }}
+                    </div>
+                    {{ send_transmit_form.submit(class_="shadow bg-yellow-600 hover:bg-purple-light focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded") }}
+                </form>
+            </div>
+        </div>
+    </main>
+    <script src="../../static/js/send_transmit_dynamic_display.js"></script>
+{% endblock %}

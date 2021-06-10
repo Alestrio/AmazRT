@@ -4,6 +4,7 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
+import datetime
 
 from flask import jsonify, request
 from werkzeug.exceptions import abort
@@ -16,14 +17,14 @@ from api.data.entities.actions.Send import Send
 from api.data.entities.people.Customer import Customer
 from api.data.entities.people.Operator import Operator
 from api.data.entities.people.Supplier import Supplier
-from application.data.entities.actions.Transmit import Transmit
+from api.data.entities.actions.Transmit import Transmit
 
 
 @app.route('/api/v1/transmit', methods=['POST'])
 def addTransmit():
     req = request.get_json()
-    transmit = Transmit(req['ide'], req['id_parcel'], req['id_plr'], req['dest_plr'], req['send_date'],
-                        req['reception_date'])
+    transmit = Transmit(req['parcel'], req['plr'], req['dest_plr'], datetime.datetime.fromtimestamp(req['send_date']),
+                        datetime.datetime.fromtimestamp(req['reception_date']))
     session.add(transmit)
     session.commit()
     return jsonify(201)

@@ -4,15 +4,24 @@
 #   - Meryem KAYA @MeryemKy
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
+import datetime
 import json
 
 from flask import jsonify, request
 from werkzeug.exceptions import abort
 
+import api
 from api import auth
 from api import app
 from api.data.base import session
 from api.data.entities.Parcel import Parcel
+from api.data.entities.actions.Transmit import Transmit as TransmitApi
+from application.data.data_classes.TripStage import TripStageType
+from application.data.entities.actions.Send import Send
+from application.data.entities.actions.Transmit import Transmit
+from application.routes.frontend.parcel_routes import getAllPackageActions
+
+from api.data.entities.actions.Send import Send as send_api
 
 
 @app.route("/api/v1/parcel", methods=['GET'])
@@ -75,6 +84,32 @@ def updateParcelByID(id_parcel: int):
         if par.id_parcel == id_parcel:
             return jsonify(par)  # TODO
     abort(404)
+
+
+@app.route("/api/v1/parcel/update_date/<string:ref_parcel>", methods=['GET'])
+def updateParcelLastDate(ref_parcel: str):
+    parcel = session.query(Parcel).filter_by(ref=ref_parcel).first()
+    package_all_actions = getAllPackageActions(parcel.ref)
+
+    lastdate = datetime.datetime.fromtimestamp(0)
+    last_stage = 0
+    for i in package_all_actions[TripStageType.SEND]:
+        if i.send_date > lastdate:
+            lastdate = i.send_date
+            last_stage = i
+    for i in package_all_actions[TripStageType.TRANSMIT]:
+        if i.send_date > lastdate:
+            lastdate = i.send_date
+            last_stage = i
+
+    if isinstance(last_stage, Transmit):
+        trans = session.query(TransmitApi).filter_by(parcel=parcel.id_parcel).first()
+        trans.reception_date = datetime.datetime.now()
+    else:
+        send = session.query(send_api).filter_by(parcel=parcel.id_parcel, pld_to_plr=last_stage.pld_to_plr).first()
+        send.reception_date = datetime.datetime.now()
+    session.commit()
+    return jsonify(200)
 
 
 @app.route("/api/v1/parcel/<int:id_parcel>", methods=['DELETE'])

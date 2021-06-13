@@ -25,11 +25,13 @@ class JsonParcelService:
 
     @staticmethod
     def moveParcel(parcel, dest_type: LocationType, dest_id):
+        cnopts = pysftp.CnOpts()
+        cnopts.hostkeys = None
         available_dests = config.available_dests
         for i in available_dests:
             if i['type'] == dest_type.value and i['id'] == int(dest_id) and parcel:
                 with pysftp.Connection(i['ip'], username=config.siteusername,
-                                       password=config.sitepassword) as conn:
+                                       password=config.sitepassword, cnopts=cnopts) as conn:
                     conn.put(config.parcel_root_file_path+parcel.ref+'.json',
                              config.parcel_root_file_path+parcel.ref+'.json')
                     os.remove(config.parcel_root_file_path+parcel.ref+'.json')

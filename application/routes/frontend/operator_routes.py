@@ -96,7 +96,7 @@ def send_transmit():
                 'pld_to_plr': (False, True)[data['pld_to_plr_field'] == 'pld_to_plr']
             }
             send = Send.fromdict(datadict)
-            #service.add(send)
+            service.add(send)
             json_service = JsonParcelService()
             json_service.moveParcel(Parcel.fromdict(service.getOne(Parcel(), data['parcel_field'])),
                                     (LocationType.PLD, LocationType.PLR)[data['pld_to_plr_field'] == 'pld_to_plr'],

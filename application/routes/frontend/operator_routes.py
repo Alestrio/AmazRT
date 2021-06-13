@@ -13,6 +13,8 @@ from flask_login import current_user
 from werkzeug.exceptions import abort
 
 from application import app, service
+from application.data.JsonParcelService import JsonParcelService
+from application.data.data_classes.TripStage import LocationType
 from application.data.entities.Parcel import Parcel
 from application.data.entities.actions.Leave import Leave
 from application.data.entities.actions.Send import Send
@@ -67,7 +69,8 @@ def parcel_register():
         parcel = Parcel.fromdict(service.getOne(Parcel(), datadict['ref']))
         leave = Leave(parcel.ide, datadict['pld_id'], datadict['supplier_id'], datetime.datetime.now())
         service.add(leave)
-        # TODO create parcel as JSON
+        json_service = JsonParcelService()
+        json_service.createParcel(Parcel.fromdict(service.getOne(Parcel(), rand_ref)))
         return redirect('/')
     else:
         abort(502)
@@ -93,8 +96,12 @@ def send_transmit():
                 'pld_to_plr': (False, True)[data['pld_to_plr_field'] == 'pld_to_plr']
             }
             send = Send.fromdict(datadict)
-            service.add(send)
-            # TODO send file to another platform
+            #service.add(send)
+            json_service = JsonParcelService()
+            json_service.moveParcel(Parcel.fromdict(service.getOne(Parcel(), data['parcel_field'])),
+                                    (LocationType.PLD, LocationType.PLR)[data['pld_to_plr_field'] == 'pld_to_plr'],
+                                    (data['pld_id_field'], data['plr_id_field'])[data['pld_to_plr_field']
+                                                                                 == 'pld_to_plr'])
         elif data['type_radio'] == 'transmit':
             datadict = {
                 'parcel': data['parcel_field'],
@@ -105,7 +112,9 @@ def send_transmit():
             }
             transmit = Transmit.fromdict(datadict)
             service.add(transmit)
-            # TODO send file to another platform
+            json_service = JsonParcelService()
+            json_service.moveParcel(Parcel.fromdict(service.getOne(Parcel(), data['parcel_field'])),
+                                    LocationType.PLR, data['dest_plr'])
         return redirect('/send-transmit')
     else:
         abort(502)

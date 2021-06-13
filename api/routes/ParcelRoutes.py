@@ -44,10 +44,9 @@ def getParcels():
 @app.route("/api/v1/parcel/<int:id_parcel>", methods=['GET'])
 @auth.login_required(role=['operator', 'supplier', 'customer'])
 def getParcelByID(id_parcel: int):
-    parcel = session.query(Parcel).all()
-    for par in parcel:
-        if par.id_parcel == id_parcel:
-            return jsonify(par)
+    parcel = session.query(Parcel).filter_by(id_parcel=id_parcel).first()
+    if parcel:
+        return jsonify(parcel.todict())
     abort(404)
 
 

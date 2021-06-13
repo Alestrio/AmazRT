@@ -5,18 +5,9 @@
 #   - Alexis LEBEL @Alestrio
 #   - Malo LEGRAND @HoesMaaad
 
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 import asyncio
 import sys
 
-#  AmazRT  -  Parcel Management System
-#  First semester Technical Degree project
-#
 import asyncssh
 
 
@@ -64,7 +55,6 @@ def mainloop():
 
 
 def main():
-    define_clients()
     mainloop()
 
 

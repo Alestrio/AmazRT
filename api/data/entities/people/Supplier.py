@@ -20,7 +20,7 @@ class Supplier(Base, UserMixin):
     __tablename__ = 'fournisseur'
     id_supplier = Column('id_fournisseur', Integer, primary_key=True)
     id_city = Column('id_ville', Integer, ForeignKey('ville.id_ville'))
-    ref = Column('ref_fournisseur', VARCHAR(15))
+    ref = Column('ref_fournisseur', VARCHAR(30))
     name = Column('nom_fournisseur', VARCHAR(30))
     login = Column('login_fournisseur', VARCHAR(15))
     password = Column("mdp_fournisseur", VARCHAR(255))

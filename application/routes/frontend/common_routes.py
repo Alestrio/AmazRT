@@ -176,7 +176,7 @@ def logout():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not isinstance(current_user, Operator):
         return redirect('/')
 
     if request.method == 'POST':

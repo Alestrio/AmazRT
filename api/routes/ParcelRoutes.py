@@ -15,13 +15,11 @@ from api import auth
 from api import app
 from api.data.base import session
 from api.data.entities.Parcel import Parcel
-from api.data.entities.actions.Transmit import Transmit as TransmitApi
+from api.data.entities.actions.Leave import Leave
+from api.data.entities.actions.Pull import Pull
+from api.data.entities.actions.Transmit import Transmit
 from application.data.data_classes.TripStage import TripStageType
-from application.data.entities.actions.Send import Send
-from application.data.entities.actions.Transmit import Transmit
-from application.routes.frontend.parcel_routes import getAllPackageActions
-
-from api.data.entities.actions.Send import Send as send_api
+from api.data.entities.actions.Send import Send
 
 
 @app.route("/api/v1/parcel", methods=['GET'])
@@ -89,6 +87,25 @@ def updateParcelByID(id_parcel: int):
     abort(404)
 
 
+def getAllPackageActions(tracking_number):
+    parcel = session.query(Parcel).filter_by(ref=tracking_number).first()
+    if parcel is not None:
+        leave = session.query(Leave).filter_by(parcel=parcel.id_parcel).first()  # those are intended to be unique
+        # that's why we are taking the first element
+        pull = session.query(Pull).filter_by(parcel=parcel.id_parcel).first()
+        sends = session.query(Send).filter_by(parcel=parcel.id_parcel).all()
+        transmits = session.query(Transmit).filter_by(parcel=parcel.id_parcel).all()
+
+        return {
+            "parcel": parcel,
+            TripStageType.LEAVE: leave,
+            TripStageType.PULL: pull,
+            TripStageType.SEND: sends,
+            TripStageType.TRANSMIT: transmits
+        }
+    abort(404)
+
+
 @app.route("/api/v1/parcel/update_date/<string:ref_parcel>", methods=['GET'])
 def updateParcelLastDate(ref_parcel: str):
     parcel = session.query(Parcel).filter_by(ref=ref_parcel).first()
@@ -106,11 +123,12 @@ def updateParcelLastDate(ref_parcel: str):
             last_stage = i
 
     if isinstance(last_stage, Transmit):
-        trans = session.query(TransmitApi).filter_by(parcel=parcel.id_parcel).first()
+        trans = session.query(Transmit).filter_by(parcel=parcel.id_parcel).first()
         trans.reception_date = datetime.datetime.now()
     else:
-        send = session.query(send_api).filter_by(parcel=parcel.id_parcel, pld_to_plr=last_stage.pld_to_plr).first()
+        send = session.query(Send).filter_by(parcel=parcel.id_parcel, pld_to_plr=last_stage.pld_to_plr).first()
         send.reception_date = datetime.datetime.now()
+
     try:
         session.commit()
     except:

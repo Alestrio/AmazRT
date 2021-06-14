@@ -12,8 +12,9 @@ import requests
 from application.util import config
 
 if __name__ == '__main__':
-    filepath = sys.argv[0]
+    filepath = sys.argv[1]
     if filepath:
         with open(filepath, 'r') as file:
-            with json.loads(file.read()) as json_result:
-                requests.get(config.api_url+'parcel/update_date/'+json_result['ref'])
+            data = json.load(file)
+            requests.get(config.api_url+'parcel/update_date/'+data['ref'])
+            file.close()

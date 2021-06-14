@@ -79,7 +79,7 @@ def sanity_check_supplier_request(req):
             address_field is not None and
             activity_field is not None):
         # city_id = session.query(City).filter_by(name=address_field).first()
-        city_id = City.fromdict(City.filter_by(service.getall(City()), name=address_field))
+        city_id = City.fromdict(service.getOne(City(), address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {

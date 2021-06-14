@@ -23,6 +23,7 @@ from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier
 from application.frontend.forms.parcel_register_form import ParcelRegisterForm
+from application.frontend.forms.register_form import RegisterForm
 from application.frontend.forms.send_transmit_form import SendTransmitForm
 from application.frontend.forms.simple_login_form import SimpleLoginForm
 
@@ -36,8 +37,8 @@ def parcel_register():
             allUsers = Customer.fromdict(service.getall(Customer()))
             for i in allUsers:
                 tolist.append(i.todict())
-            return render_template('pages/t_parcel_register.html', register_form=ParcelRegisterForm(),
-                                   userdata=tolist)
+            return render_template('pages/t_parcel_register.html', parcel_register_form=ParcelRegisterForm(),
+                                   userdata=tolist, register_form=RegisterForm())
         else:
             abort(403)
     elif request.method == 'POST':

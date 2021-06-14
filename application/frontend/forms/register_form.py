@@ -12,8 +12,8 @@ from wtforms.validators import InputRequired
 class RegisterForm(FlaskForm):
     user_type_field = RadioField('type', [InputRequired()], choices=[
         ('customer', 'Je suis un Client !'),
-        ('operator', 'Je suis un Opérateur (et j\'ai réussi mon entretien d\'embauche !)'),
-        ('supplier', 'Je suis un Fournisseur ! (De produits légaux !)')
+        ('operator', 'Je suis un Opérateur'),
+        ('supplier', 'Je suis un Fournisseur !')
     ], render_kw={'id': 'register_radio'})
 
     # Those are common fields for users

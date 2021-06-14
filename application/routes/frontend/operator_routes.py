@@ -112,7 +112,7 @@ def send_transmit():
                 'reception_date': datetime.datetime.fromtimestamp(0).timestamp()
             }
             transmit = Transmit.fromdict(datadict)
-            #service.add(transmit)
+            service.add(transmit)
             json_service = JsonParcelService()
             json_service.moveParcel(Parcel.fromdict(service.getOne(Parcel(), data['parcel_field'])),
                                     LocationType.PLR, data['dest_plr_field'])

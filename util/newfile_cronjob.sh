@@ -9,4 +9,4 @@
 
 export PYTHONPATH=/home/amazrt/AmazRT/
 source /home/amazrt/AmazRT/venv/bin/activate
-python3 /home/amazrt/Amazrt/util/check_received_parcel.py "$1"
+python3 /home/amazrt/AmazRT/util/check_received_parcel.py "$1"

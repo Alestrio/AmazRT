@@ -23,6 +23,7 @@ from application.data.entities.people.Customer import Customer
 from application.data.entities.people.Operator import Operator
 from application.data.entities.people.Supplier import Supplier
 from application.frontend.forms.parcel_register_form import ParcelRegisterForm
+from application.frontend.forms.register_form import RegisterForm
 from application.frontend.forms.send_transmit_form import SendTransmitForm
 from application.frontend.forms.simple_login_form import SimpleLoginForm
 
@@ -36,8 +37,8 @@ def parcel_register():
             allUsers = Customer.fromdict(service.getall(Customer()))
             for i in allUsers:
                 tolist.append(i.todict())
-            return render_template('pages/t_parcel_register.html', register_form=ParcelRegisterForm(),
-                                   userdata=tolist)
+            return render_template('pages/t_parcel_register.html', parcel_register_form=ParcelRegisterForm(),
+                                   userdata=tolist, register_form=RegisterForm())
         else:
             abort(403)
     elif request.method == 'POST':
@@ -50,8 +51,9 @@ def parcel_register():
             abort(400)
 
         # Generates random reference :
-        rand_ref = ''
-        for i in range(10):
+        rand_ref = (str(data['type_radio'])[0].upper() + str(data['lastname']).lower().replace(r'[_\s]', '')
+                    + datetime.date.today().strftime('%y%d%m'))
+        for i in range(4):
             rand_ref += random.choice(string.ascii_letters)
         rand_ref = rand_ref.upper()
 

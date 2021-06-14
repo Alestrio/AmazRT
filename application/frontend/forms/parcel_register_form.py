@@ -13,7 +13,7 @@ class ParcelRegisterForm(FlaskForm):
     type_radio = RadioField('type', [InputRequired()], choices=[
         ('documents', 'Documents'),
         ('goods', 'Marchandises'),
-    ], render_kw={'id': 'register_radio'})
+    ], render_kw={'id': 'type_radio'})
     parcel_trip_type = RadioField('parcel_trip', [InputRequired()], choices=[
         ('city-to-city', 'D\'une ville à une autre'),
         ('supplier-to-customer', 'D\'un fournisseur à un client')

@@ -20,7 +20,7 @@ class Customer(Base):
     __tablename__ = 'client'
     id_client = Column('id_client', Integer, primary_key=True)
     id_city = Column('id_ville', Integer, ForeignKey('ville.id_ville'))
-    ref = Column('ref_client', VARCHAR(15))
+    ref = Column('ref_client', VARCHAR(30))
     lastname = Column('nom_client', VARCHAR(30))
     firstname = Column('prenom_client', VARCHAR(30))
     login = Column('login_client', VARCHAR(15))

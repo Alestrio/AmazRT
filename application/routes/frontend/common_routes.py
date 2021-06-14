@@ -4,6 +4,7 @@
 #     - Meryem KAYA @MeryemKy
 #     - Alexis LEBEL @Alestrio
 #     - Malo LEGRAND @HoesMaaad
+import datetime
 import random
 import string
 
@@ -51,13 +52,13 @@ def sanity_check_customer_request(req):
 def create_customer(req):
     data = sanity_check_customer_request(req)
 
-    # Generates random reference :
-    rand_ref = ''
-    for i in range(10):
-        rand_ref += random.choice(string.ascii_letters)
-    rand_ref = rand_ref.upper()
-
     if data is not None:
+        # Generates random reference :
+        rand_ref = 'C' + str(data['lastname']).lower().replace(r'[_\s]', '') + datetime.date.today().strftime('%y%d%m')
+        for i in range(4):
+            rand_ref += random.choice(string.ascii_letters)
+        rand_ref = rand_ref.upper()
+
         customer = Customer(0, data['city_id'], rand_ref, data['lastname'], data['firstname'],
                             data['login'], data['password'])
         service.add(customer)
@@ -78,7 +79,7 @@ def sanity_check_supplier_request(req):
             address_field is not None and
             activity_field is not None):
         # city_id = session.query(City).filter_by(name=address_field).first()
-        city_id = City.fromdict(City.filter_by(service.getall(City()), name=address_field))
+        city_id = City.fromdict(service.getOne(City(), address_field))
         city_id = city_id.id_city
         if city_id is not None:
             return {
@@ -95,13 +96,13 @@ def sanity_check_supplier_request(req):
 def create_supplier(req):
     data = sanity_check_supplier_request(req)
 
-    # Generates random reference :
-    rand_ref = ''
-    for i in range(10):
-        rand_ref += random.choice(string.ascii_letters)
-    rand_ref = rand_ref.upper()
-
     if data is not None:
+        # Generates random reference :
+        rand_ref = 'S' + str(data['lastname']).lower().replace(r'[_\s]', '') + datetime.date.today().strftime('%y%d%m')
+        for i in range(4):
+            rand_ref += random.choice(string.ascii_letters)
+        rand_ref = rand_ref.upper()
+
         supplier = Supplier(0, data['city_id'], rand_ref, data['lastname'] + " " + data['firstname'],
                             data['login'], data['password'], data['activity'])
         service.add(supplier)
@@ -133,13 +134,13 @@ def sanity_check_operator_request(req):
 def create_operator(req):
     data = sanity_check_operator_request(req)
 
-    # Generates random reference :
-    rand_ref = ''
-    for i in range(10):
-        rand_ref += random.choice(string.ascii_letters)
-    rand_ref = rand_ref.upper()
-
     if data is not None:
+        # Generates random reference :
+        rand_ref = 'O' + str(data['lastname']).lower().replace(r'[_\s]', '') + datetime.date.today().strftime('%y%d%m')
+        for i in range(4):
+            rand_ref += random.choice(string.ascii_letters)
+        rand_ref = rand_ref.upper()
+
         operator = Operator(0, data['id_pld'], data['lastname'], data['firstname'],
                             data['login'], data['password'], rand_ref)
         service.add(operator)
@@ -175,7 +176,7 @@ def logout():
 
 @app.route('/register', methods=['POST', 'GET'])
 def register():
-    if current_user.is_authenticated:
+    if current_user.is_authenticated and not isinstance(current_user, Operator):
         return redirect('/')
 
     if request.method == 'POST':

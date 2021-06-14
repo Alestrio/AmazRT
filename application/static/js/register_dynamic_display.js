@@ -28,6 +28,7 @@ id_pld_field.style.display = 'none'
 
 
 user_type_field.onclick = function () {
+    console.log('hello')
     lastname_field.style.display = 'inline'
     firstname_field.style.display = 'inline'
     login_field.style.display = 'inline'

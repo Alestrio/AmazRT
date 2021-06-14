@@ -28,7 +28,7 @@ class Operator(AbstractEntity, UserMixin):
 
     def todict(self):
         return {
-            'id': super().ide,
+            'id': self.ide,
             'id_pld': self.id_pld,
             'lastname': self.lastname,
             'firstname': self.firstname,
@@ -39,6 +39,7 @@ class Operator(AbstractEntity, UserMixin):
 
     def __init__(self, ide=0, id_pld=0, lastname='', firstname='', login='', password='', ref=''):
         super().__init__(ide)
+        self.ide = ide
         self.id_pld = int(id_pld)
         self.lastname = lastname
         self.firstname = firstname

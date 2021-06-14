@@ -101,12 +101,12 @@ def from_pull(stage_id, pull: Pull):
 def from_send(stage_id, send: Send):
     if send.pld_to_plr:
         stage = TripStage(
-            stage_id, TripStageType.SEND, LocationType.PLR, send.plr, LocationType.PLD, send.pld, send.send_date,
+            stage_id, TripStageType.SEND, LocationType.PLD, send.pld, LocationType.PLR, send.plr, send.send_date,
             send.reception_date
         )
     else:
         stage = TripStage(
-            stage_id, TripStageType.SEND, LocationType.PLD, send.pld, LocationType.PLR, send.plr, send.send_date,
+            stage_id, TripStageType.SEND, LocationType.PLR, send.plr, LocationType.PLD, send.pld, send.send_date,
             send.reception_date
         )
     return stage

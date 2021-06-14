@@ -51,8 +51,7 @@ def parcel_register():
             abort(400)
 
         # Generates random reference :
-        rand_ref = (str(data['type_radio'])[0].upper() + str(data['lastname']).lower().replace(r'[_\s]', '')
-                    + datetime.date.today().strftime('%y%d%m'))
+        rand_ref = (data['type_radio'][0].upper() + datetime.date.today().strftime('%y%d%m'))
         for i in range(4):
             rand_ref += random.choice(string.ascii_letters)
         rand_ref = rand_ref.upper()

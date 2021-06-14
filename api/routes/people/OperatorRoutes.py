@@ -19,7 +19,11 @@ def addOperator():
     req = request.get_json()
     op = Operator(req['id_pld'], req['lastname'], req['firstname'], req['login'], req['password'], req['ref'])
     op.hash_password()
-    session.add(op)
+    try:
+        session.add(op)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 

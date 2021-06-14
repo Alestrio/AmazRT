@@ -71,8 +71,11 @@ def getParcelByREF(ref: str):
 def addParcel():
     req = request.get_json()
     par = Parcel(req['ref'], req['type'], req['id_customer'], req['id_supplier'])
-    session.add(par)
-    session.commit()
+    try:
+        session.add(par)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 
@@ -108,7 +111,10 @@ def updateParcelLastDate(ref_parcel: str):
     else:
         send = session.query(send_api).filter_by(parcel=parcel.id_parcel, pld_to_plr=last_stage.pld_to_plr).first()
         send.reception_date = datetime.datetime.now()
-    session.commit()
+    try:
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(200)
 
 

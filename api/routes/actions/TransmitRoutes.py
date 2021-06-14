@@ -25,8 +25,11 @@ def addTransmit():
     req = request.get_json()
     transmit = Transmit(req['parcel'], req['plr'], req['dest_plr'], datetime.datetime.fromtimestamp(req['send_date']),
                         datetime.datetime.fromtimestamp(req['reception_date']))
-    session.add(transmit)
-    session.commit()
+    try:
+        session.add(transmit)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 

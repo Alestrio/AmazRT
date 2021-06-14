@@ -22,8 +22,11 @@ from api.data.entities.actions.Pull import Pull
 def addPull():
     req = request.get_json()
     pull = Pull(req['ide'], req['id_parcel'], req['id_pld'], req['customer'], req['pull_date'])
-    session.add(pull)
-    session.commit()
+    try:
+        session.add(pull)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 
@@ -68,6 +71,9 @@ def updatePullByID(id_pull: int):
 @auth.login_required(role='operator')
 def deletePullByID(id_pull: int):
     pull = session.query(Pull).filter_by(ide=id_pull).first()
-    session.delete(pull)
-    session.commit()
+    try:
+        session.delete(pull)
+        session.commit()
+    except:
+        session.rollback()
     abort(404)

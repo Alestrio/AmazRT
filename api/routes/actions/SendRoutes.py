@@ -25,8 +25,11 @@ def addSend():
     send = Send(req['parcel'], req['pld'], req['plr'], datetime.datetime.fromtimestamp(req['send_date']),
                 datetime.datetime.fromtimestamp(req['reception_date']),
                 req['pld_to_plr'])
-    session.add(send)
-    session.commit()
+    try:
+        session.add(send)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 
@@ -74,6 +77,9 @@ def updateSendByID(id_send: int):
 @auth.login_required(role='operator')
 def deleteSendByID(id_send: int):
     send = session.query(Send).filter_by(ide=id_send).first()
-    session.delete(send)
-    session.commit()
+    try:
+        session.delete(send)
+        session.commit()
+    except:
+        session.rollback()
     abort(404)

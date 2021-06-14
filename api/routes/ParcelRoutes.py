@@ -27,14 +27,14 @@ from api.data.entities.actions.Send import Send as send_api
 @app.route("/api/v1/parcel", methods=['GET'])
 @auth.login_required(role=['operator', 'customer', 'supplier'])
 def getParcels():
-    if not request.data:
+    data = request.args
+    if not data:
         parcels = session.query(Parcel).all()
         plist = []
         for i in parcels:
             plist.append(i.todict())
         return jsonify(plist)
     else:
-        data = json.loads(request.data)
         if data['id_user']:
             parcels = session.query(Parcel).filter_by(id_customer=data['id_user']).all()
             plist = []
@@ -71,8 +71,11 @@ def getParcelByREF(ref: str):
 def addParcel():
     req = request.get_json()
     par = Parcel(req['ref'], req['type'], req['id_customer'], req['id_supplier'])
-    session.add(par)
-    session.commit()
+    try:
+        session.add(par)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 
@@ -108,7 +111,10 @@ def updateParcelLastDate(ref_parcel: str):
     else:
         send = session.query(send_api).filter_by(parcel=parcel.id_parcel, pld_to_plr=last_stage.pld_to_plr).first()
         send.reception_date = datetime.datetime.now()
-    session.commit()
+    try:
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(200)
 
 

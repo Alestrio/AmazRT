@@ -18,7 +18,11 @@ def addSupplier():
     req = request.get_json()
     sup = Supplier(req['id_city'], req['ref'], req['name'], req['login'], req['password'], req['activity'])
     sup.hash_password()
-    session.add(sup)
+    try:
+        session.add(sup)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 

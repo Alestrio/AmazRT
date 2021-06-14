@@ -14,8 +14,6 @@ from api import app
 from api.data.base import session
 from api.data.entities.Parcel import Parcel
 from api.data.entities.people.Customer import Customer
-from api.data.entities.people.Operator import Operator
-from api.data.entities.people.Supplier import Supplier
 from api.data.entities.actions.Leave import Leave
 
 
@@ -23,8 +21,11 @@ from api.data.entities.actions.Leave import Leave
 def addLeave():
     req = request.get_json()
     leave = Leave(req['parcel'], req['pld'], req['supplier'], datetime.datetime.fromtimestamp(req['deposit_date']))
-    session.add(leave)
-    session.commit()
+    try:
+        session.add(leave)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 

@@ -21,8 +21,11 @@ def addCustomer():
     req = request.get_json()
     cust = Customer(req['id_city'], req['ref'], req['lastname'], req['firstname'], req['login'], req['password'])
     cust.hash_password()
-    session.add(cust)
-    session.commit()
+    try:
+        session.add(cust)
+        session.commit()
+    except:
+        session.rollback()
     return jsonify(201)
 
 

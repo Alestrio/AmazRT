@@ -27,14 +27,14 @@ from api.data.entities.actions.Send import Send as send_api
 @app.route("/api/v1/parcel", methods=['GET'])
 @auth.login_required(role=['operator', 'customer', 'supplier'])
 def getParcels():
-    if not request.data:
+    data = request.args
+    if not data:
         parcels = session.query(Parcel).all()
         plist = []
         for i in parcels:
             plist.append(i.todict())
         return jsonify(plist)
     else:
-        data = json.loads(request.data)
         if data['id_user']:
             parcels = session.query(Parcel).filter_by(id_customer=data['id_user']).all()
             plist = []
